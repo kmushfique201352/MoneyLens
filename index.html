@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#060818">
+<meta name="theme-color" content="#1a0a2e">
 <title>MoneyLens - Khaled & Saba</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -12,30 +12,32 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
 :root {
-  --bg: #060818;
-  --bg2: #0b1029;
-  --glass: rgba(255,255,255,0.04);
-  --glass-border: rgba(255,255,255,0.09);
-  --glass-hover: rgba(255,255,255,0.07);
-  --text: #e8eaf6;
-  --text-muted: rgba(232,234,246,0.45);
-  --text-sub: rgba(232,234,246,0.65);
+  /* Purple-based background */
+  --bg: #0e0620;
+  --bg2: #160930;
+  --glass: rgba(255,255,255,0.05);
+  --glass-border: rgba(180,120,255,0.12);
+  --glass-hover: rgba(255,255,255,0.08);
+  --text: #f0eaff;
+  --text-muted: rgba(240,234,255,0.45);
+  --text-sub: rgba(240,234,255,0.65);
   /* Satsuma – primary brand/accent */
-  --satsuma: #D1601F;
-  --satsuma-dim: rgba(209,96,31,0.15);
-  --satsuma-glow: rgba(209,96,31,0.35);
+  --satsuma: #E8622A;
+  --satsuma-dim: rgba(232,98,42,0.15);
+  --satsuma-glow: rgba(232,98,42,0.4);
   /* Lunar Yellow – secondary highlight */
   --lunar: #FECD6D;
   --lunar-dim: rgba(254,205,109,0.13);
   /* Cobalt – info / income */
-  --cobalt: #5686BB;
-  --cobalt-dim: rgba(86,134,187,0.12);
+  --cobalt: #5EB3F5;
+  --cobalt-dim: rgba(94,179,245,0.12);
   /* Red – danger / expenses */
   --red: #ff5c7a;
   --red-dim: rgba(255,92,122,0.12);
-  /* Purple – misc */
-  --purple: #a78bfa;
-  --purple-dim: rgba(167,139,250,0.12);
+  /* Purple accents */
+  --purple: #b47aff;
+  --purple-dim: rgba(180,122,255,0.15);
+  --purple-mid: #8b5cf6;
   --font: 'Lexend', sans-serif;
   --r-sm: 14px;
   --r-md: 20px;
@@ -55,16 +57,16 @@ body {
 
 body::before {
   content: '';
-  position: fixed; top: -20%; left: -10%;
-  width: 70vw; height: 70vw;
-  background: radial-gradient(circle, rgba(209,96,31,0.07) 0%, transparent 65%);
+  position: fixed; top: -10%; left: -15%;
+  width: 75vw; height: 75vw;
+  background: radial-gradient(circle, rgba(180,122,255,0.1) 0%, rgba(232,98,42,0.06) 40%, transparent 70%);
   pointer-events: none; z-index: 0;
 }
 body::after {
   content: '';
-  position: fixed; bottom: 10%; right: -20%;
-  width: 60vw; height: 60vw;
-  background: radial-gradient(circle, rgba(86,134,187,0.05) 0%, transparent 65%);
+  position: fixed; bottom: 5%; right: -20%;
+  width: 65vw; height: 65vw;
+  background: radial-gradient(circle, rgba(94,179,245,0.07) 0%, rgba(180,122,255,0.05) 40%, transparent 70%);
   pointer-events: none; z-index: 0;
 }
 
@@ -96,35 +98,46 @@ body::after {
 .dashboard { padding: 0 16px 16px; display: flex; flex-direction: column; gap: 12px; }
 
 .hero-card {
-  background: linear-gradient(135deg, rgba(209,96,31,0.2) 0%, rgba(160,70,20,0.13) 50%, rgba(100,40,10,0.08) 100%);
-  border: 1px solid rgba(209,96,31,0.28);
+  background: linear-gradient(135deg, rgba(180,122,255,0.22) 0%, rgba(232,98,42,0.16) 50%, rgba(94,179,245,0.1) 100%);
+  border: 1px solid rgba(180,122,255,0.3);
   border-radius: var(--r-xl); padding: 28px 24px;
   position: relative; overflow: hidden;
 }
 .hero-card::before {
   content: ''; position: absolute; top: -40px; right: -40px;
   width: 160px; height: 160px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(209,96,31,0.18), transparent 70%);
+  background: radial-gradient(circle, rgba(180,122,255,0.2), transparent 70%);
   pointer-events: none;
 }
-.hero-label { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(209,96,31,0.8); font-weight: 600; margin-bottom: 10px; }
+.hero-label { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(180,122,255,0.9); font-weight: 600; margin-bottom: 10px; }
 .hero-value { font-size: 42px; font-weight: 800; color: #fff; letter-spacing: -1.5px; line-height: 1; }
 .hero-value small { font-size: 20px; font-weight: 600; opacity: 0.7; letter-spacing: 0; }
 .hero-sub { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 8px; }
+
+/* Wallet breakdown on home */
+.wallet-breakdown { margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(180,122,255,0.15); display: flex; flex-wrap: wrap; gap: 8px; }
+.wallet-chip {
+  background: rgba(255,255,255,0.07); border: 1px solid rgba(180,122,255,0.2);
+  border-radius: 20px; padding: 5px 12px;
+  font-size: 11px; font-weight: 600; color: var(--text-sub);
+  display: flex; align-items: center; gap: 5px;
+}
+.wallet-chip .wc-name { color: var(--purple); }
+.wallet-chip .wc-amt { color: var(--lunar); }
 
 .stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
 .stat-card { padding: 18px 16px; position: relative; overflow: hidden; }
 .stat-card.income-card {
-  background: linear-gradient(135deg, rgba(86,134,187,0.12), rgba(86,134,187,0.04));
-  border-color: rgba(86,134,187,0.22);
+  background: linear-gradient(135deg, rgba(94,179,245,0.14), rgba(94,179,245,0.05));
+  border-color: rgba(94,179,245,0.25);
 }
 .stat-card.expense-card {
-  background: linear-gradient(135deg, rgba(255,92,122,0.1), rgba(255,92,122,0.04));
-  border-color: rgba(255,92,122,0.2);
+  background: linear-gradient(135deg, rgba(255,92,122,0.12), rgba(255,92,122,0.04));
+  border-color: rgba(255,92,122,0.22);
 }
 .stat-card .s-icon { width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; margin-bottom: 12px; }
-.income-card .s-icon { background: rgba(86,134,187,0.18); }
+.income-card .s-icon { background: rgba(94,179,245,0.18); }
 .expense-card .s-icon { background: rgba(255,92,122,0.15); }
 .stat-card .s-label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.5px; text-transform: uppercase; }
 .stat-card .s-val { font-size: 22px; font-weight: 700; margin-top: 4px; letter-spacing: -0.5px; }
@@ -148,24 +161,28 @@ body::after {
 .btn-primary-full {
   display: block; margin: 8px 16px 4px; width: calc(100% - 32px);
   padding: 16px;
-  background: linear-gradient(135deg, var(--satsuma), #b84f18);
+  background: linear-gradient(135deg, var(--satsuma) 0%, #c0441a 50%, var(--purple-mid) 100%);
   border: none; border-radius: var(--r-md); color: #fff;
   font-family: var(--font); font-size: 15px; font-weight: 700;
   cursor: pointer; letter-spacing: 0.3px;
-  box-shadow: 0 8px 24px rgba(209,96,31,0.28);
+  box-shadow: 0 8px 24px rgba(232,98,42,0.3), 0 0 40px rgba(139,92,246,0.15);
   transition: all 0.2s;
 }
 .btn-primary-full:active { transform: scale(0.97); }
 
 .btn-sm {
   padding: 9px 16px; border-radius: 10px;
-  background: var(--satsuma); border: none; color: #fff;
+  background: linear-gradient(135deg, var(--satsuma), #b84f18);
+  border: none; color: #fff;
   font-family: var(--font); font-size: 12px; font-weight: 700;
   cursor: pointer; letter-spacing: 0.3px; transition: all 0.2s;
 }
 .btn-sm:active { transform: scale(0.95); }
+.btn-sm.cobalt { background: linear-gradient(135deg, var(--cobalt), #3a90d4); }
+.btn-sm.purple { background: linear-gradient(135deg, var(--purple), var(--purple-mid)); }
+.btn-sm.lunar { background: linear-gradient(135deg, var(--lunar), #e8a820); color: #111; }
 
-.btn-outline { padding: 9px 16px; border-radius: 10px; background: transparent; border: 1px solid var(--satsuma); color: var(--satsuma); font-size: 13px; cursor: pointer; }
+.btn-outline { padding: 9px 16px; border-radius: 10px; background: transparent; border: 1px solid var(--satsuma); color: var(--satsuma); font-size: 13px; cursor: pointer; font-family: var(--font); }
 
 /* LIST ITEMS */
 .list { padding: 0 16px; }
@@ -188,8 +205,8 @@ body::after {
   cursor: pointer; display: flex; align-items: center; justify-content: center;
   font-size: 12px; transition: all 0.2s;
 }
-.edit-btn { background: rgba(86,134,187,0.15); color: var(--cobalt); }
-.edit-btn:active { background: rgba(86,134,187,0.3); transform: scale(0.9); }
+.edit-btn { background: rgba(94,179,245,0.15); color: var(--cobalt); }
+.edit-btn:active { background: rgba(94,179,245,0.3); transform: scale(0.9); }
 .del-btn { background: rgba(255,92,122,0.12); color: var(--red); }
 .del-btn:active { background: rgba(255,92,122,0.25); transform: scale(0.9); }
 
@@ -203,14 +220,15 @@ body::after {
   font-size: 9px; font-weight: 700; letter-spacing: 0.5px;
   text-transform: uppercase; margin-left: 6px; vertical-align: middle;
 }
-.badge-h { background: rgba(209,96,31,0.15); color: var(--satsuma); border: 1px solid rgba(209,96,31,0.25); }
+.badge-h { background: rgba(232,98,42,0.15); color: var(--satsuma); border: 1px solid rgba(232,98,42,0.25); }
 .badge-m { background: rgba(254,205,109,0.15); color: var(--lunar); border: 1px solid rgba(254,205,109,0.22); }
-.badge-l { background: rgba(232,234,246,0.07); color: var(--text-muted); border: 1px solid rgba(255,255,255,0.08); }
+.badge-l { background: rgba(240,234,255,0.07); color: var(--text-muted); border: 1px solid rgba(255,255,255,0.08); }
+.badge-p { background: rgba(180,122,255,0.15); color: var(--purple); border: 1px solid rgba(180,122,255,0.25); }
 
 /* BOTTOM NAV */
 .bottom-nav {
   position: fixed; bottom: 0; left: 0; right: 0;
-  background: rgba(6,8,24,0.93); border-top: 1px solid var(--glass-border);
+  background: rgba(14,6,32,0.95); border-top: 1px solid rgba(180,122,255,0.15);
   backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
   display: flex; padding: 10px 0 calc(10px + env(safe-area-inset-bottom));
   z-index: 100;
@@ -225,7 +243,8 @@ body::after {
 .nav-item.active::before {
   content: ''; position: absolute; top: -10px; left: 50%;
   transform: translateX(-50%);
-  width: 24px; height: 2px; background: var(--satsuma);
+  width: 24px; height: 2px;
+  background: linear-gradient(90deg, var(--satsuma), var(--purple));
   border-radius: 0 0 4px 4px;
 }
 .nav-item .icon { font-size: 20px; transition: transform 0.2s; }
@@ -238,21 +257,21 @@ body::after {
 .form-group input,
 .form-group select {
   width: 100%; padding: 14px 16px; border-radius: var(--r-sm);
-  background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);
+  background: rgba(180,122,255,0.06); border: 1px solid rgba(180,122,255,0.15);
   color: var(--text); font-size: 15px; font-family: var(--font);
   outline: none; transition: border-color 0.2s, background 0.2s;
   -webkit-appearance: none;
 }
 .form-group input:focus,
-.form-group select:focus { border-color: var(--satsuma); background: rgba(209,96,31,0.04); }
-.form-group select option { background: #0b1029; color: var(--text); }
+.form-group select:focus { border-color: var(--purple); background: rgba(180,122,255,0.08); }
+.form-group select option { background: #160930; color: var(--text); }
 
 .btn-primary {
   margin: 4px 16px 10px; width: calc(100% - 32px); padding: 16px;
-  background: linear-gradient(135deg, var(--satsuma), #b84f18);
+  background: linear-gradient(135deg, var(--satsuma) 0%, #c0441a 50%, var(--purple-mid) 100%);
   border: none; border-radius: var(--r-md); color: #fff;
   font-family: var(--font); font-size: 16px; font-weight: 700;
-  cursor: pointer; box-shadow: 0 8px 24px rgba(209,96,31,0.28);
+  cursor: pointer; box-shadow: 0 8px 24px rgba(232,98,42,0.28), 0 0 30px rgba(139,92,246,0.12);
   transition: all 0.2s; letter-spacing: 0.3px;
 }
 .btn-primary:active { transform: scale(0.97); }
@@ -267,20 +286,20 @@ body::after {
 /* MODAL */
 .modal-overlay {
   position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(6,8,24,0.82); backdrop-filter: blur(8px);
+  background: rgba(14,6,32,0.88); backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px); z-index: 200; display: none;
   align-items: flex-end;
 }
 .modal-overlay.active { display: flex; }
 .modal {
-  background: #0f1529; border: 1px solid var(--glass-border);
+  background: #150828; border: 1px solid rgba(180,122,255,0.2);
   width: 100%; max-height: 92vh; border-radius: 30px 30px 0 0;
   padding: 20px 0 calc(20px + env(safe-area-inset-bottom));
   overflow-y: auto; animation: slideUp 0.35s cubic-bezier(0.22,1,0.36,1);
 }
 @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-.modal::before { content: ''; display: block; width: 36px; height: 4px; background: rgba(255,255,255,0.15); border-radius: 2px; margin: 0 auto 16px; }
-.modal-header { padding: 0 20px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); margin-bottom: 20px; }
+.modal::before { content: ''; display: block; width: 36px; height: 4px; background: rgba(180,122,255,0.25); border-radius: 2px; margin: 0 auto 16px; }
+.modal-header { padding: 0 20px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(180,122,255,0.1); margin-bottom: 20px; }
 .modal-header h2 { font-size: 20px; font-weight: 800; letter-spacing: -0.3px; }
 .modal-close { width: 32px; height: 32px; border-radius: 50%; background: var(--glass); border: 1px solid var(--glass-border); color: var(--text-muted); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
 .modal-close:active { transform: scale(0.9); }
@@ -289,16 +308,16 @@ body::after {
 .tabs { display: flex; gap: 8px; padding: 0 16px 14px; overflow-x: auto; scrollbar-width: none; }
 .tabs::-webkit-scrollbar { display: none; }
 .tab { padding: 7px 16px; border-radius: 20px; background: var(--glass); border: 1px solid var(--glass-border); color: var(--text-muted); font-size: 12px; font-weight: 500; cursor: pointer; white-space: nowrap; transition: all 0.2s; letter-spacing: 0.3px; font-family: var(--font); }
-.tab.active { background: var(--satsuma-dim); border-color: rgba(209,96,31,0.3); color: var(--satsuma); font-weight: 700; }
+.tab.active { background: rgba(180,122,255,0.15); border-color: rgba(180,122,255,0.3); color: var(--purple); font-weight: 700; }
 
 /* MONTH CHIPS */
 .month-select { display: flex; gap: 8px; padding: 8px 16px 16px; overflow-x: auto; scrollbar-width: none; }
 .month-select::-webkit-scrollbar { display: none; }
 .month-chip { padding: 8px 18px; border-radius: 20px; background: var(--glass); border: 1px solid var(--glass-border); color: var(--text-sub); font-size: 13px; font-weight: 500; white-space: nowrap; cursor: pointer; transition: all 0.2s; font-family: var(--font); }
-.month-chip.active { background: var(--satsuma-dim); border-color: rgba(209,96,31,0.3); color: var(--satsuma); font-weight: 700; }
+.month-chip.active { background: rgba(232,98,42,0.15); border-color: rgba(232,98,42,0.3); color: var(--satsuma); font-weight: 700; }
 
 /* HISTORY SUMMARY */
-.hist-summary { margin: 0 16px 16px; padding: 20px; border-radius: var(--r-lg); background: linear-gradient(135deg, rgba(86,134,187,0.09), rgba(86,134,187,0.03)); border: 1px solid rgba(86,134,187,0.16); }
+.hist-summary { margin: 0 16px 16px; padding: 20px; border-radius: var(--r-lg); background: linear-gradient(135deg, rgba(180,122,255,0.1), rgba(94,179,245,0.05)); border: 1px solid rgba(180,122,255,0.18); }
 .hist-summary .h-title { font-size: 14px; font-weight: 700; color: var(--text-muted); margin-bottom: 16px; letter-spacing: 0.5px; text-transform: uppercase; }
 .hist-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
 .hist-col { text-align: center; }
@@ -311,20 +330,20 @@ body::after {
 
 .shopping-item {
   background: rgba(255,255,255,0.03); border-radius: var(--r-sm);
-  padding: 12px 14px; margin-bottom: 7px; border: 1px solid var(--glass-border);
+  padding: 12px 14px; margin-bottom: 7px; border: 1px solid rgba(180,122,255,0.1);
   transition: all 0.2s;
 }
-.shopping-item.bought { opacity: 0.48; border-color: rgba(209,96,31,0.18); background: rgba(209,96,31,0.03); }
+.shopping-item.bought { opacity: 0.48; border-color: rgba(232,98,42,0.18); background: rgba(232,98,42,0.03); }
 .shopping-item .si-row1 { display: flex; justify-content: space-between; align-items: center; }
 .shopping-item .si-row2 { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
 .shopping-item .name { font-size: 14px; font-weight: 600; }
 .shopping-item .detail { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
 .shopping-item .price { font-size: 15px; font-weight: 700; color: var(--lunar); }
 .shopping-item .qty-controls { display: flex; align-items: center; gap: 6px; }
-.qty-btn { width: 22px; height: 22px; border-radius: 6px; background: rgba(255,255,255,0.06); border: 1px solid var(--glass-border); color: var(--text); font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-family: var(--font); transition: all 0.15s; }
-.qty-btn:active { background: rgba(209,96,31,0.2); transform: scale(0.9); }
+.qty-btn { width: 22px; height: 22px; border-radius: 6px; background: rgba(255,255,255,0.06); border: 1px solid rgba(180,122,255,0.15); color: var(--text); font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-family: var(--font); transition: all 0.15s; }
+.qty-btn:active { background: rgba(232,98,42,0.2); transform: scale(0.9); }
 .qty-val { font-size: 13px; font-weight: 700; min-width: 18px; text-align: center; }
-.shopping-item .check { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--glass-border); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; transition: all 0.2s; flex-shrink: 0; }
+.shopping-item .check { width: 26px; height: 26px; border-radius: 50%; border: 2px solid rgba(180,122,255,0.25); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; transition: all 0.2s; flex-shrink: 0; }
 .shopping-item .check.checked { background: var(--satsuma); border-color: var(--satsuma); color: #fff; box-shadow: 0 0 10px var(--satsuma-glow); }
 
 .summary-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; font-size: 13px; font-weight: 600; background: rgba(254,205,109,0.06); border: 1px solid rgba(254,205,109,0.13); border-radius: var(--r-sm); margin-top: 10px; }
@@ -366,13 +385,13 @@ body::after {
 /* AUTOCOMPLETE */
 .ac-dropdown {
   position: absolute; top: calc(100% + 4px); left: 0; right: 0;
-  background: #111728; border: 1px solid rgba(209,96,31,0.25);
+  background: #1a0a2e; border: 1px solid rgba(180,122,255,0.25);
   border-radius: var(--r-sm); z-index: 999; display: none;
   max-height: 220px; overflow-y: auto; box-shadow: 0 16px 48px rgba(0,0,0,0.5);
 }
 .ac-item { padding: 11px 14px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; border-bottom: 1px solid var(--glass-border); transition: background 0.15s; }
 .ac-item:last-child { border-bottom: none; }
-.ac-item:hover, .ac-item:active { background: rgba(209,96,31,0.1); }
+.ac-item:hover, .ac-item:active { background: rgba(180,122,255,0.1); }
 .ac-item .ac-name { font-size: 13px; font-weight: 600; }
 .ac-item .ac-meta { font-size: 11px; color: var(--text-muted); }
 .ac-item .ac-price { font-size: 13px; font-weight: 700; color: var(--lunar); }
@@ -389,29 +408,152 @@ body::after {
 .empty-state p { font-size: 13px; line-height: 1.6; }
 
 /* TOAST */
-.toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-120px); background: #0f1529; border: 1px solid var(--glass-border); padding: 12px 24px; border-radius: 100px; z-index: 300; transition: all 0.35s cubic-bezier(0.22,1,0.36,1); box-shadow: 0 20px 60px rgba(0,0,0,0.5); font-size: 14px; font-weight: 600; white-space: nowrap; }
+.toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-120px); background: #150828; border: 1px solid rgba(180,122,255,0.2); padding: 12px 24px; border-radius: 100px; z-index: 300; transition: all 0.35s cubic-bezier(0.22,1,0.36,1); box-shadow: 0 20px 60px rgba(0,0,0,0.5); font-size: 14px; font-weight: 600; white-space: nowrap; }
 .toast.show { transform: translateX(-50%) translateY(0); }
-.toast.ok { border-color: rgba(209,96,31,0.4); color: var(--satsuma); }
+.toast.ok { border-color: rgba(232,98,42,0.4); color: var(--satsuma); }
 .toast.err { border-color: rgba(255,92,122,0.4); color: var(--red); }
 
 ::-webkit-scrollbar { display: none; }
 
-.source-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--satsuma); margin-right: 6px; vertical-align: middle; box-shadow: 0 0 6px var(--satsuma-glow); }
+.source-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, var(--satsuma), var(--purple)); margin-right: 6px; vertical-align: middle; box-shadow: 0 0 6px var(--satsuma-glow); }
 
-.divider { height: 1px; background: var(--glass-border); margin: 4px 20px 16px; }
+.divider { height: 1px; background: rgba(180,122,255,0.1); margin: 4px 20px 16px; }
 
 .live-dot { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--satsuma); font-weight: 600; }
 .live-dot::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--satsuma); box-shadow: 0 0 8px var(--satsuma-glow); animation: pulse 2s ease infinite; }
 @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(0.85); } }
 
-.checkbox-row { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: var(--r-sm); cursor: pointer; }
-.checkbox-row input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-color: var(--satsuma); }
+.checkbox-row { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: rgba(180,122,255,0.05); border: 1px solid rgba(180,122,255,0.12); border-radius: var(--r-sm); cursor: pointer; }
+.checkbox-row input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-color: var(--purple); }
 .checkbox-row label { font-size: 14px; font-weight: 500; cursor: pointer; }
+
+/* PAYMENT METHOD SELECTOR (inline in forms, checkout) */
+.payment-selector { padding: 0 16px 14px; }
+.payment-selector label { display: block; font-size: 11px; color: var(--text-muted); margin-bottom: 10px; letter-spacing: 0.8px; text-transform: uppercase; font-weight: 600; }
+.payment-options { display: flex; flex-wrap: wrap; gap: 8px; }
+.pay-opt {
+  flex: 1; min-width: 100px;
+  padding: 10px 12px; border-radius: var(--r-sm);
+  background: rgba(180,122,255,0.06); border: 2px solid rgba(180,122,255,0.14);
+  color: var(--text-sub); font-family: var(--font); font-size: 12px; font-weight: 600;
+  cursor: pointer; text-align: center; transition: all 0.2s;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+}
+.pay-opt .po-name { font-size: 12px; font-weight: 700; }
+.pay-opt .po-bal { font-size: 10px; color: var(--text-muted); font-weight: 500; }
+.pay-opt.selected { background: rgba(180,122,255,0.18); border-color: var(--purple); color: var(--purple); }
+.pay-opt.selected .po-name { color: var(--purple); }
+.pay-opt.selected .po-bal { color: rgba(180,122,255,0.7); }
+.pay-opt:disabled, .pay-opt.disabled { opacity: 0.35; cursor: not-allowed; pointer-events: none; }
+
+/* SAVINGS */
+.savings-card {
+  background: linear-gradient(135deg, rgba(254,205,109,0.12) 0%, rgba(180,122,255,0.1) 100%);
+  border: 1px solid rgba(254,205,109,0.22);
+  border-radius: var(--r-xl); padding: 24px;
+  margin: 0 16px 12px; position: relative; overflow: hidden;
+}
+.savings-card::before {
+  content: ''; position: absolute; top: -30px; right: -30px;
+  width: 120px; height: 120px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(254,205,109,0.12), transparent 70%);
+  pointer-events: none;
+}
+.savings-card .sv-label { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(254,205,109,0.8); font-weight: 600; margin-bottom: 8px; }
+.savings-card .sv-total { font-size: 32px; font-weight: 800; color: var(--lunar); letter-spacing: -1px; }
+.savings-breakdown { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; }
+.sv-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+.sv-row .sv-who { color: var(--text-muted); }
+.sv-row .sv-amt { font-weight: 700; color: var(--lunar); }
+
+.savings-item {
+  background: var(--glass); border: 1px solid rgba(254,205,109,0.15);
+  border-radius: var(--r-md); padding: 14px 16px; margin-bottom: 8px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+
+/* AUTH POPUP */
+.auth-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(14,6,32,0.92); backdrop-filter: blur(12px);
+  z-index: 500; display: none; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.auth-overlay.active { display: flex; }
+.auth-box {
+  background: #1b0c35; border: 1px solid rgba(180,122,255,0.25);
+  border-radius: var(--r-xl); padding: 32px 24px; width: 100%; max-width: 360px;
+  animation: fadeUp 0.3s cubic-bezier(0.22,1,0.36,1);
+  text-align: center;
+}
+.auth-box h3 { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+.auth-box p { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; }
+.auth-pin-row { display: flex; gap: 10px; justify-content: center; margin-bottom: 24px; }
+.auth-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid rgba(180,122,255,0.3); transition: all 0.2s; }
+.auth-dot.filled { background: var(--purple); border-color: var(--purple); box-shadow: 0 0 10px rgba(180,122,255,0.4); }
+.auth-keypad { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; max-width: 260px; margin: 0 auto; }
+.key-btn {
+  padding: 16px; border-radius: var(--r-sm);
+  background: rgba(180,122,255,0.08); border: 1px solid rgba(180,122,255,0.15);
+  color: var(--text); font-family: var(--font); font-size: 18px; font-weight: 700;
+  cursor: pointer; transition: all 0.15s;
+}
+.key-btn:active { background: rgba(180,122,255,0.2); transform: scale(0.93); }
+.key-btn.del-key { font-size: 14px; color: var(--text-muted); }
+.key-btn.cancel-key { font-size: 12px; color: var(--red); background: rgba(255,92,122,0.08); border-color: rgba(255,92,122,0.15); }
+.auth-box .auth-hint { font-size: 11px; color: var(--text-muted); margin-top: 14px; }
+
+/* Payment method manage */
+.pm-item {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: var(--r-md); padding: 14px 16px; margin-bottom: 8px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.pm-item .pm-name { font-size: 14px; font-weight: 600; }
+.pm-item .pm-bal { font-size: 13px; color: var(--lunar); font-weight: 700; }
+
+/* Info chip */
+.info-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 10px; border-radius: 20px;
+  background: rgba(180,122,255,0.1); border: 1px solid rgba(180,122,255,0.2);
+  font-size: 10px; font-weight: 600; color: var(--purple);
+}
 </style>
 </head>
 <body>
 
 <div id="toast" class="toast"></div>
+
+<!-- AUTH OVERLAY -->
+<div class="auth-overlay" id="auth-overlay">
+  <div class="auth-box">
+    <div style="font-size:32px;margin-bottom:12px">🔐</div>
+    <h3>Authenticate</h3>
+    <p id="auth-desc">Enter PIN to proceed</p>
+    <div class="auth-pin-row">
+      <div class="auth-dot" id="adot0"></div>
+      <div class="auth-dot" id="adot1"></div>
+      <div class="auth-dot" id="adot2"></div>
+      <div class="auth-dot" id="adot3"></div>
+    </div>
+    <div class="auth-keypad">
+      <button class="key-btn" onclick="authKey('1')">1</button>
+      <button class="key-btn" onclick="authKey('2')">2</button>
+      <button class="key-btn" onclick="authKey('3')">3</button>
+      <button class="key-btn" onclick="authKey('4')">4</button>
+      <button class="key-btn" onclick="authKey('5')">5</button>
+      <button class="key-btn" onclick="authKey('6')">6</button>
+      <button class="key-btn" onclick="authKey('7')">7</button>
+      <button class="key-btn" onclick="authKey('8')">8</button>
+      <button class="key-btn" onclick="authKey('9')">9</button>
+      <button class="key-btn cancel-key" onclick="authCancel()">✕</button>
+      <button class="key-btn" onclick="authKey('0')">0</button>
+      <button class="key-btn del-key" onclick="authDel()">⌫</button>
+    </div>
+    <div class="auth-hint" id="auth-hint">Default PIN: 1234</div>
+  </div>
+</div>
 
 <!-- ═══════════ HOME ═══════════ -->
 <div id="page-home" class="page active">
@@ -422,8 +564,8 @@ body::after {
         <p class="subtitle" id="current-month"></p>
       </div>
       <div style="display:flex;gap:8px">
-        <button class="btn-icon" onclick="openModal('income')">💵</button>
-        <button class="btn-icon" onclick="openModal('expense')">＋</button>
+        <button class="btn-icon" onclick="requireAuth(()=>openModal('income'))">💵</button>
+        <button class="btn-icon" onclick="requireAuth(()=>openModal('expense'))">＋</button>
       </div>
     </div>
   </div>
@@ -433,17 +575,18 @@ body::after {
       <div class="hero-label">Remaining Balance</div>
       <div class="hero-value"><small>RM </small><span id="remaining">0.00</span></div>
       <div class="hero-sub">Available this month</div>
+      <div class="wallet-breakdown" id="wallet-breakdown"></div>
     </div>
     <div class="stats-row">
       <div class="stat-card glass-card income-card">
         <div class="s-icon">💵</div>
         <div class="s-label">Income</div>
-        <div class="s-val" id="total-inc">RM 0</div>
+        <div class="s-val" id="total-inc">RM 0.00</div>
       </div>
       <div class="stat-card glass-card expense-card">
         <div class="s-icon">📤</div>
         <div class="s-label">Expenses</div>
-        <div class="s-val" id="total-exp">RM 0</div>
+        <div class="s-val" id="total-exp">RM 0.00</div>
       </div>
     </div>
   </div>
@@ -452,15 +595,23 @@ body::after {
   <div class="list" id="priority-list"></div>
 </div>
 
-<!-- ═══════════ INCOME ═══════════ -->
+<!-- ═══════════ INCOME / BALANCES ═══════════ -->
 <div id="page-balances" class="page">
   <div class="header">
     <h1>Income</h1>
-    <p class="subtitle">Money coming in</p>
+    <p class="subtitle">Money & payment methods</p>
   </div>
-  <button class="btn-primary-full" onclick="openModal('income')">+ Add Income</button>
+  <button class="btn-primary-full" onclick="requireAuth(()=>openModal('income'))">+ Add Income</button>
   <div class="divider"></div>
-  <div class="section-header"><h2>All Entries</h2></div>
+
+  <!-- Payment Method Balances -->
+  <div class="section-header" style="padding-bottom:8px">
+    <h2>💳 Payment Methods</h2>
+    <button class="btn-sm purple" onclick="requireAuth(()=>openModal('manage-pm'))" style="font-size:10px;padding:6px 12px">Manage</button>
+  </div>
+  <div class="list" id="pm-balance-list"></div>
+
+  <div class="section-header"><h2>All Income Entries</h2></div>
   <div class="list" id="income-list"></div>
 </div>
 
@@ -474,9 +625,9 @@ body::after {
   <div class="hist-summary">
     <div class="h-title" id="hist-title"></div>
     <div class="hist-row">
-      <div class="hist-col"><div class="hc-label">In</div><div class="hc-val positive" id="hist-inc">RM 0</div></div>
-      <div class="hist-col"><div class="hc-label">Out</div><div class="hc-val negative" id="hist-exp">RM 0</div></div>
-      <div class="hist-col"><div class="hc-label">Left</div><div class="hc-val" style="color:var(--satsuma)" id="hist-rem">RM 0</div></div>
+      <div class="hist-col"><div class="hc-label">In</div><div class="hc-val positive" id="hist-inc">RM 0.00</div></div>
+      <div class="hist-col"><div class="hc-label">Out</div><div class="hc-val negative" id="hist-exp">RM 0.00</div></div>
+      <div class="hist-col"><div class="hc-label">Left</div><div class="hc-val" style="color:var(--satsuma)" id="hist-rem">RM 0.00</div></div>
     </div>
   </div>
   <div class="section-header"><h2>Income</h2></div>
@@ -491,7 +642,7 @@ body::after {
     <h1>Expenses</h1>
     <p class="subtitle">Rent, Utilities &amp; Other</p>
   </div>
-  <button class="btn-primary-full" onclick="openModal('expense')">+ Add Expense</button>
+  <button class="btn-primary-full" onclick="requireAuth(()=>openModal('expense'))">+ Add Expense</button>
   <div class="divider"></div>
   <div class="section-header"><h2>All Expenses</h2></div>
   <div class="list" id="expenses-list"></div>
@@ -510,10 +661,17 @@ body::after {
     <div id="shopping-items"><div class="empty-state"><p>No items in list.<br>Add items below ↓</p></div></div>
     <div class="summary-row">
       <span style="color:var(--text-muted)">Estimated Total</span>
-      <span style="color:var(--lunar);font-size:16px;font-weight:700" id="shopping-total">RM 0</span>
+      <span style="color:var(--lunar);font-size:16px;font-weight:700" id="shopping-total">RM 0.00</span>
     </div>
+
+    <!-- Inline payment method selector for checkout -->
+    <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(180,122,255,0.1)">
+      <div style="font-size:11px;color:var(--text-muted);letter-spacing:0.8px;text-transform:uppercase;font-weight:600;margin-bottom:10px">Pay From</div>
+      <div class="payment-options" id="checkout-pay-opts"></div>
+    </div>
+
     <div style="display:flex;gap:8px;margin-top:12px">
-      <button class="btn-sm" onclick="checkoutShopping()" style="flex:1;padding:12px">✅ Checkout</button>
+      <button class="btn-sm" onclick="requireAuth(()=>checkoutShopping())" style="flex:1;padding:12px">✅ Checkout</button>
     </div>
   </div>
 
@@ -566,6 +724,26 @@ body::after {
   <div class="list" id="grocery-history"></div>
 </div>
 
+<!-- ═══════════ SAVINGS ═══════════ -->
+<div id="page-savings" class="page">
+  <div class="header">
+    <h1>Savings</h1>
+    <p class="subtitle">Your saved amounts</p>
+  </div>
+  <button class="btn-primary-full" onclick="requireAuth(()=>openModal('savings'))">+ Add Saving</button>
+  <div class="divider"></div>
+
+  <!-- Total savings card -->
+  <div class="savings-card">
+    <div class="sv-label">Total Savings</div>
+    <div class="sv-total">RM <span id="sv-total">0.00</span></div>
+    <div class="savings-breakdown" id="sv-breakdown"></div>
+  </div>
+
+  <div class="section-header"><h2>Savings Log</h2></div>
+  <div class="list" id="savings-list"></div>
+</div>
+
 <!-- ═══════════ SETTINGS ═══════════ -->
 <div id="page-settings" class="page">
   <div class="header">
@@ -581,8 +759,12 @@ body::after {
       <div><div class="s-title">Refresh Data</div><div class="s-meta">Re-sync with Firebase</div></div>
       <span style="color:var(--text-muted);font-size:20px">↻</span>
     </div>
+    <div class="settings-item" onclick="requireAuth(()=>openChangePinModal())">
+      <div><div class="s-title">🔐 Change PIN</div><div class="s-meta">Update transaction PIN</div></div>
+      <span style="color:var(--text-muted);font-size:20px">›</span>
+    </div>
     <div style="margin:32px 16px 8px">
-      <button onclick="resetAll()" style="width:100%;padding:16px;background:rgba(255,92,122,0.1);border:1px solid rgba(255,92,122,0.3);border-radius:var(--r-md);color:var(--red);font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s">
+      <button onclick="requireAuth(()=>resetAll())" style="width:100%;padding:16px;background:rgba(255,92,122,0.1);border:1px solid rgba(255,92,122,0.3);border-radius:var(--r-md);color:var(--red);font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s">
         ⚠️ Reset All Data
       </button>
     </div>
@@ -609,6 +791,11 @@ body::after {
       </div>
     </div>
     <div class="form-group"><label>Notes</label><input type="text" id="exp-notes" placeholder="Optional"></div>
+    <!-- Payment method selection for expense -->
+    <div class="payment-selector">
+      <label>Pay From</label>
+      <div class="payment-options" id="exp-pay-opts"></div>
+    </div>
     <button class="btn-primary" onclick="saveExpense()">Save Expense</button>
     <button class="btn-cancel" onclick="closeModal('expense')">Cancel</button>
   </div>
@@ -622,20 +809,78 @@ body::after {
       <button class="modal-close" onclick="closeModal('income')">✕</button>
     </div>
     <div class="form-group"><label>Date</label><input type="date" id="inc-date"></div>
-    <div class="form-group"><label>Source</label>
-      <select id="inc-source">
-        <option>Salary Khaled</option><option>Salary Saba</option>
-        <option>Part Time Khaled</option><option>Part Time Saba</option>
-        <option>YY Circle</option><option>USD Exchange</option>
-        <option>Money from Home</option><option>BD Debit Card</option>
-        <option>Khaled Debit Card</option><option>Saba Debit Card</option>
-        <option>Other</option>
-      </select>
+    <div class="form-group">
+      <label>Payment Method</label>
+      <select id="inc-source"></select>
     </div>
     <div class="form-group"><label>Amount (RM)</label><input type="number" id="inc-amount" placeholder="0.00" step="0.01" min="0"></div>
     <div class="form-group"><label>Notes</label><input type="text" id="inc-notes" placeholder="Optional"></div>
     <button class="btn-primary" onclick="saveIncome()">Save Income</button>
     <button class="btn-cancel" onclick="closeModal('income')">Cancel</button>
+  </div>
+</div>
+
+<!-- ═══════════ MODAL: SAVINGS ═══════════ -->
+<div class="modal-overlay" id="modal-savings">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="sv-modal-title">Add Saving</h2>
+      <button class="modal-close" onclick="closeModal('savings')">✕</button>
+    </div>
+    <div class="form-group"><label>Date</label><input type="date" id="sv-date"></div>
+    <div class="form-group"><label>Amount (RM)</label><input type="number" id="sv-amount" placeholder="0.00" step="0.01" min="0"></div>
+    <div class="form-group"><label>Reason / Label</label><input type="text" id="sv-reason" placeholder="e.g. Emergency Fund"></div>
+    <!-- Payment method to deduct from -->
+    <div class="payment-selector">
+      <label>Deduct From</label>
+      <div class="payment-options" id="sv-pay-opts"></div>
+    </div>
+    <button class="btn-primary" onclick="saveSaving()">Save</button>
+    <button class="btn-cancel" onclick="closeModal('savings')">Cancel</button>
+  </div>
+</div>
+
+<!-- ═══════════ MODAL: MANAGE PAYMENT METHODS ═══════════ -->
+<div class="modal-overlay" id="modal-manage-pm">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Payment Methods</h2>
+      <button class="modal-close" onclick="closeModal('manage-pm')">✕</button>
+    </div>
+    <div class="list" id="pm-manage-list"></div>
+    <div style="padding:0 16px;margin-bottom:14px">
+      <input type="text" id="new-pm-name" placeholder="New method name (e.g. TNG, Cash Saba)" style="width:100%;padding:14px 16px;border-radius:var(--r-sm);background:rgba(180,122,255,0.06);border:1px solid rgba(180,122,255,0.15);color:var(--text);font-size:15px;font-family:var(--font);outline:none;">
+    </div>
+    <button class="btn-primary" onclick="addPaymentMethod()">+ Add Method</button>
+    <button class="btn-cancel" onclick="closeModal('manage-pm')">Done</button>
+  </div>
+</div>
+
+<!-- ═══════════ MODAL: RENAME PM ═══════════ -->
+<div class="modal-overlay" id="modal-rename-pm">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Rename Method</h2>
+      <button class="modal-close" onclick="closeModal('rename-pm')">✕</button>
+    </div>
+    <input type="hidden" id="rename-pm-id">
+    <div class="form-group"><label>New Name</label><input type="text" id="rename-pm-val" placeholder="Enter new name"></div>
+    <button class="btn-primary" onclick="confirmRenamePM()">Rename</button>
+    <button class="btn-cancel" onclick="closeModal('rename-pm')">Cancel</button>
+  </div>
+</div>
+
+<!-- ═══════════ MODAL: CHANGE PIN ═══════════ -->
+<div class="modal-overlay" id="modal-change-pin">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Change PIN</h2>
+      <button class="modal-close" onclick="closeModal('change-pin')">✕</button>
+    </div>
+    <div class="form-group"><label>New PIN (4 digits)</label><input type="password" id="new-pin" placeholder="••••" maxlength="4" inputmode="numeric"></div>
+    <div class="form-group"><label>Confirm PIN</label><input type="password" id="confirm-pin" placeholder="••••" maxlength="4" inputmode="numeric"></div>
+    <button class="btn-primary" onclick="saveNewPin()">Save PIN</button>
+    <button class="btn-cancel" onclick="closeModal('change-pin')">Cancel</button>
   </div>
 </div>
 
@@ -646,6 +891,7 @@ body::after {
   <button class="nav-item" onclick="goPage('income')"><span class="icon">📅</span><span class="label">History</span></button>
   <button class="nav-item" onclick="goPage('expenses')"><span class="icon">📊</span><span class="label">Expenses</span></button>
   <button class="nav-item" onclick="goPage('groceries')"><span class="icon">🛒</span><span class="label">Groceries</span></button>
+  <button class="nav-item" onclick="goPage('savings')"><span class="icon">🏦</span><span class="label">Savings</span></button>
   <button class="nav-item" onclick="goPage('settings')"><span class="icon">⚙️</span><span class="label">More</span></button>
 </nav>
 
@@ -668,23 +914,309 @@ const now = () => new Date();
 const curMonth = () => now().toISOString().slice(0,7);
 const today = () => now().toISOString().split('T')[0];
 
-let DB = { months: {}, shoppingList: [] };
+// Default payment methods
+const DEFAULT_PAYMENT_METHODS = [
+  'Cash Khaled', 'Cash Saba', 'Bank Khaled', 'Bank Saba',
+  'TNG Khaled', 'TNG Saba', 'Card Khaled', 'Card Saba'
+];
+
+let DB = { months: {}, shoppingList: [], paymentMethods: [], savings: [], pin: '1234' };
 let viewM = curMonth();
 let invFilter = 'all';
-
-// Edit state: { type: 'income'|'expense', id, month }
 let editState = null;
 
+// Auth state
+let authCallback = null;
+let authPin = '';
+
+/* ─────────────── AUTH ─────────────── */
+function requireAuth(cb) {
+  if (confirm('Confirm this transaction?')) cb();
+}
+
+function authKey(digit) {
+  if (authPin.length >= 4) return;
+  authPin += digit;
+  updateAuthDots();
+  if (authPin.length === 4) {
+    setTimeout(() => {
+      if (authPin === (DB.pin || '1234')) {
+        document.getElementById('auth-overlay').classList.remove('active');
+        authPin = '';
+        updateAuthDots();
+        if (authCallback) { authCallback(); authCallback = null; }
+      } else {
+        document.getElementById('auth-hint').textContent = '❌ Wrong PIN, try again';
+        authPin = '';
+        updateAuthDots();
+      }
+    }, 200);
+  }
+}
+
+function authDel() {
+  authPin = authPin.slice(0, -1);
+  updateAuthDots();
+}
+
+function authCancel() {
+  authPin = '';
+  authCallback = null;
+  updateAuthDots();
+  document.getElementById('auth-overlay').classList.remove('active');
+}
+
+function updateAuthDots() {
+  for (let i = 0; i < 4; i++) {
+    document.getElementById('adot'+i).classList.toggle('filled', i < authPin.length);
+  }
+}
+
+function openChangePinModal() {
+  document.getElementById('new-pin').value = '';
+  document.getElementById('confirm-pin').value = '';
+  document.getElementById('modal-change-pin').classList.add('active');
+}
+
+async function saveNewPin() {
+  const p1 = document.getElementById('new-pin').value.trim();
+  const p2 = document.getElementById('confirm-pin').value.trim();
+  if (!/^\d{4}$/.test(p1)) return toast('PIN must be 4 digits', 'err');
+  if (p1 !== p2) return toast('PINs do not match', 'err');
+  DB.pin = p1;
+  await saveAll();
+  closeModal('change-pin');
+  toast('✅ PIN updated', 'ok');
+}
+
+/* ─────────────── PAYMENT METHODS ─────────────── */
+function getPMs() {
+  if (!DB.paymentMethods || DB.paymentMethods.length === 0) DB.paymentMethods = [...DEFAULT_PAYMENT_METHODS];
+  return DB.paymentMethods;
+}
+
+// Compute balance per payment method across ALL months
+function getPMBalances() {
+  const balances = {};
+  getPMs().forEach(pm => balances[pm] = 0);
+
+  Object.values(DB.months || {}).forEach(mo => {
+    (mo.income || []).forEach(i => {
+      const pm = i.source;
+      if (pm in balances) balances[pm] = (balances[pm] || 0) + Number(i.amount);
+      else if (pm) { balances[pm] = (balances[pm] || 0) + Number(i.amount); }
+    });
+    (mo.expenses || []).forEach(e => {
+      const pm = e.payFrom;
+      if (pm && pm in balances) balances[pm] = (balances[pm] || 0) - Number(e.amount);
+    });
+  });
+
+  // Apply savings deductions
+  (DB.savings || []).forEach(sv => {
+    const pm = sv.payFrom;
+    if (pm && pm in balances) balances[pm] = (balances[pm] || 0) - Number(sv.amount);
+  });
+
+  return balances;
+}
+
+function renderPaymentMethodSelector(containerId, selectedPM, onSelect) {
+  const bals = getPMBalances();
+  const pms = getPMs();
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  container.innerHTML = pms.map(pm => {
+    const bal = bals[pm] || 0;
+    const enabled = bal >= 1;
+    return `<button class="pay-opt ${!enabled ? 'disabled' : ''} ${selectedPM === pm ? 'selected' : ''}"
+      ${!enabled ? 'disabled' : ''}
+      onclick="selectPayOpt('${containerId}','${esc(pm)}')"
+    >
+      <span class="po-name">${esc(pm)}</span>
+      <span class="po-bal">RM ${bal.toFixed(2)}</span>
+    </button>`;
+  }).join('');
+}
+
+function selectPayOpt(containerId, pm) {
+  const container = document.getElementById(containerId);
+  container.querySelectorAll('.pay-opt').forEach(b => b.classList.remove('selected'));
+  const btns = container.querySelectorAll('.pay-opt');
+  btns.forEach(b => { if (b.querySelector('.po-name').textContent === pm) b.classList.add('selected'); });
+}
+
+function getSelectedPayOpt(containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return null;
+  const sel = container.querySelector('.pay-opt.selected');
+  return sel ? sel.querySelector('.po-name').textContent : null;
+}
+
+/* ─────────────── MANAGE PMs ─────────────── */
+function renderManagePMs() {
+  const pms = getPMs();
+  const bals = getPMBalances();
+  document.getElementById('pm-manage-list').innerHTML = pms.map((pm, idx) =>
+    `<div class="pm-item">
+      <div>
+        <div class="pm-name">${esc(pm)}</div>
+        <div class="pm-bal">RM ${(bals[pm]||0).toFixed(2)}</div>
+      </div>
+      <div style="display:flex;gap:6px">
+        <button class="action-btn edit-btn" onclick="openRenamePM(${idx})">✏️</button>
+        <button class="action-btn del-btn" onclick="deletePaymentMethod(${idx})">🗑️</button>
+      </div>
+    </div>`
+  ).join('') || '<div class="empty-state"><p>No payment methods</p></div>';
+}
+
+async function addPaymentMethod() {
+  const name = document.getElementById('new-pm-name').value.trim();
+  if (!name) return toast('Enter method name', 'err');
+  if (getPMs().includes(name)) return toast('Already exists', 'err');
+  DB.paymentMethods.push(name);
+  document.getElementById('new-pm-name').value = '';
+  await saveAll();
+  renderManagePMs();
+  renderAll();
+  toast('✅ Added', 'ok');
+}
+
+function openRenamePM(idx) {
+  document.getElementById('rename-pm-id').value = idx;
+  document.getElementById('rename-pm-val').value = getPMs()[idx];
+  closeModal('manage-pm');
+  document.getElementById('modal-rename-pm').classList.add('active');
+}
+
+async function confirmRenamePM() {
+  const idx = parseInt(document.getElementById('rename-pm-id').value);
+  const newName = document.getElementById('rename-pm-val').value.trim();
+  if (!newName) return toast('Enter a name', 'err');
+  const oldName = DB.paymentMethods[idx];
+  DB.paymentMethods[idx] = newName;
+  // Update all references
+  Object.values(DB.months||{}).forEach(mo => {
+    (mo.income||[]).forEach(i => { if (i.source === oldName) i.source = newName; });
+    (mo.expenses||[]).forEach(e => { if (e.payFrom === oldName) e.payFrom = newName; });
+  });
+  (DB.savings||[]).forEach(sv => { if (sv.payFrom === oldName) sv.payFrom = newName; });
+  await saveAll();
+  closeModal('rename-pm');
+  renderAll();
+  toast('✅ Renamed', 'ok');
+}
+
+async function deletePaymentMethod(idx) {
+  if (!confirm('Delete this payment method?')) return;
+  DB.paymentMethods.splice(idx, 1);
+  await saveAll();
+  renderManagePMs();
+  renderAll();
+  toast('Deleted', 'ok');
+}
+
+/* ─────────────── SAVINGS ─────────────── */
+async function saveSaving() {
+  const amount = parseFloat(document.getElementById('sv-amount').value) || 0;
+  const reason = document.getElementById('sv-reason').value.trim();
+  const payFrom = getSelectedPayOpt('sv-pay-opts');
+  const date = document.getElementById('sv-date').value;
+
+  if (!amount) return toast('Enter amount', 'err');
+  if (!payFrom) return toast('Select payment method', 'err');
+
+  const bals = getPMBalances();
+  if ((bals[payFrom] || 0) < amount) return toast('Insufficient balance in ' + payFrom, 'err');
+
+  if (!DB.savings) DB.savings = [];
+
+  if (editState && editState.type === 'saving') {
+    const idx = DB.savings.findIndex(s => s.id === editState.id);
+    if (idx >= 0) DB.savings[idx] = { ...DB.savings[idx], amount, reason, payFrom, date };
+    editState = null;
+    toast('✅ Updated!', 'ok');
+  } else {
+    DB.savings.push({ id: 'sv_' + Date.now(), date, amount, reason, payFrom });
+    toast('✅ Saved!', 'ok');
+  }
+  await saveAll();
+  closeModal('savings');
+  renderAll();
+}
+
+function renderSavings() {
+  if (!DB.savings) DB.savings = [];
+  const savings = [...DB.savings].reverse();
+
+  // Total per payment method
+  const byPM = {};
+  DB.savings.forEach(sv => {
+    byPM[sv.payFrom] = (byPM[sv.payFrom] || 0) + Number(sv.amount);
+  });
+  const total = DB.savings.reduce((s, sv) => s + Number(sv.amount), 0);
+
+  document.getElementById('sv-total').textContent = total.toFixed(2);
+
+  const breakdown = Object.entries(byPM);
+  document.getElementById('sv-breakdown').innerHTML = breakdown.length
+    ? breakdown.map(([pm, amt]) =>
+        `<div class="sv-row"><span class="sv-who">${esc(pm)}</span><span class="sv-amt">RM ${Number(amt).toFixed(2)}</span></div>`
+      ).join('')
+    : '<div class="sv-row"><span style="color:var(--text-muted);font-size:13px">No savings yet</span></div>';
+
+  document.getElementById('savings-list').innerHTML = savings.length
+    ? savings.map(sv => `
+      <div class="savings-item">
+        <div>
+          <div class="title">${esc(sv.reason || 'Saving')}</div>
+          <div class="meta">${sv.date} · from ${esc(sv.payFrom)}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+          <div class="amount" style="color:var(--lunar)">RM ${Number(sv.amount).toFixed(2)}</div>
+          <div style="display:flex;gap:5px">
+            <button class="action-btn edit-btn" onclick="editSaving('${sv.id}')">✏️</button>
+            <button class="action-btn del-btn" onclick="deleteSaving('${sv.id}')">🗑️</button>
+          </div>
+        </div>
+      </div>`).join('')
+    : '<div class="empty-state"><div class="icon">🏦</div><p>No savings yet</p></div>';
+}
+
+function editSaving(id) {
+  const sv = (DB.savings || []).find(s => s.id === id);
+  if (!sv) return;
+  editState = { type: 'saving', id };
+  document.getElementById('sv-date').value = sv.date;
+  document.getElementById('sv-amount').value = sv.amount;
+  document.getElementById('sv-reason').value = sv.reason || '';
+  document.getElementById('sv-modal-title').textContent = 'Edit Saving';
+  renderPaymentMethodSelector('sv-pay-opts', sv.payFrom);
+  document.getElementById('modal-savings').classList.add('active');
+}
+
+async function deleteSaving(id) {
+  if (!confirm('Delete this saving?')) return;
+  DB.savings = (DB.savings || []).filter(s => s.id !== id);
+  await saveAll();
+  toast('Deleted', 'ok');
+  renderAll();
+}
+
+/* ─────────────── NAVIGATION ─────────────── */
 function goPage(p) {
   document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(x => x.classList.remove('active'));
   document.getElementById('page-'+p).classList.add('active');
-  const idx = {home:0, balances:1, income:2, expenses:3, groceries:4, settings:5};
+  const idx = {home:0, balances:1, income:2, expenses:3, groceries:4, savings:5, settings:6};
   document.querySelectorAll('.nav-item')[idx[p]].classList.add('active');
   if (p==='income') viewM = curMonth();
   renderAll();
 }
 
+/* ─────────────── DB ─────────────── */
 async function initDB() {
   const ref = db.ref('/data');
   try {
@@ -693,10 +1225,16 @@ async function initDB() {
       const d = snap.val();
       DB.months = d.months || {};
       DB.shoppingList = d.shoppingList || [];
+      DB.paymentMethods = d.paymentMethods || [];
+      DB.savings = d.savings || [];
+      DB.pin = d.pin || '1234';
     }
     if (!DB.months[curMonth()]) DB.months[curMonth()] = { income: [], expenses: [], groceries: [], inventory: {}, shoppingHistory: [] };
     if (!DB.shoppingList) DB.shoppingList = [];
-    await ref.set({ months: DB.months, shoppingList: DB.shoppingList });
+    if (!DB.paymentMethods || DB.paymentMethods.length === 0) DB.paymentMethods = [...DEFAULT_PAYMENT_METHODS];
+    if (!DB.savings) DB.savings = [];
+    if (!DB.pin) DB.pin = '1234';
+    await ref.set({ months: DB.months, shoppingList: DB.shoppingList, paymentMethods: DB.paymentMethods, savings: DB.savings, pin: DB.pin });
     renderAll();
     toast('✅ Ready', 'ok');
   } catch(e) { toast('❌ ' + e.message, 'err'); }
@@ -707,6 +1245,9 @@ db.ref('/data').on('value', snap => {
     const d = snap.val();
     DB.months = d.months || {};
     DB.shoppingList = d.shoppingList || [];
+    DB.paymentMethods = d.paymentMethods || [];
+    DB.savings = d.savings || [];
+    DB.pin = d.pin || '1234';
     renderAll();
   }
 });
@@ -723,32 +1264,46 @@ function md(month) {
 }
 
 async function saveAll() {
-  await db.ref('/data').set({ months: DB.months, shoppingList: DB.shoppingList });
+  await db.ref('/data').set({ months: DB.months, shoppingList: DB.shoppingList, paymentMethods: DB.paymentMethods, savings: DB.savings || [], pin: DB.pin || '1234' });
 }
 
+/* ─────────────── RENDER ALL ─────────────── */
 function renderAll() {
   const m = curMonth();
   document.getElementById('current-month').textContent = MONTHS[now().getMonth()] + ' ' + now().getFullYear();
   document.getElementById('shopping-date').textContent = today();
   renderHome(m);
   renderIncome(m);
+  renderPMBalances(m);
   renderHistory();
   renderExpenses(m);
   renderShoppingList();
   renderInventory(m);
+  renderSavings();
+  renderCheckoutPayOpts();
 }
 
-/* ── HOME: High Priority Watch ── */
+/* ─────────────── HOME ─────────────── */
 function renderHome(m) {
   const d = md(m);
+  const bals = getPMBalances();
+  const totalBalance = Object.values(bals).reduce((s, v) => s + v, 0);
+  const spendable = totalBalance;
+
   const inc = d.income.reduce((s,i) => s + Number(i.amount), 0);
   const exp = d.expenses.reduce((s,e) => s + Number(e.amount), 0);
-  const prev = getPrevRem(m);
-  const rem = (inc - exp + prev).toFixed(2);
 
-  document.getElementById('remaining').textContent = rem;
-  document.getElementById('total-inc').textContent = 'RM ' + inc.toFixed(0);
-  document.getElementById('total-exp').textContent = 'RM ' + exp.toFixed(0);
+  document.getElementById('remaining').textContent = spendable.toFixed(2);
+  document.getElementById('total-inc').textContent = 'RM ' + inc.toFixed(2);
+  document.getElementById('total-exp').textContent = 'RM ' + exp.toFixed(2);
+
+  // Wallet breakdown – only show if balance >= 1
+  const filtered = Object.entries(bals).filter(([pm, bal]) => bal >= 1);
+  document.getElementById('wallet-breakdown').innerHTML = filtered.length
+    ? filtered.map(([pm, bal]) =>
+        `<div class="wallet-chip"><span class="wc-name">${esc(pm)}</span><span style="color:var(--text-muted)">·</span><span class="wc-amt">RM ${bal.toFixed(2)}</span></div>`
+      ).join('')
+    : '<div style="font-size:12px;color:var(--text-muted)">No funded wallets yet</div>';
 
   // High priority inventory items
   const items = Object.values(d.inventory).filter(i => i.priority === 'High');
@@ -788,11 +1343,37 @@ function addToListFromHome(name, price, category) {
   renderShoppingList();
 }
 
-/* ── INCOME ── */
+/* ─────────────── PM BALANCES LIST ─────────────── */
+function renderPMBalances() {
+  const bals = getPMBalances();
+  const pms = getPMs();
+  document.getElementById('pm-balance-list').innerHTML = pms.map(pm => {
+    const bal = bals[pm] || 0;
+    const color = bal < 0 ? 'var(--red)' : bal >= 1 ? 'var(--cobalt)' : 'var(--text-muted)';
+    return `<div class="list-item">
+      <div class="left">
+        <div class="title"><span class="source-dot"></span>${esc(pm)}</div>
+      </div>
+      <div class="item-right">
+        <div class="amount" style="color:${color}">RM ${bal.toFixed(2)}</div>
+      </div>
+    </div>`;
+  }).join('') || '<div class="empty-state"><p>No payment methods</p></div>';
+}
+
+/* ─────────────── INCOME ─────────────── */
 function renderIncome(m) {
   const d = md(m);
-  document.getElementById('income-list').innerHTML = d.income.length
-    ? d.income.map(i => `
+  const sorted = [...d.income].reverse();
+  // Refresh income source dropdown
+  const sel = document.getElementById('inc-source');
+  if (sel) {
+    const cur = sel.value;
+    sel.innerHTML = getPMs().map(pm => `<option value="${esc(pm)}" ${cur===pm?'selected':''}>${esc(pm)}</option>`).join('');
+  }
+
+  document.getElementById('income-list').innerHTML = sorted.length
+    ? sorted.map(i => `
       <div class="list-item">
         <div class="left">
           <div class="title"><span class="source-dot"></span>${esc(i.source)}</div>
@@ -801,15 +1382,15 @@ function renderIncome(m) {
         <div class="item-right">
           <div class="amount positive">+RM ${Number(i.amount).toFixed(2)}</div>
           <div class="item-actions">
-            <button class="action-btn edit-btn" onclick="editIncome('${i.id}','${m}')">✏️</button>
-            <button class="action-btn del-btn" onclick="deleteIncome('${i.id}','${m}')">🗑️</button>
+            <button class="action-btn edit-btn" onclick="requireAuth(()=>editIncome('${i.id}','${m}'))">✏️</button>
+            <button class="action-btn del-btn" onclick="requireAuth(()=>deleteIncome('${i.id}','${m}'))">🗑️</button>
           </div>
         </div>
       </div>`).join('')
     : '<div class="empty-state"><div class="icon">💸</div><p>No income entries yet</p></div>';
 }
 
-/* ── HISTORY ── */
+/* ─────────────── HISTORY ─────────────── */
 function renderHistory() {
   const months = [...new Set([...Object.keys(DB.months), curMonth()])].sort().reverse();
   document.getElementById('month-selector').innerHTML = months.map(m =>
@@ -818,71 +1399,77 @@ function renderHistory() {
   const d = md(viewM);
   const inc = d.income.reduce((s,i) => s + Number(i.amount), 0);
   const exp = d.expenses.reduce((s,e) => s + Number(e.amount), 0);
-  const rem = inc - exp + getPrevRem(viewM);
+  const rem = inc - exp;
 
   document.getElementById('hist-title').textContent = fmtMonth(viewM);
-  document.getElementById('hist-inc').textContent = 'RM ' + inc.toFixed(0);
-  document.getElementById('hist-exp').textContent = 'RM ' + exp.toFixed(0);
-  document.getElementById('hist-rem').textContent = 'RM ' + rem.toFixed(0);
+  document.getElementById('hist-inc').textContent = 'RM ' + inc.toFixed(2);
+  document.getElementById('hist-exp').textContent = 'RM ' + exp.toFixed(2);
+  document.getElementById('hist-rem').textContent = 'RM ' + rem.toFixed(2);
 
-  document.getElementById('hist-inc-list').innerHTML = d.income.length
-    ? d.income.map(i => `
+  const sortedInc = [...d.income].reverse();
+  const sortedExp = [...d.expenses].reverse();
+
+  document.getElementById('hist-inc-list').innerHTML = sortedInc.length
+    ? sortedInc.map(i => `
       <div class="list-item">
         <div class="left"><div class="title">${esc(i.source)}</div><div class="meta">${i.date}</div></div>
         <div class="item-right">
           <div class="amount positive">+RM ${Number(i.amount).toFixed(2)}</div>
           <div class="item-actions">
-            <button class="action-btn edit-btn" onclick="editIncome('${i.id}','${viewM}')">✏️</button>
-            <button class="action-btn del-btn" onclick="deleteIncome('${i.id}','${viewM}')">🗑️</button>
+            <button class="action-btn edit-btn" onclick="requireAuth(()=>editIncome('${i.id}','${viewM}'))">✏️</button>
+            <button class="action-btn del-btn" onclick="requireAuth(()=>deleteIncome('${i.id}','${viewM}'))">🗑️</button>
           </div>
         </div>
       </div>`).join('')
     : '<div class="empty-state"><p>No income</p></div>';
 
-  document.getElementById('hist-exp-list').innerHTML = d.expenses.length
-    ? d.expenses.map(e => `
+  document.getElementById('hist-exp-list').innerHTML = sortedExp.length
+    ? sortedExp.map(e => `
       <div class="list-item">
-        <div class="left"><div class="title">${esc(e.item)}</div><div class="meta">${e.date} · ${esc(e.category)}</div></div>
+        <div class="left">
+          <div class="title">${esc(e.item)}</div>
+          <div class="meta">${e.date} · ${esc(e.category)}${e.payFrom ? ' · <span style="color:var(--purple)">'+esc(e.payFrom)+'</span>' : ''}</div>
+        </div>
         <div class="item-right">
           <div class="amount negative">−RM ${Number(e.amount).toFixed(2)}</div>
           <div class="item-actions">
-            <button class="action-btn edit-btn" onclick="editExpense('${e.id}','${viewM}')">✏️</button>
-            <button class="action-btn del-btn" onclick="deleteExpense('${e.id}','${viewM}')">🗑️</button>
+            <button class="action-btn edit-btn" onclick="requireAuth(()=>editExpense('${e.id}','${viewM}'))">✏️</button>
+            <button class="action-btn del-btn" onclick="requireAuth(()=>deleteExpense('${e.id}','${viewM}'))">🗑️</button>
           </div>
         </div>
       </div>`).join('')
     : '<div class="empty-state"><p>No expenses</p></div>';
 }
 
-/* ── EXPENSES ── */
+/* ─────────────── EXPENSES ─────────────── */
 function renderExpenses(m) {
   const d = md(m);
-  const exp = d.expenses.filter(e => e.category !== 'Groceries');
+  const exp = [...d.expenses].filter(e => e.category !== 'Groceries').reverse();
   document.getElementById('expenses-list').innerHTML = exp.length
-    ? [...exp].reverse().map(e => `
+    ? exp.map(e => `
       <div class="list-item">
         <div class="left">
           <div class="title">${esc(e.item)}<span class="badge badge-${e.priority==='High'?'h':'m'}">${e.priority}</span>${e.isLoan?' 🔴':''}</div>
-          <div class="meta">${e.date} · ${esc(e.subcategory)}</div>
+          <div class="meta">${e.date} · ${esc(e.subcategory)}${e.payFrom ? ' · <span style="color:var(--purple)">'+esc(e.payFrom)+'</span>' : ''}</div>
         </div>
         <div class="item-right">
           <div class="amount negative">−RM ${Number(e.amount).toFixed(2)}</div>
           <div class="item-actions">
-            <button class="action-btn edit-btn" onclick="editExpense('${e.id}','${m}')">✏️</button>
-            <button class="action-btn del-btn" onclick="deleteExpense('${e.id}','${m}')">🗑️</button>
+            <button class="action-btn edit-btn" onclick="requireAuth(()=>editExpense('${e.id}','${m}'))">✏️</button>
+            <button class="action-btn del-btn" onclick="requireAuth(()=>deleteExpense('${e.id}','${m}'))">🗑️</button>
           </div>
         </div>
       </div>`).join('')
     : '<div class="empty-state"><div class="icon">📊</div><p>No expenses yet</p></div>';
 }
 
-/* ── SHOPPING LIST ── */
+/* ─────────────── SHOPPING LIST ─────────────── */
 function renderShoppingList() {
   const container = document.getElementById('shopping-items');
   const list = DB.shoppingList || [];
   if (list.length === 0) {
     container.innerHTML = '<div class="empty-state"><p>Add items to your shopping list</p></div>';
-    document.getElementById('shopping-total').textContent = 'RM 0';
+    document.getElementById('shopping-total').textContent = 'RM 0.00';
     return;
   }
   const total = list.reduce((s, item) => s + (item.bought ? 0 : (item.qty||1) * Number(item.price)), 0);
@@ -911,13 +1498,17 @@ function renderShoppingList() {
           <button class="qty-btn" onclick="changeQty(${idx},1)">+</button>
           <span style="font-size:11px;color:var(--text-muted);margin-left:4px">× RM</span>
           <input type="number" value="${Number(item.price).toFixed(2)}" step="0.01" min="0"
-            style="width:68px;padding:6px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid var(--glass-border);color:var(--text);text-align:center;font-family:var(--font);font-size:13px"
+            style="width:68px;padding:6px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid rgba(180,122,255,0.15);color:var(--text);text-align:center;font-family:var(--font);font-size:13px"
             onchange="updateListItemPrice(${idx}, this.value)">
         </div>
         <div class="price">= RM ${lineTotal}</div>
       </div>
     </div>`;
   }).join('');
+}
+
+function renderCheckoutPayOpts() {
+  renderPaymentMethodSelector('checkout-pay-opts', null, null);
 }
 
 function changeQty(idx, delta) {
@@ -946,13 +1537,49 @@ function removeListItem(idx) {
   renderShoppingList();
 }
 
-/* ── AUTOCOMPLETE ── */
+/* ─────────────── CHECKOUT ─────────────── */
+async function checkoutShopping() {
+  const boughtItems = DB.shoppingList.filter(i => i.bought);
+  if (boughtItems.length === 0) return toast('No items marked as bought', 'err');
+  const total = boughtItems.reduce((s,i) => s + (i.qty||1) * Number(i.price), 0);
+
+  const payFrom = getSelectedPayOpt('checkout-pay-opts');
+  if (!payFrom) return toast('Select payment method to pay from', 'err');
+
+  const bals = getPMBalances();
+  if ((bals[payFrom] || 0) < total) return toast('Insufficient balance in ' + payFrom, 'err');
+
+  const m = curMonth();
+  const d = md(m);
+  const date = today();
+  for (const item of boughtItems) {
+    const id = 'inv_' + item.name.toLowerCase().replace(/[^a-z0-9]/g, '_');
+    const existing = d.inventory[id];
+    const qty = item.qty || 1;
+    d.inventory[id] = {
+      id, name: item.name, category: item.category || 'Food',
+      qtyMax: qty, qtyLeft: qty, unitPrice: Number(item.price),
+      totalSpent: (existing?.totalSpent || 0) + (qty * Number(item.price)),
+      priority: item.priority || existing?.priority || 'Medium',
+      lastPurchase: date, status: 'active'
+    };
+    d.groceries.push({ id: 'g_' + Date.now() + Math.random(), date, item: item.name, category: item.category || 'Food', cost: qty * Number(item.price), details: `Qty ${qty} × RM ${Number(item.price).toFixed(2)}` });
+    d.expenses.push({ id: 'eg_' + Date.now() + Math.random(), date, category: 'Groceries', subcategory: item.category || 'Food', item: item.name + (qty > 1 ? ` ×${qty}` : ''), amount: qty * Number(item.price), priority: item.priority || 'Medium', isLoan: false, notes: 'Shopping list', payFrom });
+  }
+  DB.shoppingList = DB.shoppingList.filter(i => !i.bought);
+  if (!d.shoppingHistory) d.shoppingHistory = [];
+  d.shoppingHistory.push({ date, items: boughtItems.length, total, payFrom });
+  await saveAll();
+  toast('✅ Checkout done! ' + boughtItems.length + ' items from ' + payFrom, 'ok');
+  renderAll();
+}
+
+/* ─────────────── AUTOCOMPLETE ─────────────── */
 function acSearch(val) {
   const dropdown = document.getElementById('ac-dropdown');
   const query = val.trim().toLowerCase();
   if (!query) { dropdown.style.display = 'none'; return; }
 
-  // Build item map from all months inventory
   const itemMap = {};
   Object.values(DB.months).forEach(mo => {
     Object.values(mo.inventory || {}).forEach(item => {
@@ -967,7 +1594,7 @@ function acSearch(val) {
   if (matches.length === 0) { dropdown.style.display = 'none'; return; }
 
   dropdown.innerHTML = matches.slice(0, 8).map(item =>
-    `<div class="ac-item" onmousedown="selectAcItem('${esc(item.name).replace(/'/g,"\\'")}',${Number(item.unitPrice)|| 0},'${esc(item.category||'Food').replace(/'/g,"\\'")}','${esc(item.priority||'Medium').replace(/'/g,"\\'")}')">
+    `<div class="ac-item" onmousedown="selectAcItem('${esc(item.name).replace(/'/g,"\\'")}',${Number(item.unitPrice)||0},'${esc(item.category||'Food').replace(/'/g,"\\'")}','${esc(item.priority||'Medium').replace(/'/g,"\\'")}')">
       <div>
         <div class="ac-name">${esc(item.name)}</div>
         <div class="ac-meta">${esc(item.category||'Food')} · Last: ${item.lastPurchase||'N/A'}</div>
@@ -999,7 +1626,6 @@ function quickAddToList() {
   const priority = document.getElementById('quick-priority').value || 'Medium';
   if (!name) return toast('Enter item name', 'err');
 
-  // Look up last known price from inventory
   const itemMap = {};
   Object.values(DB.months).forEach(mo => {
     Object.values(mo.inventory || {}).forEach(item => {
@@ -1026,37 +1652,7 @@ function quickAddToList() {
   renderShoppingList();
 }
 
-async function checkoutShopping() {
-  const boughtItems = DB.shoppingList.filter(i => i.bought);
-  if (boughtItems.length === 0) return toast('No items marked as bought', 'err');
-  const total = boughtItems.reduce((s,i) => s + (i.qty||1) * Number(i.price), 0);
-  if (!confirm(`Push ${boughtItems.length} item(s) to inventory? Total: RM ${total.toFixed(2)}`)) return;
-  const m = curMonth();
-  const d = md(m);
-  const date = today();
-  for (const item of boughtItems) {
-    const id = 'inv_' + item.name.toLowerCase().replace(/[^a-z0-9]/g, '_');
-    const existing = d.inventory[id];
-    const qty = item.qty || 1;
-    d.inventory[id] = {
-      id, name: item.name, category: item.category || 'Food',
-      qtyMax: qty, qtyLeft: qty, unitPrice: Number(item.price),
-      totalSpent: (existing?.totalSpent || 0) + (qty * Number(item.price)),
-      priority: item.priority || existing?.priority || 'Medium',
-      lastPurchase: date, status: 'active'
-    };
-    d.groceries.push({ id: 'g_' + Date.now() + Math.random(), date, item: item.name, category: item.category || 'Food', cost: qty * Number(item.price), details: `Qty ${qty} × RM ${Number(item.price).toFixed(2)}` });
-    d.expenses.push({ id: 'eg_' + Date.now() + Math.random(), date, category: 'Groceries', subcategory: item.category || 'Food', item: item.name + (qty > 1 ? ` ×${qty}` : ''), amount: qty * Number(item.price), priority: item.priority || 'Medium', isLoan: false, notes: 'Shopping list' });
-  }
-  DB.shoppingList = DB.shoppingList.filter(i => !i.bought);
-  if (!d.shoppingHistory) d.shoppingHistory = [];
-  d.shoppingHistory.push({ date, items: boughtItems.length, total });
-  await saveAll();
-  toast('✅ Checkout done! ' + boughtItems.length + ' items', 'ok');
-  renderAll();
-}
-
-/* ── INVENTORY ── */
+/* ─────────────── INVENTORY ─────────────── */
 function renderInventory(m) {
   const d = md(m);
   const items = Object.values(d.inventory);
@@ -1078,7 +1674,7 @@ function renderInventory(m) {
           <span class="badge ${priClass}">${item.priority}</span>
           <span class="badge" style="color:${statusColor};border-color:${statusColor}22;background:${statusColor}18">${status}</span>
         </div>
-        <button class="action-btn del-btn" onclick="deleteInventoryItem('${item.id}','${m}')" style="flex-shrink:0">🗑️</button>
+        <button class="action-btn del-btn" onclick="requireAuth(()=>deleteInventoryItem('${item.id}','${m}'))" style="flex-shrink:0">🗑️</button>
       </div>
       <div class="cat">Last bought: ${item.lastPurchase || 'N/A'} · RM ${Number(item.unitPrice).toFixed(2)}/unit</div>
       <div class="qrow">
@@ -1088,7 +1684,7 @@ function renderInventory(m) {
       </div>
       ${item.qtyLeft > 0
         ? `<div style="display:flex;gap:8px;margin-top:12px;align-items:center">
-            <button class="btn-sm" onclick="useItem('${item.id}')" style="background:var(--lunar);color:#111;padding:8px 14px">−1 Use</button>
+            <button class="btn-sm lunar" onclick="requireAuth(()=>useItem('${item.id}'))" style="padding:8px 14px">−1 Use</button>
             <span style="font-size:12px;color:var(--text-muted)">${item.qtyLeft} remaining</span>
            </div>`
         : `<div style="text-align:center;color:var(--red);margin-top:10px;font-size:12px;opacity:0.7">Finished</div>`}
@@ -1102,7 +1698,7 @@ function renderInventory(m) {
         <div class="item-right">
           <div class="amount negative">RM ${Number(g.cost).toFixed(2)}</div>
           <div class="item-actions">
-            <button class="action-btn del-btn" onclick="deleteGroceryEntry('${g.id}','${m}')">🗑️</button>
+            <button class="action-btn del-btn" onclick="requireAuth(()=>deleteGroceryEntry('${g.id}','${m}'))">🗑️</button>
           </div>
         </div>
       </div>`).join('')
@@ -1118,7 +1714,7 @@ async function useItem(id) {
     item.status = item.qtyLeft <= 0 ? 'finished' : 'active';
     await saveAll();
     toast('Used 1 ' + item.name, 'ok');
-    renderAll();
+    renderInventory(m);
   }
 }
 
@@ -1140,14 +1736,17 @@ async function deleteGroceryEntry(id, month) {
   renderAll();
 }
 
-/* ── EDIT / DELETE: INCOME ── */
+/* ─────────────── EDIT / DELETE: INCOME ─────────────── */
 function editIncome(id, month) {
   const d = md(month);
   const item = d.income.find(i => i.id === id);
   if (!item) return;
   editState = { type: 'income', id, month };
   document.getElementById('inc-date').value = item.date;
-  document.getElementById('inc-source').value = item.source;
+  // Ensure dropdown has options before setting
+  const sel = document.getElementById('inc-source');
+  sel.innerHTML = getPMs().map(pm => `<option value="${esc(pm)}">${esc(pm)}</option>`).join('');
+  sel.value = item.source;
   document.getElementById('inc-amount').value = item.amount;
   document.getElementById('inc-notes').value = item.notes || '';
   document.getElementById('inc-modal-title').textContent = 'Edit Income';
@@ -1163,7 +1762,7 @@ async function deleteIncome(id, month) {
   renderAll();
 }
 
-/* ── EDIT / DELETE: EXPENSE ── */
+/* ─────────────── EDIT / DELETE: EXPENSE ─────────────── */
 function editExpense(id, month) {
   const d = md(month);
   const item = d.expenses.find(e => e.id === id);
@@ -1172,7 +1771,6 @@ function editExpense(id, month) {
   document.getElementById('exp-date').value = item.date;
   document.getElementById('exp-cat').value = item.category;
   updateSubs();
-  // Give DOM a tick to update subcategory options
   setTimeout(() => { document.getElementById('exp-sub').value = item.subcategory || ''; }, 50);
   document.getElementById('exp-item').value = item.item;
   document.getElementById('exp-amount').value = item.amount;
@@ -1180,6 +1778,7 @@ function editExpense(id, month) {
   document.getElementById('exp-loan').checked = item.isLoan || false;
   document.getElementById('exp-notes').value = item.notes || '';
   document.getElementById('exp-modal-title').textContent = 'Edit Expense';
+  renderPaymentMethodSelector('exp-pay-opts', item.payFrom || null);
   document.getElementById('modal-expense').classList.add('active');
 }
 
@@ -1192,12 +1791,12 @@ async function deleteExpense(id, month) {
   renderAll();
 }
 
-/* ── SAVE INCOME (add or edit) ── */
+/* ─────────────── SAVE INCOME ─────────────── */
 async function saveIncome() {
   const data = {
     date: document.getElementById('inc-date').value,
     source: document.getElementById('inc-source').value,
-    amount: Number(document.getElementById('inc-amount').value) || 0,
+    amount: parseFloat(document.getElementById('inc-amount').value) || 0,
     notes: document.getElementById('inc-notes').value
   };
   if (!data.amount) return toast('Enter amount', 'err');
@@ -1218,19 +1817,33 @@ async function saveIncome() {
   renderAll();
 }
 
-/* ── SAVE EXPENSE (add or edit) ── */
+/* ─────────────── SAVE EXPENSE ─────────────── */
 async function saveExpense() {
+  const payFrom = getSelectedPayOpt('exp-pay-opts');
   const data = {
     date: document.getElementById('exp-date').value,
     category: document.getElementById('exp-cat').value,
     subcategory: document.getElementById('exp-sub').value,
     item: document.getElementById('exp-item').value.trim(),
-    amount: Number(document.getElementById('exp-amount').value) || 0,
+    amount: parseFloat(document.getElementById('exp-amount').value) || 0,
     priority: document.getElementById('exp-priority').value,
     isLoan: document.getElementById('exp-loan').checked,
-    notes: document.getElementById('exp-notes').value
+    notes: document.getElementById('exp-notes').value,
+    payFrom: payFrom || null
   };
   if (!data.item || !data.amount) return toast('Fill item & amount', 'err');
+  if (!payFrom) return toast('Select payment method', 'err');
+
+  const bals = getPMBalances();
+  // If editing, restore old amount before checking balance
+  let prevAmount = 0;
+  if (editState && editState.type === 'expense') {
+    const d = md(editState.month);
+    const old = d.expenses.find(e => e.id === editState.id);
+    if (old && old.payFrom === payFrom) prevAmount = Number(old.amount);
+  }
+  const availBal = (bals[payFrom] || 0) + prevAmount;
+  if (availBal < data.amount) return toast('Insufficient balance in ' + payFrom, 'err');
 
   if (editState && editState.type === 'expense') {
     const d = md(editState.month);
@@ -1248,17 +1861,7 @@ async function saveExpense() {
   renderAll();
 }
 
-function getPrevRem(month) {
-  const months = Object.keys(DB.months).sort();
-  const idx = months.indexOf(month);
-  if (idx <= 0) return 0;
-  const prev = DB.months[months[idx-1]];
-  if (!prev) return 0;
-  const inc = (prev.income||[]).reduce((s,i) => s + Number(i.amount), 0);
-  const exp = (prev.expenses||[]).reduce((s,e) => s + Number(e.amount), 0);
-  return inc - exp + getPrevRem(months[idx-1]);
-}
-
+/* ─────────────── MODALS ─────────────── */
 function openModal(id) {
   editState = null;
   document.getElementById('modal-'+id).classList.add('active');
@@ -1267,8 +1870,20 @@ function openModal(id) {
   if (id === 'expense') {
     document.getElementById('exp-modal-title').textContent = 'Add Expense';
     updateSubs();
+    renderPaymentMethodSelector('exp-pay-opts', null);
   }
-  if (id === 'income') document.getElementById('inc-modal-title').textContent = 'Add Income';
+  if (id === 'income') {
+    document.getElementById('inc-modal-title').textContent = 'Add Income';
+    const sel = document.getElementById('inc-source');
+    sel.innerHTML = getPMs().map(pm => `<option value="${esc(pm)}">${esc(pm)}</option>`).join('');
+  }
+  if (id === 'manage-pm') {
+    renderManagePMs();
+  }
+  if (id === 'savings') {
+    document.getElementById('sv-modal-title').textContent = 'Add Saving';
+    renderPaymentMethodSelector('sv-pay-opts', null);
+  }
 }
 
 function closeModal(id) {
@@ -1276,6 +1891,7 @@ function closeModal(id) {
   document.getElementById('modal-'+id).classList.remove('active');
   if (id === 'expense') document.getElementById('exp-modal-title').textContent = 'Add Expense';
   if (id === 'income') document.getElementById('inc-modal-title').textContent = 'Add Income';
+  if (id === 'savings') document.getElementById('sv-modal-title').textContent = 'Add Saving';
 }
 
 function updateSubs() {
@@ -1298,11 +1914,22 @@ function setFilter(f) {
 async function resetAll() {
   if (!confirm('Delete ALL data?')) return;
   if (!confirm('Really? This cannot be undone.')) return;
-  DB = { months: {}, shoppingList: [] };
+  DB = { months: {}, shoppingList: [], paymentMethods: [...DEFAULT_PAYMENT_METHODS], savings: [], pin: DB.pin || '1234' };
   DB.months[curMonth()] = { income: [], expenses: [], groceries: [], inventory: {}, shoppingHistory: [] };
-  await db.ref('/data').set({ months: DB.months, shoppingList: [] });
+  await db.ref('/data').set({ months: DB.months, shoppingList: [], paymentMethods: DB.paymentMethods, savings: [], pin: DB.pin });
   toast('Reset complete');
   renderAll();
+}
+
+function getPrevRem(month) {
+  const months = Object.keys(DB.months).sort();
+  const idx = months.indexOf(month);
+  if (idx <= 0) return 0;
+  const prev = DB.months[months[idx-1]];
+  if (!prev) return 0;
+  const inc = (prev.income||[]).reduce((s,i) => s + Number(i.amount), 0);
+  const exp = (prev.expenses||[]).reduce((s,e) => s + Number(e.amount), 0);
+  return inc - exp + getPrevRem(months[idx-1]);
 }
 
 function fmtMonth(m) {
