@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#060818">
 <title>MoneyLens - Khaled & Saba</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
@@ -20,19 +20,23 @@
   --text: #e8eaf6;
   --text-muted: rgba(232,234,246,0.45);
   --text-sub: rgba(232,234,246,0.65);
-  --emerald: #00d68f;
-  --emerald-dim: rgba(0,214,143,0.15);
-  --emerald-glow: rgba(0,214,143,0.3);
+  /* Satsuma – primary brand/accent */
+  --satsuma: #D1601F;
+  --satsuma-dim: rgba(209,96,31,0.15);
+  --satsuma-glow: rgba(209,96,31,0.35);
+  /* Lunar Yellow – secondary highlight */
+  --lunar: #FECD6D;
+  --lunar-dim: rgba(254,205,109,0.13);
+  /* Cobalt – info / income */
+  --cobalt: #5686BB;
+  --cobalt-dim: rgba(86,134,187,0.12);
+  /* Red – danger / expenses */
   --red: #ff5c7a;
   --red-dim: rgba(255,92,122,0.12);
-  --amber: #ffb547;
-  --amber-dim: rgba(255,181,71,0.12);
-  --blue: #5b9cf6;
-  --blue-dim: rgba(91,156,246,0.12);
+  /* Purple – misc */
   --purple: #a78bfa;
   --purple-dim: rgba(167,139,250,0.12);
-  --font-head: 'Syne', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
+  --font: 'Lexend', sans-serif;
   --r-sm: 14px;
   --r-md: 20px;
   --r-lg: 28px;
@@ -40,80 +44,51 @@
 }
 
 body {
-  font-family: var(--font-body);
+  font-family: var(--font);
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
   padding-bottom: 90px;
   overflow-x: hidden;
+  font-weight: 400;
 }
 
-/* Ambient background orbs */
 body::before {
   content: '';
-  position: fixed;
-  top: -20%;
-  left: -10%;
-  width: 70vw;
-  height: 70vw;
-  background: radial-gradient(circle, rgba(0,214,143,0.06) 0%, transparent 65%);
-  pointer-events: none;
-  z-index: 0;
+  position: fixed; top: -20%; left: -10%;
+  width: 70vw; height: 70vw;
+  background: radial-gradient(circle, rgba(209,96,31,0.07) 0%, transparent 65%);
+  pointer-events: none; z-index: 0;
 }
 body::after {
   content: '';
-  position: fixed;
-  bottom: 10%;
-  right: -20%;
-  width: 60vw;
-  height: 60vw;
-  background: radial-gradient(circle, rgba(91,156,246,0.05) 0%, transparent 65%);
-  pointer-events: none;
-  z-index: 0;
+  position: fixed; bottom: 10%; right: -20%;
+  width: 60vw; height: 60vw;
+  background: radial-gradient(circle, rgba(86,134,187,0.05) 0%, transparent 65%);
+  pointer-events: none; z-index: 0;
 }
 
 /* PAGE */
 .page { display: none; position: relative; z-index: 1; }
 .page.active { display: block; animation: fadeUp 0.35s cubic-bezier(0.22,1,0.36,1) both; }
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 
 /* HEADER */
 .header {
   padding: 56px 20px 20px;
-  position: sticky;
-  top: 0;
-  z-index: 50;
+  position: sticky; top: 0; z-index: 50;
   background: linear-gradient(180deg, var(--bg) 70%, transparent);
 }
 .header-inner { display: flex; justify-content: space-between; align-items: flex-start; }
-.header h1 {
-  font-family: var(--font-head);
-  font-size: 26px;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  line-height: 1;
-}
-.header h1 span { color: var(--emerald); }
-.header .subtitle {
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-top: 5px;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  font-weight: 400;
-}
+.header h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; line-height: 1; }
+.header h1 span { color: var(--satsuma); }
+.header .subtitle { font-size: 12px; color: var(--text-muted); margin-top: 5px; letter-spacing: 0.5px; text-transform: uppercase; font-weight: 400; }
 
 /* CARDS */
 .glass-card {
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--r-lg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  transition: background 0.2s, transform 0.2s;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: var(--r-lg); backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px); transition: background 0.2s, transform 0.2s;
 }
 .glass-card:active { transform: scale(0.985); background: var(--glass-hover); }
 
@@ -121,655 +96,316 @@ body::after {
 .dashboard { padding: 0 16px 16px; display: flex; flex-direction: column; gap: 12px; }
 
 .hero-card {
-  background: linear-gradient(135deg, rgba(0,214,143,0.18) 0%, rgba(0,155,105,0.12) 50%, rgba(0,100,70,0.08) 100%);
-  border: 1px solid rgba(0,214,143,0.25);
-  border-radius: var(--r-xl);
-  padding: 28px 24px;
-  position: relative;
-  overflow: hidden;
+  background: linear-gradient(135deg, rgba(209,96,31,0.2) 0%, rgba(160,70,20,0.13) 50%, rgba(100,40,10,0.08) 100%);
+  border: 1px solid rgba(209,96,31,0.28);
+  border-radius: var(--r-xl); padding: 28px 24px;
+  position: relative; overflow: hidden;
 }
 .hero-card::before {
-  content: '';
-  position: absolute;
-  top: -40px; right: -40px;
-  width: 160px; height: 160px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(0,214,143,0.15), transparent 70%);
+  content: ''; position: absolute; top: -40px; right: -40px;
+  width: 160px; height: 160px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(209,96,31,0.18), transparent 70%);
   pointer-events: none;
 }
-.hero-card::after {
-  content: '';
-  position: absolute;
-  bottom: -20px; left: 20px;
-  width: 100px; height: 100px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(0,200,130,0.08), transparent 70%);
-  pointer-events: none;
-}
-.hero-label {
-  font-size: 11px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: rgba(0,214,143,0.7);
-  font-weight: 500;
-  margin-bottom: 10px;
-}
-.hero-value {
-  font-family: var(--font-head);
-  font-size: 42px;
-  font-weight: 800;
-  color: #fff;
-  letter-spacing: -1.5px;
-  line-height: 1;
-}
+.hero-label { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(209,96,31,0.8); font-weight: 600; margin-bottom: 10px; }
+.hero-value { font-size: 42px; font-weight: 800; color: #fff; letter-spacing: -1.5px; line-height: 1; }
 .hero-value small { font-size: 20px; font-weight: 600; opacity: 0.7; letter-spacing: 0; }
 .hero-sub { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 8px; }
 
 .stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
-.stat-card {
-  padding: 18px 16px;
-  position: relative;
-  overflow: hidden;
-}
+.stat-card { padding: 18px 16px; position: relative; overflow: hidden; }
 .stat-card.income-card {
-  background: linear-gradient(135deg, rgba(91,156,246,0.1), rgba(91,156,246,0.04));
-  border-color: rgba(91,156,246,0.2);
+  background: linear-gradient(135deg, rgba(86,134,187,0.12), rgba(86,134,187,0.04));
+  border-color: rgba(86,134,187,0.22);
 }
 .stat-card.expense-card {
   background: linear-gradient(135deg, rgba(255,92,122,0.1), rgba(255,92,122,0.04));
   border-color: rgba(255,92,122,0.2);
 }
-.stat-card .s-icon {
-  width: 34px; height: 34px;
-  border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 16px;
-  margin-bottom: 12px;
-}
-.income-card .s-icon { background: rgba(91,156,246,0.15); }
+.stat-card .s-icon { width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; margin-bottom: 12px; }
+.income-card .s-icon { background: rgba(86,134,187,0.18); }
 .expense-card .s-icon { background: rgba(255,92,122,0.15); }
 .stat-card .s-label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.5px; text-transform: uppercase; }
-.stat-card .s-val {
-  font-family: var(--font-head);
-  font-size: 22px;
-  font-weight: 700;
-  margin-top: 4px;
-  letter-spacing: -0.5px;
-}
-.income-card .s-val { color: var(--blue); }
+.stat-card .s-val { font-size: 22px; font-weight: 700; margin-top: 4px; letter-spacing: -0.5px; }
+.income-card .s-val { color: var(--cobalt); }
 .expense-card .s-val { color: var(--red); }
 
 /* SECTION HEADER */
-.section-header {
-  padding: 22px 20px 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.section-header h2 {
-  font-family: var(--font-head);
-  font-size: 17px;
-  font-weight: 700;
-  letter-spacing: -0.3px;
-}
-.section-header .s-actions { display: flex; gap: 8px; }
+.section-header { padding: 22px 20px 12px; display: flex; justify-content: space-between; align-items: center; }
+.section-header h2 { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; }
 
 /* BUTTONS */
 .btn-icon {
-  width: 38px; height: 38px;
-  border-radius: 12px;
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  color: var(--text);
-  font-size: 18px;
-  cursor: pointer;
+  width: 38px; height: 38px; border-radius: 12px;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  color: var(--text); font-size: 18px; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  transition: all 0.2s;
-  backdrop-filter: blur(10px);
+  transition: all 0.2s; backdrop-filter: blur(10px);
 }
 .btn-icon:active { transform: scale(0.9); background: var(--glass-hover); }
 
 .btn-primary-full {
-  display: block;
-  margin: 8px 16px 4px;
-  width: calc(100% - 32px);
+  display: block; margin: 8px 16px 4px; width: calc(100% - 32px);
   padding: 16px;
-  background: linear-gradient(135deg, var(--emerald), #00b87a);
-  border: none;
-  border-radius: var(--r-md);
-  color: #fff;
-  font-family: var(--font-head);
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-  letter-spacing: 0.3px;
-  box-shadow: 0 8px 24px rgba(0,214,143,0.25);
+  background: linear-gradient(135deg, var(--satsuma), #b84f18);
+  border: none; border-radius: var(--r-md); color: #fff;
+  font-family: var(--font); font-size: 15px; font-weight: 700;
+  cursor: pointer; letter-spacing: 0.3px;
+  box-shadow: 0 8px 24px rgba(209,96,31,0.28);
   transition: all 0.2s;
 }
-.btn-primary-full:active { transform: scale(0.97); box-shadow: 0 4px 12px rgba(0,214,143,0.2); }
+.btn-primary-full:active { transform: scale(0.97); }
 
 .btn-sm {
-  padding: 9px 16px;
-  border-radius: 10px;
-  background: var(--emerald);
-  border: none;
-  color: #fff;
-  font-family: var(--font-head);
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
-  letter-spacing: 0.3px;
-  transition: all 0.2s;
+  padding: 9px 16px; border-radius: 10px;
+  background: var(--satsuma); border: none; color: #fff;
+  font-family: var(--font); font-size: 12px; font-weight: 700;
+  cursor: pointer; letter-spacing: 0.3px; transition: all 0.2s;
 }
 .btn-sm:active { transform: scale(0.95); }
 
-.btn-outline {
-  padding: 9px 16px;
-  border-radius: 10px;
-  background: transparent;
-  border: 1px solid var(--emerald);
-  color: var(--emerald);
-  font-size: 13px;
-  cursor: pointer;
-}
+.btn-outline { padding: 9px 16px; border-radius: 10px; background: transparent; border: 1px solid var(--satsuma); color: var(--satsuma); font-size: 13px; cursor: pointer; }
 
 /* LIST ITEMS */
 .list { padding: 0 16px; }
 
 .list-item {
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--r-md);
-  padding: 14px 16px;
-  margin-bottom: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: var(--r-md); padding: 14px 16px; margin-bottom: 8px;
+  display: flex; justify-content: space-between; align-items: center;
   transition: background 0.2s;
 }
 .list-item:active { background: var(--glass-hover); }
 .list-item .left { flex: 1; min-width: 0; }
-.list-item .title { font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.list-item .title { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .list-item .meta { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
-.list-item .amount { font-family: var(--font-head); font-size: 15px; font-weight: 700; white-space: nowrap; margin-left: 12px; }
+.list-item .item-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; margin-left: 12px; }
+.list-item .amount { font-size: 15px; font-weight: 700; white-space: nowrap; }
+.item-actions { display: flex; gap: 5px; }
+.action-btn {
+  width: 26px; height: 26px; border-radius: 8px; border: none;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 12px; transition: all 0.2s;
+}
+.edit-btn { background: rgba(86,134,187,0.15); color: var(--cobalt); }
+.edit-btn:active { background: rgba(86,134,187,0.3); transform: scale(0.9); }
+.del-btn { background: rgba(255,92,122,0.12); color: var(--red); }
+.del-btn:active { background: rgba(255,92,122,0.25); transform: scale(0.9); }
 
-.positive { color: var(--emerald); }
+.positive { color: #4ecb82; }
 .negative { color: var(--red); }
 .text-muted { color: var(--text-muted); font-size: 12px; }
 
 /* BADGES */
 .badge {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 20px;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  margin-left: 6px;
-  vertical-align: middle;
+  display: inline-block; padding: 2px 8px; border-radius: 20px;
+  font-size: 9px; font-weight: 700; letter-spacing: 0.5px;
+  text-transform: uppercase; margin-left: 6px; vertical-align: middle;
 }
-.badge-h { background: rgba(0,214,143,0.15); color: var(--emerald); border: 1px solid rgba(0,214,143,0.2); }
-.badge-m { background: rgba(255,181,71,0.15); color: var(--amber); border: 1px solid rgba(255,181,71,0.2); }
+.badge-h { background: rgba(209,96,31,0.15); color: var(--satsuma); border: 1px solid rgba(209,96,31,0.25); }
+.badge-m { background: rgba(254,205,109,0.15); color: var(--lunar); border: 1px solid rgba(254,205,109,0.22); }
 .badge-l { background: rgba(232,234,246,0.07); color: var(--text-muted); border: 1px solid rgba(255,255,255,0.08); }
 
 /* BOTTOM NAV */
 .bottom-nav {
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  background: rgba(6,8,24,0.92);
-  border-top: 1px solid var(--glass-border);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
-  display: flex;
-  padding: 10px 0 calc(10px + env(safe-area-inset-bottom));
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: rgba(6,8,24,0.93); border-top: 1px solid var(--glass-border);
+  backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+  display: flex; padding: 10px 0 calc(10px + env(safe-area-inset-bottom));
   z-index: 100;
 }
 .nav-item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  padding: 6px 4px;
-  cursor: pointer;
-  border: none;
-  background: none;
-  color: var(--text-muted);
-  transition: color 0.2s;
-  position: relative;
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  gap: 3px; padding: 6px 4px; cursor: pointer; border: none;
+  background: none; color: var(--text-muted); transition: color 0.2s;
+  position: relative; font-family: var(--font);
 }
-.nav-item.active { color: var(--emerald); }
+.nav-item.active { color: var(--satsuma); }
 .nav-item.active::before {
-  content: '';
-  position: absolute;
-  top: -10px; left: 50%;
+  content: ''; position: absolute; top: -10px; left: 50%;
   transform: translateX(-50%);
-  width: 24px; height: 2px;
-  background: var(--emerald);
+  width: 24px; height: 2px; background: var(--satsuma);
   border-radius: 0 0 4px 4px;
 }
 .nav-item .icon { font-size: 20px; transition: transform 0.2s; }
 .nav-item.active .icon { transform: scale(1.15); }
-.nav-item .label { font-size: 9px; font-weight: 500; letter-spacing: 0.3px; text-transform: uppercase; }
+.nav-item .label { font-size: 9px; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; }
 
 /* FORMS */
 .form-group { padding: 0 16px; margin-bottom: 14px; }
-.form-group label {
-  display: block;
-  font-size: 11px;
-  color: var(--text-muted);
-  margin-bottom: 7px;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-  font-weight: 500;
-}
+.form-group label { display: block; font-size: 11px; color: var(--text-muted); margin-bottom: 7px; letter-spacing: 0.8px; text-transform: uppercase; font-weight: 600; }
 .form-group input,
 .form-group select {
-  width: 100%;
-  padding: 14px 16px;
-  border-radius: var(--r-sm);
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--glass-border);
-  color: var(--text);
-  font-size: 15px;
-  font-family: var(--font-body);
-  outline: none;
-  transition: border-color 0.2s, background 0.2s;
+  width: 100%; padding: 14px 16px; border-radius: var(--r-sm);
+  background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);
+  color: var(--text); font-size: 15px; font-family: var(--font);
+  outline: none; transition: border-color 0.2s, background 0.2s;
   -webkit-appearance: none;
 }
 .form-group input:focus,
-.form-group select:focus {
-  border-color: var(--emerald);
-  background: rgba(0,214,143,0.04);
-}
+.form-group select:focus { border-color: var(--satsuma); background: rgba(209,96,31,0.04); }
 .form-group select option { background: #0b1029; color: var(--text); }
-.form-group input[type="checkbox"] { width: auto; }
 
 .btn-primary {
-  margin: 4px 16px 10px;
-  width: calc(100% - 32px);
-  padding: 16px;
-  background: linear-gradient(135deg, var(--emerald), #00b87a);
-  border: none;
-  border-radius: var(--r-md);
-  color: #fff;
-  font-family: var(--font-head);
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 8px 24px rgba(0,214,143,0.25);
-  transition: all 0.2s;
-  letter-spacing: 0.3px;
+  margin: 4px 16px 10px; width: calc(100% - 32px); padding: 16px;
+  background: linear-gradient(135deg, var(--satsuma), #b84f18);
+  border: none; border-radius: var(--r-md); color: #fff;
+  font-family: var(--font); font-size: 16px; font-weight: 700;
+  cursor: pointer; box-shadow: 0 8px 24px rgba(209,96,31,0.28);
+  transition: all 0.2s; letter-spacing: 0.3px;
 }
 .btn-primary:active { transform: scale(0.97); }
 
 .btn-cancel {
-  margin: 0 16px 14px;
-  width: calc(100% - 32px);
-  padding: 14px;
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--r-md);
-  color: var(--text-sub);
-  font-family: var(--font-body);
-  font-size: 15px;
-  cursor: pointer;
-  transition: all 0.2s;
+  margin: 0 16px 14px; width: calc(100% - 32px); padding: 14px;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: var(--r-md); color: var(--text-sub);
+  font-family: var(--font); font-size: 15px; cursor: pointer; transition: all 0.2s;
 }
 
 /* MODAL */
 .modal-overlay {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(6,8,24,0.8);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  z-index: 200;
-  display: none;
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(6,8,24,0.82); backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px); z-index: 200; display: none;
   align-items: flex-end;
 }
 .modal-overlay.active { display: flex; }
-
 .modal {
-  background: #0f1529;
-  border: 1px solid var(--glass-border);
-  width: 100%;
-  max-height: 92vh;
-  border-radius: 30px 30px 0 0;
+  background: #0f1529; border: 1px solid var(--glass-border);
+  width: 100%; max-height: 92vh; border-radius: 30px 30px 0 0;
   padding: 20px 0 calc(20px + env(safe-area-inset-bottom));
-  overflow-y: auto;
-  animation: slideUp 0.35s cubic-bezier(0.22,1,0.36,1);
+  overflow-y: auto; animation: slideUp 0.35s cubic-bezier(0.22,1,0.36,1);
 }
 @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-
-/* drag handle */
-.modal::before {
-  content: '';
-  display: block;
-  width: 36px; height: 4px;
-  background: rgba(255,255,255,0.15);
-  border-radius: 2px;
-  margin: 0 auto 16px;
-}
-.modal-header {
-  padding: 0 20px 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--glass-border);
-  margin-bottom: 20px;
-}
-.modal-header h2 {
-  font-family: var(--font-head);
-  font-size: 20px;
-  font-weight: 800;
-  letter-spacing: -0.3px;
-}
-.modal-close {
-  width: 32px; height: 32px;
-  border-radius: 50%;
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  color: var(--text-muted);
-  font-size: 18px;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.2s;
-}
+.modal::before { content: ''; display: block; width: 36px; height: 4px; background: rgba(255,255,255,0.15); border-radius: 2px; margin: 0 auto 16px; }
+.modal-header { padding: 0 20px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); margin-bottom: 20px; }
+.modal-header h2 { font-size: 20px; font-weight: 800; letter-spacing: -0.3px; }
+.modal-close { width: 32px; height: 32px; border-radius: 50%; background: var(--glass); border: 1px solid var(--glass-border); color: var(--text-muted); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
 .modal-close:active { transform: scale(0.9); }
 
 /* TABS */
 .tabs { display: flex; gap: 8px; padding: 0 16px 14px; overflow-x: auto; scrollbar-width: none; }
 .tabs::-webkit-scrollbar { display: none; }
-.tab {
-  padding: 7px 16px;
-  border-radius: 20px;
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  color: var(--text-muted);
-  font-size: 12px;
-  font-weight: 500;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.2s;
-  letter-spacing: 0.3px;
-}
-.tab.active {
-  background: var(--emerald-dim);
-  border-color: rgba(0,214,143,0.3);
-  color: var(--emerald);
-  font-weight: 700;
-}
+.tab { padding: 7px 16px; border-radius: 20px; background: var(--glass); border: 1px solid var(--glass-border); color: var(--text-muted); font-size: 12px; font-weight: 500; cursor: pointer; white-space: nowrap; transition: all 0.2s; letter-spacing: 0.3px; font-family: var(--font); }
+.tab.active { background: var(--satsuma-dim); border-color: rgba(209,96,31,0.3); color: var(--satsuma); font-weight: 700; }
 
 /* MONTH CHIPS */
 .month-select { display: flex; gap: 8px; padding: 8px 16px 16px; overflow-x: auto; scrollbar-width: none; }
 .month-select::-webkit-scrollbar { display: none; }
-.month-chip {
-  padding: 8px 18px;
-  border-radius: 20px;
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  color: var(--text-sub);
-  font-size: 13px;
-  font-weight: 500;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.month-chip.active {
-  background: var(--emerald-dim);
-  border-color: rgba(0,214,143,0.3);
-  color: var(--emerald);
-  font-weight: 700;
-}
+.month-chip { padding: 8px 18px; border-radius: 20px; background: var(--glass); border: 1px solid var(--glass-border); color: var(--text-sub); font-size: 13px; font-weight: 500; white-space: nowrap; cursor: pointer; transition: all 0.2s; font-family: var(--font); }
+.month-chip.active { background: var(--satsuma-dim); border-color: rgba(209,96,31,0.3); color: var(--satsuma); font-weight: 700; }
 
 /* HISTORY SUMMARY */
-.hist-summary {
-  margin: 0 16px 16px;
-  padding: 20px;
-  border-radius: var(--r-lg);
-  background: linear-gradient(135deg, rgba(91,156,246,0.08), rgba(91,156,246,0.03));
-  border: 1px solid rgba(91,156,246,0.15);
-}
-.hist-summary .h-title {
-  font-family: var(--font-head);
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--text-muted);
-  margin-bottom: 16px;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-}
+.hist-summary { margin: 0 16px 16px; padding: 20px; border-radius: var(--r-lg); background: linear-gradient(135deg, rgba(86,134,187,0.09), rgba(86,134,187,0.03)); border: 1px solid rgba(86,134,187,0.16); }
+.hist-summary .h-title { font-size: 14px; font-weight: 700; color: var(--text-muted); margin-bottom: 16px; letter-spacing: 0.5px; text-transform: uppercase; }
 .hist-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
 .hist-col { text-align: center; }
 .hist-col .hc-label { font-size: 10px; color: var(--text-muted); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 5px; }
-.hist-col .hc-val { font-family: var(--font-head); font-size: 18px; font-weight: 700; }
+.hist-col .hc-val { font-size: 18px; font-weight: 700; }
 
 /* SHOPPING */
-.shopping-summary {
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  margin: 0 16px 8px;
-  border-radius: var(--r-lg);
-  padding: 18px 16px;
-}
-.shopping-summary h3 {
-  font-family: var(--font-head);
-  font-size: 15px;
-  font-weight: 700;
-  margin-bottom: 12px;
-  color: var(--text-sub);
-}
+.shopping-summary { background: var(--glass); border: 1px solid var(--glass-border); margin: 0 16px 8px; border-radius: var(--r-lg); padding: 18px 16px; }
+.shopping-summary h3 { font-size: 15px; font-weight: 700; margin-bottom: 12px; color: var(--text-sub); }
 
 .shopping-item {
-  background: rgba(255,255,255,0.03);
-  border-radius: var(--r-sm);
-  padding: 12px 14px;
-  margin-bottom: 7px;
-  border: 1px solid var(--glass-border);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  background: rgba(255,255,255,0.03); border-radius: var(--r-sm);
+  padding: 12px 14px; margin-bottom: 7px; border: 1px solid var(--glass-border);
   transition: all 0.2s;
 }
-.shopping-item.bought {
-  opacity: 0.5;
-  border-color: rgba(0,214,143,0.2);
-  background: rgba(0,214,143,0.03);
-}
-.shopping-item .info { flex: 1; }
-.shopping-item .name { font-size: 14px; font-weight: 500; }
+.shopping-item.bought { opacity: 0.48; border-color: rgba(209,96,31,0.18); background: rgba(209,96,31,0.03); }
+.shopping-item .si-row1 { display: flex; justify-content: space-between; align-items: center; }
+.shopping-item .si-row2 { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+.shopping-item .name { font-size: 14px; font-weight: 600; }
 .shopping-item .detail { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
-.shopping-item .price { font-family: var(--font-head); font-size: 15px; font-weight: 700; }
+.shopping-item .price { font-size: 15px; font-weight: 700; color: var(--lunar); }
+.shopping-item .qty-controls { display: flex; align-items: center; gap: 6px; }
+.qty-btn { width: 22px; height: 22px; border-radius: 6px; background: rgba(255,255,255,0.06); border: 1px solid var(--glass-border); color: var(--text); font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-family: var(--font); transition: all 0.15s; }
+.qty-btn:active { background: rgba(209,96,31,0.2); transform: scale(0.9); }
+.qty-val { font-size: 13px; font-weight: 700; min-width: 18px; text-align: center; }
+.shopping-item .check { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--glass-border); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; transition: all 0.2s; flex-shrink: 0; }
+.shopping-item .check.checked { background: var(--satsuma); border-color: var(--satsuma); color: #fff; box-shadow: 0 0 10px var(--satsuma-glow); }
 
-.shopping-item .check {
-  width: 26px; height: 26px;
-  border-radius: 50%;
-  border: 2px solid var(--glass-border);
-  margin-left: 10px;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 12px;
-  transition: all 0.2s;
-  flex-shrink: 0;
-}
-.shopping-item .check.checked {
-  background: var(--emerald);
-  border-color: var(--emerald);
-  color: #fff;
-  box-shadow: 0 0 10px rgba(0,214,143,0.3);
-}
+.summary-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; font-size: 13px; font-weight: 600; background: rgba(254,205,109,0.06); border: 1px solid rgba(254,205,109,0.13); border-radius: var(--r-sm); margin-top: 10px; }
 
-.summary-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 14px;
-  font-size: 13px;
-  font-weight: 600;
-  background: rgba(255,181,71,0.06);
-  border: 1px solid rgba(255,181,71,0.12);
-  border-radius: var(--r-sm);
-  margin-top: 10px;
+/* PRIORITY SECTION on Home */
+.priority-item {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: var(--r-md); padding: 14px 16px; margin-bottom: 8px;
+  display: flex; justify-content: space-between; align-items: center;
 }
+.priority-item .p-name { font-size: 14px; font-weight: 600; }
+.priority-item .p-meta { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+.priority-item .p-status { font-size: 12px; font-weight: 700; }
+.p-status.low { color: var(--lunar); }
+.p-status.out { color: var(--red); }
 
 /* INVENTORY */
-.inv-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 8px;
-  padding: 0 16px 16px;
-}
-.inv-card {
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--r-md);
-  padding: 16px 10px;
-  text-align: center;
-}
-.inv-card .num {
-  font-family: var(--font-head);
-  font-size: 28px;
-  font-weight: 800;
-  line-height: 1;
-}
+.inv-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; padding: 0 16px 16px; }
+.inv-card { background: var(--glass); border: 1px solid var(--glass-border); border-radius: var(--r-md); padding: 16px 10px; text-align: center; }
+.inv-card .num { font-size: 28px; font-weight: 800; line-height: 1; }
 .inv-card .lbl { font-size: 9px; color: var(--text-muted); margin-top: 5px; text-transform: uppercase; letter-spacing: 0.8px; }
 
-.grocery-card {
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--r-md);
-  padding: 16px;
-  margin: 0 16px 8px;
-  transition: background 0.2s;
-}
+.grocery-card { background: var(--glass); border: 1px solid var(--glass-border); border-radius: var(--r-md); padding: 16px; margin: 0 16px 8px; transition: background 0.2s; }
 .grocery-card .name { font-size: 15px; font-weight: 600; }
 .grocery-card .cat { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
-.grocery-card .qrow {
-  display: flex;
-  gap: 12px;
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid var(--glass-border);
-}
+.grocery-card .qrow { display: flex; gap: 12px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--glass-border); }
 .grocery-card .qbox { text-align: center; flex: 1; }
-.grocery-card .qbox .n { font-family: var(--font-head); font-size: 18px; font-weight: 700; }
+.grocery-card .qbox .n { font-size: 18px; font-weight: 700; }
 .grocery-card .qbox .l { font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
 
 /* QUICK ADD */
-.quick-add-row {
-  display: flex;
-  gap: 8px;
-  align-items: center;
+.quick-add-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.quick-add-row .qa-name-wrap { flex: 1; min-width: 130px; position: relative; }
+.quick-add-row input, .quick-add-row select { padding: 12px 14px; }
+.qa-qty { width: 62px; flex: none; }
+.qa-price { width: 84px; flex: none; }
+.qa-pri { width: 90px; flex: none; -webkit-appearance: none; padding: 12px 10px; }
+
+/* AUTOCOMPLETE */
+.ac-dropdown {
+  position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+  background: #111728; border: 1px solid rgba(209,96,31,0.25);
+  border-radius: var(--r-sm); z-index: 999; display: none;
+  max-height: 220px; overflow-y: auto; box-shadow: 0 16px 48px rgba(0,0,0,0.5);
 }
-.quick-add-row input { flex: 1; }
-.quick-add-row input:last-of-type { width: 90px; flex: none; }
+.ac-item { padding: 11px 14px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; border-bottom: 1px solid var(--glass-border); transition: background 0.15s; }
+.ac-item:last-child { border-bottom: none; }
+.ac-item:hover, .ac-item:active { background: rgba(209,96,31,0.1); }
+.ac-item .ac-name { font-size: 13px; font-weight: 600; }
+.ac-item .ac-meta { font-size: 11px; color: var(--text-muted); }
+.ac-item .ac-price { font-size: 13px; font-weight: 700; color: var(--lunar); }
 
 /* SETTINGS */
-.settings-item {
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--r-md);
-  padding: 16px;
-  margin: 0 16px 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-  transition: background 0.2s;
-}
+.settings-item { background: var(--glass); border: 1px solid var(--glass-border); border-radius: var(--r-md); padding: 16px; margin: 0 16px 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: background 0.2s; }
 .settings-item:active { background: var(--glass-hover); }
 .settings-item .s-title { font-size: 15px; font-weight: 500; }
 .settings-item .s-meta { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
 
 /* EMPTY STATE */
-.empty-state {
-  text-align: center;
-  padding: 40px 20px;
-  color: var(--text-muted);
-}
+.empty-state { text-align: center; padding: 40px 20px; color: var(--text-muted); }
 .empty-state .icon { font-size: 40px; margin-bottom: 10px; opacity: 0.5; }
 .empty-state p { font-size: 13px; line-height: 1.6; }
 
 /* TOAST */
-.toast {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%) translateY(-120px);
-  background: #0f1529;
-  border: 1px solid var(--glass-border);
-  padding: 12px 24px;
-  border-radius: 100px;
-  z-index: 300;
-  transition: all 0.35s cubic-bezier(0.22,1,0.36,1);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-  font-size: 14px;
-  font-weight: 500;
-  white-space: nowrap;
-}
+.toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-120px); background: #0f1529; border: 1px solid var(--glass-border); padding: 12px 24px; border-radius: 100px; z-index: 300; transition: all 0.35s cubic-bezier(0.22,1,0.36,1); box-shadow: 0 20px 60px rgba(0,0,0,0.5); font-size: 14px; font-weight: 600; white-space: nowrap; }
 .toast.show { transform: translateX(-50%) translateY(0); }
-.toast.ok { border-color: rgba(0,214,143,0.4); color: var(--emerald); }
+.toast.ok { border-color: rgba(209,96,31,0.4); color: var(--satsuma); }
 .toast.err { border-color: rgba(255,92,122,0.4); color: var(--red); }
 
 ::-webkit-scrollbar { display: none; }
 
-/* Scrollbar for modals */
-.modal::-webkit-scrollbar { display: none; }
+.source-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--satsuma); margin-right: 6px; vertical-align: middle; box-shadow: 0 0 6px var(--satsuma-glow); }
 
-/* Income page icon badge */
-.source-dot {
-  display: inline-block;
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--emerald);
-  margin-right: 6px;
-  vertical-align: middle;
-  box-shadow: 0 0 6px var(--emerald-glow);
-}
+.divider { height: 1px; background: var(--glass-border); margin: 4px 20px 16px; }
 
-/* Divider line */
-.divider {
-  height: 1px;
-  background: var(--glass-border);
-  margin: 4px 20px 16px;
-}
+.live-dot { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--satsuma); font-weight: 600; }
+.live-dot::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--satsuma); box-shadow: 0 0 8px var(--satsuma-glow); animation: pulse 2s ease infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(0.85); } }
 
-/* settings live badge */
-.live-dot {
-  display: flex; align-items: center; gap: 6px;
-  font-size: 12px; color: var(--emerald); font-weight: 500;
-}
-.live-dot::before {
-  content: '';
-  width: 7px; height: 7px; border-radius: 50%;
-  background: var(--emerald);
-  box-shadow: 0 0 8px var(--emerald-glow);
-  animation: pulse 2s ease infinite;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(0.85); }
-}
-
-/* checkbox row */
-.checkbox-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--r-sm);
-  cursor: pointer;
-}
-.checkbox-row input[type="checkbox"] {
-  width: 18px; height: 18px;
-  cursor: pointer;
-  accent-color: var(--emerald);
-}
+.checkbox-row { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: var(--r-sm); cursor: pointer; }
+.checkbox-row input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-color: var(--satsuma); }
 .checkbox-row label { font-size: 14px; font-weight: 500; cursor: pointer; }
 </style>
 </head>
@@ -812,8 +448,8 @@ body::after {
     </div>
   </div>
 
-  <div class="section-header"><h2>Recent Expenses</h2></div>
-  <div class="list" id="recent-list"></div>
+  <div class="section-header"><h2>⭐ High Priority Watch</h2></div>
+  <div class="list" id="priority-list"></div>
 </div>
 
 <!-- ═══════════ INCOME ═══════════ -->
@@ -840,7 +476,7 @@ body::after {
     <div class="hist-row">
       <div class="hist-col"><div class="hc-label">In</div><div class="hc-val positive" id="hist-inc">RM 0</div></div>
       <div class="hist-col"><div class="hc-label">Out</div><div class="hc-val negative" id="hist-exp">RM 0</div></div>
-      <div class="hist-col"><div class="hc-label">Left</div><div class="hc-val" style="color:var(--emerald)" id="hist-rem">RM 0</div></div>
+      <div class="hist-col"><div class="hc-label">Left</div><div class="hc-val" style="color:var(--satsuma)" id="hist-rem">RM 0</div></div>
     </div>
   </div>
   <div class="section-header"><h2>Income</h2></div>
@@ -874,7 +510,7 @@ body::after {
     <div id="shopping-items"><div class="empty-state"><p>No items in list.<br>Add items below ↓</p></div></div>
     <div class="summary-row">
       <span style="color:var(--text-muted)">Estimated Total</span>
-      <span style="color:var(--amber);font-family:var(--font-head);font-size:16px" id="shopping-total">RM 0</span>
+      <span style="color:var(--lunar);font-size:16px;font-weight:700" id="shopping-total">RM 0</span>
     </div>
     <div style="display:flex;gap:8px;margin-top:12px">
       <button class="btn-sm" onclick="checkoutShopping()" style="flex:1;padding:12px">✅ Checkout</button>
@@ -885,21 +521,29 @@ body::after {
   <div class="form-group" style="margin-top:16px">
     <label>Quick Add to List</label>
     <div class="quick-add-row">
-      <input type="text" id="quick-item" placeholder="Item name" list="item-suggestions">
-      <datalist id="item-suggestions"></datalist>
-      <input type="number" id="quick-price" placeholder="RM" step="0.01" min="0">
+      <div class="qa-name-wrap">
+        <input type="text" id="quick-item" placeholder="Item name" autocomplete="off" oninput="acSearch(this.value)" onfocus="acSearch(this.value)">
+        <div id="ac-dropdown" class="ac-dropdown"></div>
+      </div>
+      <input type="number" id="quick-qty" class="qa-qty" placeholder="Qty" min="1" value="1" step="1">
+      <input type="number" id="quick-price" class="qa-price" placeholder="RM" step="0.01" min="0">
+      <select id="quick-priority" class="qa-pri">
+        <option value="High">High ⭐</option>
+        <option value="Medium" selected>Medium</option>
+        <option value="Low">Low</option>
+      </select>
       <button class="btn-sm" onclick="quickAddToList()">+</button>
     </div>
   </div>
 
   <!-- Inventory Stats -->
   <div class="inv-grid">
-    <div class="inv-card" style="border-top:2px solid var(--emerald)">
-      <div class="num" style="color:var(--emerald)" id="inv-ok">0</div>
+    <div class="inv-card" style="border-top:2px solid var(--satsuma)">
+      <div class="num" style="color:var(--satsuma)" id="inv-ok">0</div>
       <div class="lbl">Available</div>
     </div>
-    <div class="inv-card" style="border-top:2px solid var(--amber)">
-      <div class="num" style="color:var(--amber)" id="inv-low">0</div>
+    <div class="inv-card" style="border-top:2px solid var(--lunar)">
+      <div class="num" style="color:var(--lunar)" id="inv-low">0</div>
       <div class="lbl">Low</div>
     </div>
     <div class="inv-card" style="border-top:2px solid var(--red)">
@@ -938,7 +582,7 @@ body::after {
       <span style="color:var(--text-muted);font-size:20px">↻</span>
     </div>
     <div style="margin:32px 16px 8px">
-      <button onclick="resetAll()" style="width:100%;padding:16px;background:rgba(255,92,122,0.1);border:1px solid rgba(255,92,122,0.3);border-radius:var(--r-md);color:var(--red);font-family:var(--font-head);font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s">
+      <button onclick="resetAll()" style="width:100%;padding:16px;background:rgba(255,92,122,0.1);border:1px solid rgba(255,92,122,0.3);border-radius:var(--r-md);color:var(--red);font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s">
         ⚠️ Reset All Data
       </button>
     </div>
@@ -949,7 +593,7 @@ body::after {
 <div class="modal-overlay" id="modal-expense">
   <div class="modal">
     <div class="modal-header">
-      <h2>Add Expense</h2>
+      <h2 id="exp-modal-title">Add Expense</h2>
       <button class="modal-close" onclick="closeModal('expense')">✕</button>
     </div>
     <div class="form-group"><label>Date</label><input type="date" id="exp-date"></div>
@@ -965,7 +609,7 @@ body::after {
       </div>
     </div>
     <div class="form-group"><label>Notes</label><input type="text" id="exp-notes" placeholder="Optional"></div>
-    <button class="btn-primary" onclick="addExpense()">Save Expense</button>
+    <button class="btn-primary" onclick="saveExpense()">Save Expense</button>
     <button class="btn-cancel" onclick="closeModal('expense')">Cancel</button>
   </div>
 </div>
@@ -974,7 +618,7 @@ body::after {
 <div class="modal-overlay" id="modal-income">
   <div class="modal">
     <div class="modal-header">
-      <h2>Add Income</h2>
+      <h2 id="inc-modal-title">Add Income</h2>
       <button class="modal-close" onclick="closeModal('income')">✕</button>
     </div>
     <div class="form-group"><label>Date</label><input type="date" id="inc-date"></div>
@@ -990,7 +634,7 @@ body::after {
     </div>
     <div class="form-group"><label>Amount (RM)</label><input type="number" id="inc-amount" placeholder="0.00" step="0.01" min="0"></div>
     <div class="form-group"><label>Notes</label><input type="text" id="inc-notes" placeholder="Optional"></div>
-    <button class="btn-primary" onclick="addIncome()">Save Income</button>
+    <button class="btn-primary" onclick="saveIncome()">Save Income</button>
     <button class="btn-cancel" onclick="closeModal('income')">Cancel</button>
   </div>
 </div>
@@ -1028,6 +672,9 @@ let DB = { months: {}, shoppingList: [] };
 let viewM = curMonth();
 let invFilter = 'all';
 
+// Edit state: { type: 'income'|'expense', id, month }
+let editState = null;
+
 function goPage(p) {
   document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(x => x.classList.remove('active'));
@@ -1047,16 +694,12 @@ async function initDB() {
       DB.months = d.months || {};
       DB.shoppingList = d.shoppingList || [];
     }
-    if (!DB.months[curMonth()]) {
-      DB.months[curMonth()] = { income: [], expenses: [], groceries: [], inventory: {}, shoppingHistory: [] };
-    }
+    if (!DB.months[curMonth()]) DB.months[curMonth()] = { income: [], expenses: [], groceries: [], inventory: {}, shoppingHistory: [] };
     if (!DB.shoppingList) DB.shoppingList = [];
     await ref.set({ months: DB.months, shoppingList: DB.shoppingList });
     renderAll();
     toast('✅ Ready', 'ok');
-  } catch(e) {
-    toast('❌ ' + e.message, 'err');
-  }
+  } catch(e) { toast('❌ ' + e.message, 'err'); }
 }
 
 db.ref('/data').on('value', snap => {
@@ -1093,9 +736,9 @@ function renderAll() {
   renderExpenses(m);
   renderShoppingList();
   renderInventory(m);
-  updateSuggestions();
 }
 
+/* ── HOME: High Priority Watch ── */
 function renderHome(m) {
   const d = md(m);
   const inc = d.income.reduce((s,i) => s + Number(i.amount), 0);
@@ -1107,19 +750,45 @@ function renderHome(m) {
   document.getElementById('total-inc').textContent = 'RM ' + inc.toFixed(0);
   document.getElementById('total-exp').textContent = 'RM ' + exp.toFixed(0);
 
-  const recent = [...d.expenses].reverse().slice(0,5);
-  document.getElementById('recent-list').innerHTML = recent.length
-    ? recent.map(e => `
-      <div class="list-item">
-        <div class="left">
-          <div class="title">${esc(e.item)}</div>
-          <div class="meta">${e.date} · ${esc(e.category)}</div>
-        </div>
-        <div class="amount negative">−RM ${Number(e.amount).toFixed(2)}</div>
-      </div>`).join('')
-    : '<div class="empty-state"><div class="icon">📭</div><p>No expenses yet this month</p></div>';
+  // High priority inventory items
+  const items = Object.values(d.inventory).filter(i => i.priority === 'High');
+  const watchList = items.sort((a,b) => a.qtyLeft - b.qtyLeft);
+
+  if (watchList.length === 0) {
+    document.getElementById('priority-list').innerHTML =
+      '<div class="empty-state"><div class="icon">✅</div><p>All high priority items are stocked up!</p></div>';
+    return;
+  }
+
+  document.getElementById('priority-list').innerHTML = watchList.map(item => {
+    const isOut = item.qtyLeft <= 0;
+    const isLow = item.qtyLeft <= 1 && item.qtyLeft > 0;
+    const statusText = isOut ? '🔴 Finished' : isLow ? '🟡 Low' : '🟢 OK';
+    const statusClass = isOut ? 'out' : isLow ? 'low' : '';
+    return `<div class="priority-item glass-card">
+      <div>
+        <div class="p-name">${esc(item.name)}</div>
+        <div class="p-meta">Last bought: ${item.lastPurchase || 'N/A'} · RM ${Number(item.unitPrice).toFixed(2)}</div>
+      </div>
+      <div>
+        <div class="p-status ${statusClass}">${statusText}</div>
+        ${isOut || isLow ? `<button class="btn-sm" style="margin-top:6px;padding:6px 12px;font-size:11px" onclick="addToListFromHome('${esc(item.name)}',${item.unitPrice},'${esc(item.category||'Food')}')">+ List</button>` : ''}
+      </div>
+    </div>`;
+  }).join('');
 }
 
+function addToListFromHome(name, price, category) {
+  if (DB.shoppingList.find(i => i.name.toLowerCase() === name.toLowerCase() && !i.bought)) {
+    return toast(name + ' already in list', 'err');
+  }
+  DB.shoppingList.push({ id: 'sl_' + Date.now(), name, price, qty: 1, priority: 'High', bought: false, lastPrice: price, category });
+  saveAll();
+  toast('Added ' + name + ' to list', 'ok');
+  renderShoppingList();
+}
+
+/* ── INCOME ── */
 function renderIncome(m) {
   const d = md(m);
   document.getElementById('income-list').innerHTML = d.income.length
@@ -1127,13 +796,20 @@ function renderIncome(m) {
       <div class="list-item">
         <div class="left">
           <div class="title"><span class="source-dot"></span>${esc(i.source)}</div>
-          <div class="meta">${i.date}</div>
+          <div class="meta">${i.date}${i.notes ? ' · '+esc(i.notes) : ''}</div>
         </div>
-        <div class="amount positive">+RM ${Number(i.amount).toFixed(2)}</div>
+        <div class="item-right">
+          <div class="amount positive">+RM ${Number(i.amount).toFixed(2)}</div>
+          <div class="item-actions">
+            <button class="action-btn edit-btn" onclick="editIncome('${i.id}','${m}')">✏️</button>
+            <button class="action-btn del-btn" onclick="deleteIncome('${i.id}','${m}')">🗑️</button>
+          </div>
+        </div>
       </div>`).join('')
     : '<div class="empty-state"><div class="icon">💸</div><p>No income entries yet</p></div>';
 }
 
+/* ── HISTORY ── */
 function renderHistory() {
   const months = [...new Set([...Object.keys(DB.months), curMonth()])].sort().reverse();
   document.getElementById('month-selector').innerHTML = months.map(m =>
@@ -1153,7 +829,13 @@ function renderHistory() {
     ? d.income.map(i => `
       <div class="list-item">
         <div class="left"><div class="title">${esc(i.source)}</div><div class="meta">${i.date}</div></div>
-        <div class="amount positive">+RM ${Number(i.amount).toFixed(2)}</div>
+        <div class="item-right">
+          <div class="amount positive">+RM ${Number(i.amount).toFixed(2)}</div>
+          <div class="item-actions">
+            <button class="action-btn edit-btn" onclick="editIncome('${i.id}','${viewM}')">✏️</button>
+            <button class="action-btn del-btn" onclick="deleteIncome('${i.id}','${viewM}')">🗑️</button>
+          </div>
+        </div>
       </div>`).join('')
     : '<div class="empty-state"><p>No income</p></div>';
 
@@ -1161,11 +843,18 @@ function renderHistory() {
     ? d.expenses.map(e => `
       <div class="list-item">
         <div class="left"><div class="title">${esc(e.item)}</div><div class="meta">${e.date} · ${esc(e.category)}</div></div>
-        <div class="amount negative">−RM ${Number(e.amount).toFixed(2)}</div>
+        <div class="item-right">
+          <div class="amount negative">−RM ${Number(e.amount).toFixed(2)}</div>
+          <div class="item-actions">
+            <button class="action-btn edit-btn" onclick="editExpense('${e.id}','${viewM}')">✏️</button>
+            <button class="action-btn del-btn" onclick="deleteExpense('${e.id}','${viewM}')">🗑️</button>
+          </div>
+        </div>
       </div>`).join('')
     : '<div class="empty-state"><p>No expenses</p></div>';
 }
 
+/* ── EXPENSES ── */
 function renderExpenses(m) {
   const d = md(m);
   const exp = d.expenses.filter(e => e.category !== 'Groceries');
@@ -1176,11 +865,18 @@ function renderExpenses(m) {
           <div class="title">${esc(e.item)}<span class="badge badge-${e.priority==='High'?'h':'m'}">${e.priority}</span>${e.isLoan?' 🔴':''}</div>
           <div class="meta">${e.date} · ${esc(e.subcategory)}</div>
         </div>
-        <div class="amount negative">−RM ${Number(e.amount).toFixed(2)}</div>
+        <div class="item-right">
+          <div class="amount negative">−RM ${Number(e.amount).toFixed(2)}</div>
+          <div class="item-actions">
+            <button class="action-btn edit-btn" onclick="editExpense('${e.id}','${m}')">✏️</button>
+            <button class="action-btn del-btn" onclick="deleteExpense('${e.id}','${m}')">🗑️</button>
+          </div>
+        </div>
       </div>`).join('')
     : '<div class="empty-state"><div class="icon">📊</div><p>No expenses yet</p></div>';
 }
 
+/* ── SHOPPING LIST ── */
 function renderShoppingList() {
   const container = document.getElementById('shopping-items');
   const list = DB.shoppingList || [];
@@ -1189,42 +885,47 @@ function renderShoppingList() {
     document.getElementById('shopping-total').textContent = 'RM 0';
     return;
   }
-  const total = list.reduce((s, item) => s + (item.bought ? 0 : Number(item.price)), 0);
+  const total = list.reduce((s, item) => s + (item.bought ? 0 : (item.qty||1) * Number(item.price)), 0);
   document.getElementById('shopping-total').textContent = 'RM ' + total.toFixed(2);
+
   container.innerHTML = list.map((item, idx) => {
-    const detail = item.lastPrice ? `Last: RM ${Number(item.lastPrice).toFixed(2)}` : 'New item';
+    const lastPriceText = item.lastPrice ? `Last: RM ${Number(item.lastPrice).toFixed(2)}` : 'New item';
+    const qty = item.qty || 1;
+    const lineTotal = (qty * Number(item.price)).toFixed(2);
+    const priClass = item.priority === 'High' ? 'badge-h' : item.priority === 'Low' ? 'badge-l' : 'badge-m';
     return `<div class="shopping-item ${item.bought ? 'bought' : ''}">
-      <div class="info">
-        <div class="name">${esc(item.name)}</div>
-        <div class="detail">${detail} · Est: RM ${Number(item.price).toFixed(2)}</div>
+      <div class="si-row1">
+        <div>
+          <div class="name">${esc(item.name)} <span class="badge ${priClass}">${item.priority||'Medium'}</span></div>
+          <div class="detail">${lastPriceText} · RM ${Number(item.price).toFixed(2)}/unit</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <div class="check ${item.bought ? 'checked' : ''}" onclick="toggleItemBought(${idx})">${item.bought ? '✓' : ''}</div>
+          <button onclick="removeListItem(${idx})" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:18px;opacity:0.7">✕</button>
+        </div>
       </div>
-      <div style="display:flex;align-items:center;gap:8px">
-        <input type="number" value="${Number(item.price).toFixed(2)}" step="0.01" min="0"
-          style="width:72px;padding:8px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid var(--glass-border);color:var(--text);text-align:center;font-family:var(--font-head);font-size:13px"
-          onchange="updateListItemPrice(${idx}, this.value)">
-        <div class="check ${item.bought ? 'checked' : ''}" onclick="toggleItemBought(${idx})">${item.bought ? '✓' : ''}</div>
-        <button onclick="removeListItem(${idx})" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:18px;opacity:0.7">✕</button>
+      <div class="si-row2">
+        <div class="qty-controls">
+          <button class="qty-btn" onclick="changeQty(${idx},-1)">−</button>
+          <span class="qty-val">${qty}</span>
+          <button class="qty-btn" onclick="changeQty(${idx},1)">+</button>
+          <span style="font-size:11px;color:var(--text-muted);margin-left:4px">× RM</span>
+          <input type="number" value="${Number(item.price).toFixed(2)}" step="0.01" min="0"
+            style="width:68px;padding:6px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid var(--glass-border);color:var(--text);text-align:center;font-family:var(--font);font-size:13px"
+            onchange="updateListItemPrice(${idx}, this.value)">
+        </div>
+        <div class="price">= RM ${lineTotal}</div>
       </div>
     </div>`;
   }).join('');
 }
 
-function quickAddToList() {
-  const name = document.getElementById('quick-item').value.trim();
-  const price = Number(document.getElementById('quick-price').value) || 0;
-  if (!name) return toast('Enter item name', 'err');
-  const items = Object.values(DB.months).flatMap(mo => Object.values(mo.inventory || {}));
-  const existing = items.find(i => i.name.toLowerCase() === name.toLowerCase());
-  DB.shoppingList.push({
-    id: 'sl_' + Date.now(), name, price: price || (existing ? existing.unitPrice : 0),
-    bought: false, lastPrice: existing ? existing.unitPrice : null,
-    category: existing ? existing.category : 'Food'
-  });
-  document.getElementById('quick-item').value = '';
-  document.getElementById('quick-price').value = '';
+function changeQty(idx, delta) {
+  const item = DB.shoppingList[idx];
+  const newQty = Math.max(1, (item.qty || 1) + delta);
+  item.qty = newQty;
   saveAll();
   renderShoppingList();
-  updateSuggestions();
 }
 
 function updateListItemPrice(idx, price) {
@@ -1245,42 +946,117 @@ function removeListItem(idx) {
   renderShoppingList();
 }
 
+/* ── AUTOCOMPLETE ── */
+function acSearch(val) {
+  const dropdown = document.getElementById('ac-dropdown');
+  const query = val.trim().toLowerCase();
+  if (!query) { dropdown.style.display = 'none'; return; }
+
+  // Build item map from all months inventory
+  const itemMap = {};
+  Object.values(DB.months).forEach(mo => {
+    Object.values(mo.inventory || {}).forEach(item => {
+      const key = item.name.toLowerCase();
+      if (!itemMap[key] || (item.lastPurchase && (!itemMap[key].lastPurchase || item.lastPurchase > itemMap[key].lastPurchase))) {
+        itemMap[key] = item;
+      }
+    });
+  });
+
+  const matches = Object.values(itemMap).filter(i => i.name.toLowerCase().includes(query));
+  if (matches.length === 0) { dropdown.style.display = 'none'; return; }
+
+  dropdown.innerHTML = matches.slice(0, 8).map(item =>
+    `<div class="ac-item" onmousedown="selectAcItem('${esc(item.name).replace(/'/g,"\\'")}',${Number(item.unitPrice)|| 0},'${esc(item.category||'Food').replace(/'/g,"\\'")}','${esc(item.priority||'Medium').replace(/'/g,"\\'")}')">
+      <div>
+        <div class="ac-name">${esc(item.name)}</div>
+        <div class="ac-meta">${esc(item.category||'Food')} · Last: ${item.lastPurchase||'N/A'}</div>
+      </div>
+      <div class="ac-price">RM ${Number(item.unitPrice||0).toFixed(2)}</div>
+    </div>`
+  ).join('');
+  dropdown.style.display = 'block';
+}
+
+function selectAcItem(name, price, category, priority) {
+  document.getElementById('quick-item').value = name;
+  document.getElementById('quick-price').value = price.toFixed(2);
+  document.getElementById('quick-priority').value = priority;
+  document.getElementById('ac-dropdown').style.display = 'none';
+}
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.qa-name-wrap')) {
+    const dd = document.getElementById('ac-dropdown');
+    if (dd) dd.style.display = 'none';
+  }
+});
+
+function quickAddToList() {
+  const name = document.getElementById('quick-item').value.trim();
+  const qty = Math.max(1, Number(document.getElementById('quick-qty').value) || 1);
+  const price = Number(document.getElementById('quick-price').value) || 0;
+  const priority = document.getElementById('quick-priority').value || 'Medium';
+  if (!name) return toast('Enter item name', 'err');
+
+  // Look up last known price from inventory
+  const itemMap = {};
+  Object.values(DB.months).forEach(mo => {
+    Object.values(mo.inventory || {}).forEach(item => {
+      const key = item.name.toLowerCase();
+      if (!itemMap[key] || (item.lastPurchase && (!itemMap[key].lastPurchase || item.lastPurchase > itemMap[key].lastPurchase))) {
+        itemMap[key] = item;
+      }
+    });
+  });
+  const existing = itemMap[name.toLowerCase()];
+
+  DB.shoppingList.push({
+    id: 'sl_' + Date.now(), name, qty, price: price || (existing ? existing.unitPrice : 0),
+    priority, bought: false,
+    lastPrice: existing ? existing.unitPrice : null,
+    category: existing ? existing.category : 'Food'
+  });
+  document.getElementById('quick-item').value = '';
+  document.getElementById('quick-qty').value = '1';
+  document.getElementById('quick-price').value = '';
+  document.getElementById('quick-priority').value = 'Medium';
+  document.getElementById('ac-dropdown').style.display = 'none';
+  saveAll();
+  renderShoppingList();
+}
+
 async function checkoutShopping() {
   const boughtItems = DB.shoppingList.filter(i => i.bought);
   if (boughtItems.length === 0) return toast('No items marked as bought', 'err');
-  if (!confirm(`Push ${boughtItems.length} items to inventory? Total: RM ${boughtItems.reduce((s,i) => s + Number(i.price), 0).toFixed(2)}`)) return;
+  const total = boughtItems.reduce((s,i) => s + (i.qty||1) * Number(i.price), 0);
+  if (!confirm(`Push ${boughtItems.length} item(s) to inventory? Total: RM ${total.toFixed(2)}`)) return;
   const m = curMonth();
   const d = md(m);
   const date = today();
   for (const item of boughtItems) {
     const id = 'inv_' + item.name.toLowerCase().replace(/[^a-z0-9]/g, '_');
     const existing = d.inventory[id];
-    const prevItems = Object.values(DB.months).flatMap(mo => Object.values(mo.inventory || {}));
-    const globalExisting = prevItems.find(i => i.name.toLowerCase() === item.name.toLowerCase());
+    const qty = item.qty || 1;
     d.inventory[id] = {
       id, name: item.name, category: item.category || 'Food',
-      qtyMax: 1, qtyLeft: 1, unitPrice: Number(item.price),
-      totalSpent: (existing?.totalSpent || 0) + Number(item.price),
-      priority: globalExisting?.priority || 'Medium', lastPurchase: date, status: 'active'
+      qtyMax: qty, qtyLeft: qty, unitPrice: Number(item.price),
+      totalSpent: (existing?.totalSpent || 0) + (qty * Number(item.price)),
+      priority: item.priority || existing?.priority || 'Medium',
+      lastPurchase: date, status: 'active'
     };
-    d.groceries.push({ id: 'g_' + Date.now() + Math.random(), date, item: item.name, category: item.category || 'Food', cost: Number(item.price), details: 'Shopping list checkout' });
-    d.expenses.push({ id: 'eg_' + Date.now() + Math.random(), date, category: 'Groceries', subcategory: item.category || 'Food', item: item.name, amount: Number(item.price), priority: globalExisting?.priority || 'Medium', isLoan: false, notes: 'Shopping list' });
+    d.groceries.push({ id: 'g_' + Date.now() + Math.random(), date, item: item.name, category: item.category || 'Food', cost: qty * Number(item.price), details: `Qty ${qty} × RM ${Number(item.price).toFixed(2)}` });
+    d.expenses.push({ id: 'eg_' + Date.now() + Math.random(), date, category: 'Groceries', subcategory: item.category || 'Food', item: item.name + (qty > 1 ? ` ×${qty}` : ''), amount: qty * Number(item.price), priority: item.priority || 'Medium', isLoan: false, notes: 'Shopping list' });
   }
   DB.shoppingList = DB.shoppingList.filter(i => !i.bought);
-  DB.shoppingList.forEach(i => i.bought = false);
   if (!d.shoppingHistory) d.shoppingHistory = [];
-  d.shoppingHistory.push({ date, items: boughtItems.length, total: boughtItems.reduce((s,i) => s + Number(i.price), 0) });
+  d.shoppingHistory.push({ date, items: boughtItems.length, total });
   await saveAll();
-  toast('✅ Checkout complete! ' + boughtItems.length + ' items', 'ok');
+  toast('✅ Checkout done! ' + boughtItems.length + ' items', 'ok');
   renderAll();
 }
 
-function updateSuggestions() {
-  const allItems = Object.values(DB.months).flatMap(m => Object.values(m.inventory || {}));
-  const uniqueItems = [...new Set(allItems.map(i => i.name))];
-  document.getElementById('item-suggestions').innerHTML = uniqueItems.map(n => `<option value="${esc(n)}">`).join('');
-}
-
+/* ── INVENTORY ── */
 function renderInventory(m) {
   const d = md(m);
   const items = Object.values(d.inventory);
@@ -1294,21 +1070,25 @@ function renderInventory(m) {
   else if (invFilter === 'high') filtered = items.filter(i => i.priority === 'High');
   document.getElementById('inventory-list').innerHTML = filtered.length ? filtered.map(item => {
     const status = item.qtyLeft <= 0 ? 'Finished' : item.qtyLeft <= 1 ? 'Low' : 'Available';
-    const statusColor = item.qtyLeft <= 0 ? 'var(--red)' : item.qtyLeft <= 1 ? 'var(--amber)' : 'var(--emerald)';
+    const statusColor = item.qtyLeft <= 0 ? 'var(--red)' : item.qtyLeft <= 1 ? 'var(--lunar)' : 'var(--satsuma)';
+    const priClass = item.priority === 'High' ? 'badge-h' : item.priority === 'Low' ? 'badge-l' : 'badge-m';
     return `<div class="grocery-card">
-      <div class="name">${esc(item.name)}
-        <span class="badge badge-${item.priority==='High'?'h':'m'}">${item.priority}</span>
-        <span class="badge" style="color:${statusColor};border-color:${statusColor}20;background:${statusColor}15">${status}</span>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div class="name">${esc(item.name)}
+          <span class="badge ${priClass}">${item.priority}</span>
+          <span class="badge" style="color:${statusColor};border-color:${statusColor}22;background:${statusColor}18">${status}</span>
+        </div>
+        <button class="action-btn del-btn" onclick="deleteInventoryItem('${item.id}','${m}')" style="flex-shrink:0">🗑️</button>
       </div>
       <div class="cat">Last bought: ${item.lastPurchase || 'N/A'} · RM ${Number(item.unitPrice).toFixed(2)}/unit</div>
       <div class="qrow">
-        <div class="qbox"><div class="n">1</div><div class="l">Total</div></div>
+        <div class="qbox"><div class="n">${item.qtyMax||1}</div><div class="l">Total</div></div>
         <div class="qbox"><div class="n" style="color:${statusColor}">${item.qtyLeft}</div><div class="l">Left</div></div>
         <div class="qbox"><div class="n" style="font-size:14px">RM ${Number(item.totalSpent).toFixed(2)}</div><div class="l">Spent</div></div>
       </div>
       ${item.qtyLeft > 0
         ? `<div style="display:flex;gap:8px;margin-top:12px;align-items:center">
-            <button class="btn-sm" onclick="useItem('${item.id}')" style="background:var(--amber);padding:8px 14px">−1 Use</button>
+            <button class="btn-sm" onclick="useItem('${item.id}')" style="background:var(--lunar);color:#111;padding:8px 14px">−1 Use</button>
             <span style="font-size:12px;color:var(--text-muted)">${item.qtyLeft} remaining</span>
            </div>`
         : `<div style="text-align:center;color:var(--red);margin-top:10px;font-size:12px;opacity:0.7">Finished</div>`}
@@ -1319,7 +1099,12 @@ function renderInventory(m) {
     ? [...d.groceries].reverse().slice(0,20).map(g => `
       <div class="list-item">
         <div class="left"><div class="title">${esc(g.item)}</div><div class="meta">${g.date} · ${esc(g.details||'')}</div></div>
-        <div class="amount negative">RM ${Number(g.cost).toFixed(2)}</div>
+        <div class="item-right">
+          <div class="amount negative">RM ${Number(g.cost).toFixed(2)}</div>
+          <div class="item-actions">
+            <button class="action-btn del-btn" onclick="deleteGroceryEntry('${g.id}','${m}')">🗑️</button>
+          </div>
+        </div>
       </div>`).join('')
     : '<div class="empty-state"><p>No purchases yet</p></div>';
 }
@@ -1337,11 +1122,105 @@ async function useItem(id) {
   }
 }
 
-async function addExpense() {
-  const m = curMonth();
-  const d = md(m);
-  const exp = {
-    id: 'e_' + Date.now(),
+async function deleteInventoryItem(id, month) {
+  if (!confirm('Remove this item from inventory?')) return;
+  const d = md(month);
+  delete d.inventory[id];
+  await saveAll();
+  toast('Removed', 'ok');
+  renderAll();
+}
+
+async function deleteGroceryEntry(id, month) {
+  if (!confirm('Delete this purchase record?')) return;
+  const d = md(month);
+  d.groceries = d.groceries.filter(g => g.id !== id);
+  await saveAll();
+  toast('Deleted', 'ok');
+  renderAll();
+}
+
+/* ── EDIT / DELETE: INCOME ── */
+function editIncome(id, month) {
+  const d = md(month);
+  const item = d.income.find(i => i.id === id);
+  if (!item) return;
+  editState = { type: 'income', id, month };
+  document.getElementById('inc-date').value = item.date;
+  document.getElementById('inc-source').value = item.source;
+  document.getElementById('inc-amount').value = item.amount;
+  document.getElementById('inc-notes').value = item.notes || '';
+  document.getElementById('inc-modal-title').textContent = 'Edit Income';
+  document.getElementById('modal-income').classList.add('active');
+}
+
+async function deleteIncome(id, month) {
+  if (!confirm('Delete this income entry?')) return;
+  const d = md(month);
+  d.income = d.income.filter(i => i.id !== id);
+  await saveAll();
+  toast('Deleted', 'ok');
+  renderAll();
+}
+
+/* ── EDIT / DELETE: EXPENSE ── */
+function editExpense(id, month) {
+  const d = md(month);
+  const item = d.expenses.find(e => e.id === id);
+  if (!item) return;
+  editState = { type: 'expense', id, month };
+  document.getElementById('exp-date').value = item.date;
+  document.getElementById('exp-cat').value = item.category;
+  updateSubs();
+  // Give DOM a tick to update subcategory options
+  setTimeout(() => { document.getElementById('exp-sub').value = item.subcategory || ''; }, 50);
+  document.getElementById('exp-item').value = item.item;
+  document.getElementById('exp-amount').value = item.amount;
+  document.getElementById('exp-priority').value = item.priority;
+  document.getElementById('exp-loan').checked = item.isLoan || false;
+  document.getElementById('exp-notes').value = item.notes || '';
+  document.getElementById('exp-modal-title').textContent = 'Edit Expense';
+  document.getElementById('modal-expense').classList.add('active');
+}
+
+async function deleteExpense(id, month) {
+  if (!confirm('Delete this expense?')) return;
+  const d = md(month);
+  d.expenses = d.expenses.filter(e => e.id !== id);
+  await saveAll();
+  toast('Deleted', 'ok');
+  renderAll();
+}
+
+/* ── SAVE INCOME (add or edit) ── */
+async function saveIncome() {
+  const data = {
+    date: document.getElementById('inc-date').value,
+    source: document.getElementById('inc-source').value,
+    amount: Number(document.getElementById('inc-amount').value) || 0,
+    notes: document.getElementById('inc-notes').value
+  };
+  if (!data.amount) return toast('Enter amount', 'err');
+
+  if (editState && editState.type === 'income') {
+    const d = md(editState.month);
+    const idx = d.income.findIndex(i => i.id === editState.id);
+    if (idx >= 0) d.income[idx] = { ...d.income[idx], ...data };
+    editState = null;
+    toast('✅ Updated!', 'ok');
+  } else {
+    const d = md(curMonth());
+    d.income.push({ id: 'i_' + Date.now(), ...data });
+    toast('✅ Saved!', 'ok');
+  }
+  await saveAll();
+  closeModal('income');
+  renderAll();
+}
+
+/* ── SAVE EXPENSE (add or edit) ── */
+async function saveExpense() {
+  const data = {
     date: document.getElementById('exp-date').value,
     category: document.getElementById('exp-cat').value,
     subcategory: document.getElementById('exp-sub').value,
@@ -1351,29 +1230,21 @@ async function addExpense() {
     isLoan: document.getElementById('exp-loan').checked,
     notes: document.getElementById('exp-notes').value
   };
-  if (!exp.item || !exp.amount) return toast('Fill item & amount', 'err');
-  d.expenses.push(exp);
-  await saveAll();
-  toast('✅ Saved!', 'ok');
-  closeModal('expense');
-  renderAll();
-}
+  if (!data.item || !data.amount) return toast('Fill item & amount', 'err');
 
-async function addIncome() {
-  const m = curMonth();
-  const d = md(m);
-  const inc = {
-    id: 'i_' + Date.now(),
-    date: document.getElementById('inc-date').value,
-    source: document.getElementById('inc-source').value,
-    amount: Number(document.getElementById('inc-amount').value) || 0,
-    notes: document.getElementById('inc-notes').value
-  };
-  if (!inc.amount) return toast('Enter amount', 'err');
-  d.income.push(inc);
+  if (editState && editState.type === 'expense') {
+    const d = md(editState.month);
+    const idx = d.expenses.findIndex(e => e.id === editState.id);
+    if (idx >= 0) d.expenses[idx] = { ...d.expenses[idx], ...data };
+    editState = null;
+    toast('✅ Updated!', 'ok');
+  } else {
+    const d = md(curMonth());
+    d.expenses.push({ id: 'e_' + Date.now(), ...data });
+    toast('✅ Saved!', 'ok');
+  }
   await saveAll();
-  toast('✅ Saved!', 'ok');
-  closeModal('income');
+  closeModal('expense');
   renderAll();
 }
 
@@ -1389,14 +1260,22 @@ function getPrevRem(month) {
 }
 
 function openModal(id) {
+  editState = null;
   document.getElementById('modal-'+id).classList.add('active');
   const dt = document.querySelector('#modal-'+id+' input[type="date"]');
   if (dt) dt.value = today();
-  if (id === 'expense') updateSubs();
+  if (id === 'expense') {
+    document.getElementById('exp-modal-title').textContent = 'Add Expense';
+    updateSubs();
+  }
+  if (id === 'income') document.getElementById('inc-modal-title').textContent = 'Add Income';
 }
 
 function closeModal(id) {
+  editState = null;
   document.getElementById('modal-'+id).classList.remove('active');
+  if (id === 'expense') document.getElementById('exp-modal-title').textContent = 'Add Expense';
+  if (id === 'income') document.getElementById('inc-modal-title').textContent = 'Add Income';
 }
 
 function updateSubs() {
@@ -1418,7 +1297,7 @@ function setFilter(f) {
 
 async function resetAll() {
   if (!confirm('Delete ALL data?')) return;
-  if (!confirm('Really?')) return;
+  if (!confirm('Really? This cannot be undone.')) return;
   DB = { months: {}, shoppingList: [] };
   DB.months[curMonth()] = { income: [], expenses: [], groceries: [], inventory: {}, shoppingHistory: [] };
   await db.ref('/data').set({ months: DB.months, shoppingList: [] });
