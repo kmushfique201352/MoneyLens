@@ -5,7 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a0a2e">
-<title>MoneyLens - Khaled & Saba</title>
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MoneyLens">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%230e0620'/%3E%3Ccircle cx='256' cy='256' r='200' fill='none' stroke='%23b47aff' stroke-width='8' opacity='0.3'/%3E%3Cpath d='M256 120 C256 120 340 180 340 256 C340 332 256 392 256 392 C256 392 172 332 172 256 C172 180 256 120 256 120Z' fill='none' stroke='%23E8622A' stroke-width='14' stroke-linejoin='round'/%3E%3Ccircle cx='256' cy='256' r='36' fill='%23E8622A'/%3E%3Ccircle cx='256' cy='256' r='18' fill='%23FECD6D'/%3E%3Cline x1='256' y1='140' x2='256' y2='185' stroke='%23b47aff' stroke-width='10' stroke-linecap='round'/%3E%3Cline x1='256' y1='327' x2='256' y2='372' stroke='%23b47aff' stroke-width='10' stroke-linecap='round'/%3E%3Cline x1='172' y1='256' x2='217' y2='256' stroke='%23b47aff' stroke-width='10' stroke-linecap='round'/%3E%3Cline x1='295' y1='256' x2='340' y2='256' stroke='%23b47aff' stroke-width='10' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%230e0620'/%3E%3Ccircle cx='256' cy='256' r='200' fill='none' stroke='%23b47aff' stroke-width='8' opacity='0.3'/%3E%3Cpath d='M256 120 C256 120 340 180 340 256 C340 332 256 392 256 392 C256 392 172 332 172 256 C172 180 256 120 256 120Z' fill='none' stroke='%23E8622A' stroke-width='14' stroke-linejoin='round'/%3E%3Ccircle cx='256' cy='256' r='36' fill='%23E8622A'/%3E%3Ccircle cx='256' cy='256' r='18' fill='%23FECD6D'/%3E%3Cline x1='256' y1='140' x2='256' y2='185' stroke='%23b47aff' stroke-width='10' stroke-linecap='round'/%3E%3Cline x1='256' y1='327' x2='256' y2='372' stroke='%23b47aff' stroke-width='10' stroke-linecap='round'/%3E%3Cline x1='172' y1='256' x2='217' y2='256' stroke='%23b47aff' stroke-width='10' stroke-linecap='round'/%3E%3Cline x1='295' y1='256' x2='340' y2='256' stroke='%23b47aff' stroke-width='10' stroke-linecap='round'/%3E%3C/svg%3E">
+<title>MoneyLens</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -574,7 +579,7 @@ body::after {
     <div class="hero-card glass-card">
       <div class="hero-label">Remaining Balance</div>
       <div class="hero-value"><small>RM </small><span id="remaining">0.00</span></div>
-      <div class="hero-sub">Available this month</div>
+      <div class="hero-sub">Total across all wallets</div>
       <div class="wallet-breakdown" id="wallet-breakdown"></div>
     </div>
     <div class="stats-row">
@@ -621,7 +626,13 @@ body::after {
     <h1>History</h1>
     <p class="subtitle">Past months</p>
   </div>
-  <div class="month-select" id="month-selector"></div>
+  <div style="padding:8px 16px 16px;position:relative">
+    <div style="position:absolute;right:28px;top:50%;transform:translateY(-50%);pointer-events:none;color:#D1601F;font-size:14px">▼</div>
+    <select id="month-selector-dd" onchange="viewM=this.value;renderHistory()"
+      style="width:100%;padding:14px 20px 14px 16px;border-radius:16px;background:linear-gradient(135deg,rgba(209,96,31,0.12),rgba(180,122,255,0.08));border:2px solid rgba(209,96,31,0.4);color:var(--text);font-size:14px;font-weight:700;font-family:var(--font);outline:none;-webkit-appearance:none;cursor:pointer;box-shadow:0 4px 20px rgba(209,96,31,0.15)">
+    </select>
+  </div>
+  <div class="month-select" id="month-selector" style="display:none"></div>
   <div class="hist-summary">
     <div class="h-title" id="hist-title"></div>
     <div class="hist-row">
@@ -676,22 +687,39 @@ body::after {
   </div>
 
   <!-- Quick Add -->
-  <div class="form-group" style="margin-top:16px">
-    <label>Quick Add to List</label>
-    <div class="quick-add-row">
-      <div class="qa-name-wrap">
-        <input type="text" id="quick-item" placeholder="Item name" autocomplete="off" oninput="acSearch(this.value)" onfocus="acSearch(this.value)">
-        <div id="ac-dropdown" class="ac-dropdown"></div>
-      </div>
-      <input type="number" id="quick-qty" class="qa-qty" placeholder="Qty" min="1" value="1" step="1">
-      <input type="number" id="quick-price" class="qa-price" placeholder="RM" step="0.01" min="0">
-      <select id="quick-priority" class="qa-pri">
-        <option value="High">High ⭐</option>
-        <option value="Medium" selected>Medium</option>
-        <option value="Low">Low</option>
-      </select>
-      <button class="btn-sm" onclick="quickAddToList()">+</button>
+  <div style="margin:16px 16px 8px;background:linear-gradient(135deg,rgba(180,122,255,0.08),rgba(232,98,42,0.05));border:1px solid rgba(180,122,255,0.2);border-radius:20px;padding:16px">
+    <div style="font-size:12px;font-weight:700;color:var(--purple);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px">➕ Quick Add to List</div>
+    <div style="position:relative;margin-bottom:10px">
+      <input type="text" id="quick-item" placeholder="🔍 Search or type item name..." autocomplete="off"
+        oninput="acSearch(this.value)" onfocus="acSearch(this.value)"
+        style="width:100%;padding:13px 16px;border-radius:12px;background:rgba(255,255,255,0.06);border:1px solid rgba(180,122,255,0.2);color:var(--text);font-size:14px;font-family:var(--font);outline:none">
+      <div id="ac-dropdown" class="ac-dropdown"></div>
     </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px">
+      <div>
+        <div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:5px;font-weight:600">Qty</div>
+        <input type="number" id="quick-qty" placeholder="1" min="1" value="1" step="1"
+          style="width:100%;padding:11px 12px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(180,122,255,0.15);color:var(--text);font-size:14px;font-family:var(--font);outline:none;text-align:center">
+      </div>
+      <div>
+        <div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:5px;font-weight:600">Price (RM)</div>
+        <input type="number" id="quick-price" placeholder="0.00" step="0.01" min="0"
+          style="width:100%;padding:11px 12px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(180,122,255,0.15);color:var(--text);font-size:14px;font-family:var(--font);outline:none;text-align:center">
+      </div>
+      <div>
+        <div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:5px;font-weight:600">Priority</div>
+        <select id="quick-priority"
+          style="width:100%;padding:11px 8px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(180,122,255,0.15);color:var(--text);font-size:13px;font-family:var(--font);outline:none;-webkit-appearance:none;text-align:center">
+          <option value="High">⭐ High</option>
+          <option value="Medium" selected>● Med</option>
+          <option value="Low">○ Low</option>
+        </select>
+      </div>
+    </div>
+    <button onclick="quickAddToList()"
+      style="width:100%;padding:13px;background:linear-gradient(135deg,var(--satsuma),var(--purple-mid));border:none;border-radius:12px;color:#fff;font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer;letter-spacing:0.3px">
+      ➕ Add to Shopping List
+    </button>
   </div>
 
   <!-- Inventory Stats -->
@@ -728,9 +756,12 @@ body::after {
 <div id="page-savings" class="page">
   <div class="header">
     <h1>Savings</h1>
-    <p class="subtitle">Your saved amounts</p>
+    <p class="subtitle">Goals &amp; deposits</p>
   </div>
-  <button class="btn-primary-full" onclick="requireAuth(()=>openModal('savings'))">+ Add Saving</button>
+  <div style="display:flex;gap:8px;padding:0 16px 4px">
+    <button class="btn-primary-full" style="margin:0;flex:1" onclick="requireAuth(()=>openSavingGoalModal())">+ New Goal</button>
+    <button class="btn-primary-full" style="margin:0;flex:1;background:linear-gradient(135deg,var(--purple),var(--purple-mid))" onclick="requireAuth(()=>openSavingsModal())">+ Deposit</button>
+  </div>
   <div class="divider"></div>
 
   <!-- Total savings card -->
@@ -740,7 +771,9 @@ body::after {
     <div class="savings-breakdown" id="sv-breakdown"></div>
   </div>
 
-  <div class="section-header"><h2>Savings Log</h2></div>
+  <div class="section-header"><h2>Goals</h2></div>
+  <div class="list" id="savings-goals-list"></div>
+  <div class="section-header"><h2>All Deposits</h2></div>
   <div class="list" id="savings-list"></div>
 </div>
 
@@ -763,7 +796,12 @@ body::after {
       <div><div class="s-title">🔐 Change PIN</div><div class="s-meta">Update transaction PIN</div></div>
       <span style="color:var(--text-muted);font-size:20px">›</span>
     </div>
-    <div style="margin:32px 16px 8px">
+    <div style="margin:16px 16px 8px">
+      <button onclick="requireAuth(()=>fixOrphanedExpenses())" style="width:100%;padding:16px;background:rgba(254,205,109,0.1);border:1px solid rgba(254,205,109,0.3);border-radius:var(--r-md);color:var(--lunar);font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s">
+        🔧 Fix Orphaned Expenses (Missing Pay-From)
+      </button>
+    </div>
+    <div style="margin:0 16px 8px">
       <button onclick="requireAuth(()=>resetAll())" style="width:100%;padding:16px;background:rgba(255,92,122,0.1);border:1px solid rgba(255,92,122,0.3);border-radius:var(--r-md);color:var(--red);font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s">
         ⚠️ Reset All Data
       </button>
@@ -820,7 +858,23 @@ body::after {
   </div>
 </div>
 
-<!-- ═══════════ MODAL: SAVINGS ═══════════ -->
+<!-- ═══════════ MODAL: SAVING GOAL (CREATE LABEL) ═══════════ -->
+<div class="modal-overlay" id="modal-saving-goal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="sg-modal-title">New Saving Goal</h2>
+      <button class="modal-close" onclick="closeModal('saving-goal')">✕</button>
+    </div>
+    <input type="hidden" id="sg-edit-id">
+    <div class="form-group"><label>Goal / Label Name</label><input type="text" id="sg-name" placeholder="e.g. Khaled Tuition Fee"></div>
+    <div class="form-group"><label>Target Amount (RM) — optional</label><input type="number" id="sg-target" placeholder="0.00 = no target" step="0.01" min="0"></div>
+    <div class="form-group"><label>Initial Deposit (RM) — can be 0</label><input type="number" id="sg-initial" placeholder="0.00" step="0.01" min="0" value="0"></div>
+    <button class="btn-primary" onclick="saveSavingGoal()">Create Goal</button>
+    <button class="btn-cancel" onclick="closeModal('saving-goal')">Cancel</button>
+  </div>
+</div>
+
+<!-- ═══════════ MODAL: SAVINGS (DEPOSIT INTO GOAL) ═══════════ -->
 <div class="modal-overlay" id="modal-savings">
   <div class="modal">
     <div class="modal-header">
@@ -829,8 +883,10 @@ body::after {
     </div>
     <div class="form-group"><label>Date</label><input type="date" id="sv-date"></div>
     <div class="form-group"><label>Amount (RM)</label><input type="number" id="sv-amount" placeholder="0.00" step="0.01" min="0"></div>
-    <div class="form-group"><label>Reason / Label</label><input type="text" id="sv-reason" placeholder="e.g. Emergency Fund"></div>
-    <!-- Payment method to deduct from -->
+    <div class="form-group">
+      <label>Goal / Label</label>
+      <select id="sv-goal-select" style="width:100%;padding:14px 16px;border-radius:var(--r-sm);background:rgba(180,122,255,0.06);border:1px solid rgba(180,122,255,0.15);color:var(--text);font-size:15px;font-family:var(--font);outline:none;-webkit-appearance:none"></select>
+    </div>
     <div class="payment-selector">
       <label>Deduct From</label>
       <div class="payment-options" id="sv-pay-opts"></div>
@@ -867,6 +923,29 @@ body::after {
     <div class="form-group"><label>New Name</label><input type="text" id="rename-pm-val" placeholder="Enter new name"></div>
     <button class="btn-primary" onclick="confirmRenamePM()">Rename</button>
     <button class="btn-cancel" onclick="closeModal('rename-pm')">Cancel</button>
+  </div>
+</div>
+
+<!-- ═══════════ MODAL: WITHDRAW SAVINGS ═══════════ -->
+<div class="modal-overlay" id="modal-withdraw-savings">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Withdraw from Savings</h2>
+      <button class="modal-close" onclick="closeModal('withdraw-savings')">✕</button>
+    </div>
+    <input type="hidden" id="wd-goal-id">
+    <div class="form-group"><label>Date</label><input type="date" id="wd-date"></div>
+    <div class="form-group"><label>Amount to Withdraw (RM)</label><input type="number" id="wd-amount" placeholder="0.00" step="0.01" min="0"></div>
+    <div class="form-group">
+      <label>Withdrawal Type</label>
+      <select id="wd-type" style="width:100%;padding:14px 16px;border-radius:var(--r-sm);background:rgba(180,122,255,0.06);border:1px solid rgba(180,122,255,0.15);color:var(--text);font-size:15px;font-family:var(--font);outline:none;-webkit-appearance:none">
+        <option value="goal">Goal Payment (e.g. paid tuition fee) — shown greyed</option>
+        <option value="emergency">Emergency Use (e.g. medical) — reduces net saved</option>
+      </select>
+    </div>
+    <div class="form-group"><label>Reason / Note</label><input type="text" id="wd-reason" placeholder="e.g. Paid tuition fee, Medical bill"></div>
+    <button class="btn-primary" style="background:linear-gradient(135deg,#D1601F,#a03c10)" onclick="saveWithdrawal()">Confirm Withdrawal</button>
+    <button class="btn-cancel" onclick="closeModal('withdraw-savings')">Cancel</button>
   </div>
 </div>
 
@@ -920,7 +999,7 @@ const DEFAULT_PAYMENT_METHODS = [
   'TNG Khaled', 'TNG Saba', 'Card Khaled', 'Card Saba'
 ];
 
-let DB = { months: {}, shoppingList: [], paymentMethods: [], savings: [], pin: '1234' };
+let DB = { months: {}, shoppingList: [], paymentMethods: [], savings: [], savingGoals: [], pin: '1234' };
 let viewM = curMonth();
 let invFilter = 'all';
 let editState = null;
@@ -1119,27 +1198,107 @@ async function deletePaymentMethod(idx) {
 }
 
 /* ─────────────── SAVINGS ─────────────── */
+
+function openSavingGoalModal(editId) {
+  document.getElementById('sg-edit-id').value = editId || '';
+  document.getElementById('sg-name').value = '';
+  document.getElementById('sg-target').value = '';
+  document.getElementById('sg-initial').value = '0';
+  const isEdit = !!editId;
+  if (isEdit) {
+    const g = (DB.savingGoals || []).find(g => g.id === editId);
+    if (g) {
+      document.getElementById('sg-name').value = g.name;
+      document.getElementById('sg-target').value = g.target || '';
+      document.getElementById('sg-initial').value = '';
+    }
+  }
+  document.getElementById('sg-modal-title').textContent = isEdit ? 'Edit Goal' : 'New Saving Goal';
+  // Hide initial deposit field when editing
+  document.getElementById('sg-initial').parentElement.style.display = isEdit ? 'none' : '';
+  document.getElementById('modal-saving-goal').classList.add('active');
+}
+
+async function saveSavingGoal() {
+  const editId = document.getElementById('sg-edit-id').value;
+  const name = document.getElementById('sg-name').value.trim();
+  const target = parseFloat(document.getElementById('sg-target').value) || 0;
+  const initial = parseFloat(document.getElementById('sg-initial').value) || 0;
+  if (!name) return toast('Enter a goal name', 'err');
+  if (!DB.savingGoals) DB.savingGoals = [];
+
+  if (editId) {
+    const idx = DB.savingGoals.findIndex(g => g.id === editId);
+    if (idx >= 0) { DB.savingGoals[idx].name = name; DB.savingGoals[idx].target = target; }
+    toast('✅ Goal updated', 'ok');
+  } else {
+    const goalId = 'sg_' + Date.now();
+    DB.savingGoals.push({ id: goalId, name, target, createdAt: today() });
+    // Add initial deposit if > 0
+    if (initial > 0) {
+      if (!DB.savings) DB.savings = [];
+      DB.savings.push({ id: 'sv_' + Date.now(), date: today(), amount: initial, goalId, payFrom: null, isInitial: true });
+    }
+    toast('✅ Goal created', 'ok');
+  }
+  await saveAll();
+  closeModal('saving-goal');
+  renderAll();
+}
+
+async function deleteSavingGoal(id) {
+  if (!confirm('Delete this goal and all its deposits?')) return;
+  DB.savingGoals = (DB.savingGoals || []).filter(g => g.id !== id);
+  DB.savings = (DB.savings || []).filter(s => s.goalId !== id);
+  await saveAll();
+  toast('Deleted', 'ok');
+  renderAll();
+}
+
+function openSavingsModal(preGoalId) {
+  if (!DB.savingGoals || DB.savingGoals.length === 0) return toast('Create a saving goal first', 'err');
+  editState = null;
+  document.getElementById('sv-modal-title').textContent = 'Add Deposit';
+  document.getElementById('sv-date').value = today();
+  document.getElementById('sv-amount').value = '';
+  // Populate goal dropdown
+  const sel = document.getElementById('sv-goal-select');
+  sel.innerHTML = (DB.savingGoals || []).map(g => {
+    const deposited = (DB.savings||[]).filter(s=>s.goalId===g.id).reduce((sum,s)=>sum+Number(s.amount),0);
+    const remaining = g.target ? ` · RM${(g.target-deposited).toFixed(2)} left` : '';
+    return `<option value="${g.id}" ${preGoalId===g.id?'selected':''}>${esc(g.name)}${remaining}</option>`;
+  }).join('');
+  renderPaymentMethodSelector('sv-pay-opts', null);
+  document.getElementById('modal-savings').classList.add('active');
+}
+
 async function saveSaving() {
   const amount = parseFloat(document.getElementById('sv-amount').value) || 0;
-  const reason = document.getElementById('sv-reason').value.trim();
+  const goalId = document.getElementById('sv-goal-select').value;
   const payFrom = getSelectedPayOpt('sv-pay-opts');
   const date = document.getElementById('sv-date').value;
 
   if (!amount) return toast('Enter amount', 'err');
+  if (!goalId) return toast('Select a goal', 'err');
   if (!payFrom) return toast('Select payment method', 'err');
 
   const bals = getPMBalances();
-  if ((bals[payFrom] || 0) < amount) return toast('Insufficient balance in ' + payFrom, 'err');
+  let prevAmount = 0;
+  if (editState && editState.type === 'saving') {
+    const old = (DB.savings||[]).find(s => s.id === editState.id);
+    if (old && old.payFrom === payFrom) prevAmount = Number(old.amount);
+  }
+  if ((bals[payFrom] || 0) + prevAmount < amount) return toast('Insufficient balance in ' + payFrom, 'err');
 
   if (!DB.savings) DB.savings = [];
 
   if (editState && editState.type === 'saving') {
     const idx = DB.savings.findIndex(s => s.id === editState.id);
-    if (idx >= 0) DB.savings[idx] = { ...DB.savings[idx], amount, reason, payFrom, date };
+    if (idx >= 0) DB.savings[idx] = { ...DB.savings[idx], amount, goalId, payFrom, date };
     editState = null;
     toast('✅ Updated!', 'ok');
   } else {
-    DB.savings.push({ id: 'sv_' + Date.now(), date, amount, reason, payFrom });
+    DB.savings.push({ id: 'sv_' + Date.now(), date, amount, goalId, payFrom });
     toast('✅ Saved!', 'ok');
   }
   await saveAll();
@@ -1149,56 +1308,144 @@ async function saveSaving() {
 
 function renderSavings() {
   if (!DB.savings) DB.savings = [];
-  const savings = [...DB.savings].reverse();
+  if (!DB.savingGoals) DB.savingGoals = [];
 
-  // Total per payment method
-  const byPM = {};
-  DB.savings.forEach(sv => {
-    byPM[sv.payFrom] = (byPM[sv.payFrom] || 0) + Number(sv.amount);
+  const totalDepositsAll = DB.savings.filter(s => s.type !== 'withdraw').reduce((s, sv) => s + Number(sv.amount), 0);
+  const totalWithdrawalsEmerg = DB.savings.filter(s => s.type === 'withdraw' && s.withdrawType === 'emergency').reduce((s, sv) => s + Number(sv.amount), 0);
+  const totalAll = Math.max(0, totalDepositsAll - totalWithdrawalsEmerg);
+  document.getElementById('sv-total').textContent = totalAll.toFixed(2);
+
+  // Breakdown by goal
+  const goalBreakdown = DB.savingGoals.map(g => {
+    const deposited = DB.savings.filter(s => s.goalId === g.id && s.type !== 'withdraw').reduce((s, sv) => s + Number(sv.amount), 0);
+    const withdrawnEmerg = DB.savings.filter(s => s.goalId === g.id && s.type === 'withdraw' && s.withdrawType === 'emergency').reduce((s, sv) => s + Number(sv.amount), 0);
+    const withdrawnGoal = DB.savings.filter(s => s.goalId === g.id && s.type === 'withdraw' && s.withdrawType === 'goal').reduce((s, sv) => s + Number(sv.amount), 0);
+    const netInSavings = Math.max(0, deposited - withdrawnEmerg);
+    return { ...g, deposited, withdrawnEmerg, withdrawnGoal, netInSavings };
   });
-  const total = DB.savings.reduce((s, sv) => s + Number(sv.amount), 0);
-
-  document.getElementById('sv-total').textContent = total.toFixed(2);
-
-  const breakdown = Object.entries(byPM);
-  document.getElementById('sv-breakdown').innerHTML = breakdown.length
-    ? breakdown.map(([pm, amt]) =>
-        `<div class="sv-row"><span class="sv-who">${esc(pm)}</span><span class="sv-amt">RM ${Number(amt).toFixed(2)}</span></div>`
-      ).join('')
-    : '<div class="sv-row"><span style="color:var(--text-muted);font-size:13px">No savings yet</span></div>';
-
-  document.getElementById('savings-list').innerHTML = savings.length
-    ? savings.map(sv => `
-      <div class="savings-item">
-        <div>
-          <div class="title">${esc(sv.reason || 'Saving')}</div>
-          <div class="meta">${sv.date} · from ${esc(sv.payFrom)}</div>
+  const goalBreakdownFull = goalBreakdown.map(g => {
+    return { ...g, withdrawn: g.withdrawnEmerg + g.withdrawnGoal, net: g.netInSavings };
+  });
+  const totalGoalTarget = goalBreakdownFull.reduce((s, g) => s + (Number(g.target) || 0), 0);
+  const totalDeposited = goalBreakdownFull.reduce((s, g) => s + g.netInSavings, 0);
+  const overallPct = totalGoalTarget > 0 ? Math.min(100, (totalDeposited / totalGoalTarget) * 100) : null;
+  document.getElementById('sv-breakdown').innerHTML = goalBreakdown.length
+    ? `${goalBreakdown.map(g =>
+        `<div class="sv-row">
+          <span class="sv-who">${esc(g.name)}</span>
+          <span class="sv-amt">RM ${g.netInSavings.toFixed(2)}${g.target ? ' / RM '+Number(g.target).toFixed(2) : ''}</span>
+        </div>`
+      ).join('')}
+      <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(254,205,109,0.2)">
+        <div class="sv-row" style="margin-bottom:6px">
+          <span style="color:var(--text-muted);font-size:11px;letter-spacing:0.5px;text-transform:uppercase">Total Saved</span>
+          <span style="color:var(--lunar);font-weight:800">RM ${totalDeposited.toFixed(2)}</span>
         </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
-          <div class="amount" style="color:var(--lunar)">RM ${Number(sv.amount).toFixed(2)}</div>
-          <div style="display:flex;gap:5px">
-            <button class="action-btn edit-btn" onclick="editSaving('${sv.id}')">✏️</button>
-            <button class="action-btn del-btn" onclick="deleteSaving('${sv.id}')">🗑️</button>
+        ${totalGoalTarget > 0 ? `<div class="sv-row" style="margin-bottom:8px">
+          <span style="color:var(--text-muted);font-size:11px;letter-spacing:0.5px;text-transform:uppercase">Total Goal</span>
+          <span style="color:var(--purple);font-weight:800">RM ${totalGoalTarget.toFixed(2)}</span>
+        </div>
+        <div style="background:rgba(255,255,255,0.07);border-radius:20px;height:8px;overflow:hidden;margin-top:4px">
+          <div style="height:100%;width:${overallPct.toFixed(1)}%;background:linear-gradient(90deg,var(--lunar),var(--satsuma),var(--purple));border-radius:20px;transition:width 0.5s"></div>
+        </div>
+        <div style="font-size:10px;color:var(--text-muted);text-align:right;margin-top:4px">${overallPct.toFixed(1)}% of all goals funded</div>` : ''}`
+    : '<div class="sv-row"><span style="color:var(--text-muted);font-size:13px">No goals yet</span></div>';
+
+  // Render goals with progress
+  document.getElementById('savings-goals-list').innerHTML = DB.savingGoals.length
+    ? DB.savingGoals.map(g => {
+        const allEntries = DB.savings.filter(s => s.goalId === g.id);
+        const deposited = allEntries.filter(s => s.type !== 'withdraw').reduce((s, sv) => s + Number(sv.amount), 0);
+        const withdrawnGoal = allEntries.filter(s => s.type === 'withdraw' && s.withdrawType === 'goal').reduce((s, sv) => s + Number(sv.amount), 0);
+        const withdrawnEmerg = allEntries.filter(s => s.type === 'withdraw' && s.withdrawType === 'emergency').reduce((s, sv) => s + Number(sv.amount), 0);
+        const netSaved = Math.max(0, deposited - withdrawnEmerg - withdrawnGoal);
+        const remainingInPot = Math.max(0, deposited - withdrawnEmerg - withdrawnGoal);
+        const pct = g.target ? Math.min(100, (remainingInPot / g.target) * 100) : null;
+        const withdrawnGoalPct = g.target ? Math.min(100, (withdrawnGoal / g.target) * 100) : null;
+        const remaining = g.target ? Math.max(0, g.target - netSaved) : null;
+        return `<div class="savings-item" style="flex-direction:column;align-items:stretch;gap:10px">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start">
+            <div>
+              <div class="title" style="font-size:15px;font-weight:700">${esc(g.name)}</div>
+              <div class="meta">Created ${g.createdAt || ''}</div>
+            </div>
+            <div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap;justify-content:flex-end">
+              <button class="btn-sm purple" style="padding:6px 10px;font-size:10px" onclick="requireAuth(()=>openSavingsModal('${g.id}'))">+ Deposit</button>
+              <button class="btn-sm" style="padding:6px 10px;font-size:10px;background:linear-gradient(135deg,#D1601F,#a03c10)" onclick="requireAuth(()=>openWithdrawModal('${g.id}'))">− Withdraw</button>
+              <button class="action-btn edit-btn" onclick="requireAuth(()=>openSavingGoalModal('${g.id}'))">✏️</button>
+              <button class="action-btn del-btn" onclick="requireAuth(()=>deleteSavingGoal('${g.id}'))">🗑️</button>
+            </div>
           </div>
-        </div>
-      </div>`).join('')
-    : '<div class="empty-state"><div class="icon">🏦</div><p>No savings yet</p></div>';
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:4px">
+            <div style="text-align:center;background:rgba(254,205,109,0.08);border:1px solid rgba(254,205,109,0.15);border-radius:10px;padding:8px">
+              <div style="font-size:15px;font-weight:800;color:var(--lunar)">RM ${deposited.toFixed(2)}</div>
+              <div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-top:2px">Deposited</div>
+            </div>
+            <div style="text-align:center;background:rgba(180,180,180,0.06);border:1px solid rgba(180,180,180,0.15);border-radius:10px;padding:8px">
+              <div style="font-size:15px;font-weight:800;color:rgba(200,200,200,0.8)">RM ${withdrawnGoal.toFixed(2)}</div>
+              <div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-top:2px">Paid to Goal</div>
+            </div>
+            <div style="text-align:center;background:rgba(94,179,245,0.08);border:1px solid rgba(94,179,245,0.15);border-radius:10px;padding:8px">
+              <div style="font-size:15px;font-weight:800;color:var(--cobalt)">RM ${remainingInPot.toFixed(2)}</div>
+              <div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-top:2px">In Savings</div>
+            </div>
+          </div>
+          ${g.target ? `<div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);margin-top:2px"><span>Target: RM ${Number(g.target).toFixed(2)}</span><span>Remaining: RM ${remaining.toFixed(2)}</span></div>` : ''}
+          ${pct !== null ? `
+          <div style="background:rgba(255,255,255,0.07);border-radius:20px;height:10px;overflow:hidden;position:relative">
+            <div style="position:absolute;left:0;top:0;height:100%;width:${pct.toFixed(1)}%;background:linear-gradient(90deg,var(--lunar),var(--satsuma));border-radius:20px;transition:width 0.4s"></div>
+            <div style="position:absolute;right:0;top:0;height:100%;width:${withdrawnGoalPct.toFixed(1)}%;background:rgba(180,180,180,0.35);border-radius:20px;transition:width 0.4s"></div>
+          </div>
+          <div style="font-size:10px;color:var(--text-muted);text-align:right">${pct.toFixed(1)}% in savings${withdrawnGoal > 0 ? ' · '+withdrawnGoalPct.toFixed(1)+'% paid to goal' : ''}${withdrawnEmerg > 0 ? ' · RM'+withdrawnEmerg.toFixed(2)+' emergency used' : ''}</div>` : ''}
+        </div>`;
+      }).join('')
+    : '<div class="empty-state"><div class="icon">🎯</div><p>No goals yet.<br>Create a goal first, then deposit into it.</p></div>';
+
+  // All deposits + withdrawals log
+  const savings = [...DB.savings].reverse();
+  document.getElementById('savings-list').innerHTML = savings.length
+    ? savings.map(sv => {
+        const goal = DB.savingGoals.find(g => g.id === sv.goalId);
+        const isWithdraw = sv.type === 'withdraw';
+        const isGoalPay = isWithdraw && sv.withdrawType === 'goal';
+        const amtColor = isWithdraw ? (isGoalPay ? 'rgba(200,200,200,0.5)' : 'var(--red)') : 'var(--lunar)';
+        const prefix = isWithdraw ? '−' : '+';
+        const typeBadge = isWithdraw
+          ? `<span class="badge" style="background:rgba(209,96,31,0.15);color:#D1601F;border-color:rgba(209,96,31,0.3)">${isGoalPay ? 'Goal Pay' : 'Emergency'}</span>`
+          : (sv.isInitial ? '<span class="badge badge-p">Initial</span>' : '<span class="badge badge-p">Deposit</span>');
+        return `<div class="savings-item" style="${isWithdraw ? 'opacity:0.75;border-color:rgba(209,96,31,0.2)' : ''}">
+          <div>
+            <div class="title">${esc(goal ? goal.name : 'Unknown Goal')} ${typeBadge}</div>
+            <div class="meta">${sv.date}${sv.payFrom ? ' · '+esc(sv.payFrom) : ''}${sv.reason ? ' · '+esc(sv.reason) : ''}</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+            <div class="amount" style="color:${amtColor}">${prefix}RM ${Number(sv.amount).toFixed(2)}</div>
+            <div style="display:flex;gap:5px">
+              <button class="action-btn del-btn" onclick="requireAuth(()=>deleteSaving('${sv.id}'))">🗑️</button>
+            </div>
+          </div>
+        </div>`;
+      }).join('')
+    : '<div class="empty-state"><div class="icon">🏦</div><p>No deposits yet</p></div>';
 }
 
 function editSaving(id) {
   const sv = (DB.savings || []).find(s => s.id === id);
   if (!sv) return;
+  if (!DB.savingGoals || DB.savingGoals.length === 0) return toast('No goals exist', 'err');
   editState = { type: 'saving', id };
   document.getElementById('sv-date').value = sv.date;
   document.getElementById('sv-amount').value = sv.amount;
-  document.getElementById('sv-reason').value = sv.reason || '';
-  document.getElementById('sv-modal-title').textContent = 'Edit Saving';
+  // Populate goal dropdown
+  const sel = document.getElementById('sv-goal-select');
+  sel.innerHTML = (DB.savingGoals || []).map(g => `<option value="${g.id}" ${sv.goalId===g.id?'selected':''}>${esc(g.name)}</option>`).join('');
+  document.getElementById('sv-modal-title').textContent = 'Edit Deposit';
   renderPaymentMethodSelector('sv-pay-opts', sv.payFrom);
   document.getElementById('modal-savings').classList.add('active');
 }
 
 async function deleteSaving(id) {
-  if (!confirm('Delete this saving?')) return;
+  if (!confirm('Delete this deposit?')) return;
   DB.savings = (DB.savings || []).filter(s => s.id !== id);
   await saveAll();
   toast('Deleted', 'ok');
@@ -1217,6 +1464,13 @@ function goPage(p) {
 }
 
 /* ─────────────── DB ─────────────── */
+function normalizeArr(val) {
+  if (!val) return [];
+  if (Array.isArray(val)) return val;
+  // Firebase can return object with numeric keys instead of array
+  return Object.values(val);
+}
+
 async function initDB() {
   const ref = db.ref('/data');
   try {
@@ -1224,17 +1478,19 @@ async function initDB() {
     if (snap.exists()) {
       const d = snap.val();
       DB.months = d.months || {};
-      DB.shoppingList = d.shoppingList || [];
-      DB.paymentMethods = d.paymentMethods || [];
-      DB.savings = d.savings || [];
+      DB.shoppingList = normalizeArr(d.shoppingList);
+      DB.paymentMethods = normalizeArr(d.paymentMethods);
+      DB.savings = normalizeArr(d.savings);
+      DB.savingGoals = normalizeArr(d.savingGoals);
       DB.pin = d.pin || '1234';
     }
     if (!DB.months[curMonth()]) DB.months[curMonth()] = { income: [], expenses: [], groceries: [], inventory: {}, shoppingHistory: [] };
     if (!DB.shoppingList) DB.shoppingList = [];
     if (!DB.paymentMethods || DB.paymentMethods.length === 0) DB.paymentMethods = [...DEFAULT_PAYMENT_METHODS];
     if (!DB.savings) DB.savings = [];
+    if (!DB.savingGoals) DB.savingGoals = [];
     if (!DB.pin) DB.pin = '1234';
-    await ref.set({ months: DB.months, shoppingList: DB.shoppingList, paymentMethods: DB.paymentMethods, savings: DB.savings, pin: DB.pin });
+    await ref.set({ months: DB.months, shoppingList: DB.shoppingList, paymentMethods: DB.paymentMethods, savings: DB.savings, savingGoals: DB.savingGoals, pin: DB.pin });
     renderAll();
     toast('✅ Ready', 'ok');
   } catch(e) { toast('❌ ' + e.message, 'err'); }
@@ -1244,9 +1500,10 @@ db.ref('/data').on('value', snap => {
   if (snap.exists()) {
     const d = snap.val();
     DB.months = d.months || {};
-    DB.shoppingList = d.shoppingList || [];
-    DB.paymentMethods = d.paymentMethods || [];
-    DB.savings = d.savings || [];
+    DB.shoppingList = normalizeArr(d.shoppingList);
+    DB.paymentMethods = normalizeArr(d.paymentMethods);
+    DB.savings = normalizeArr(d.savings);
+    DB.savingGoals = normalizeArr(d.savingGoals);
     DB.pin = d.pin || '1234';
     renderAll();
   }
@@ -1264,7 +1521,7 @@ function md(month) {
 }
 
 async function saveAll() {
-  await db.ref('/data').set({ months: DB.months, shoppingList: DB.shoppingList, paymentMethods: DB.paymentMethods, savings: DB.savings || [], pin: DB.pin || '1234' });
+  await db.ref('/data').set({ months: DB.months, shoppingList: DB.shoppingList, paymentMethods: DB.paymentMethods, savings: DB.savings || [], savingGoals: DB.savingGoals || [], pin: DB.pin || '1234' });
 }
 
 /* ─────────────── RENDER ALL ─────────────── */
@@ -1288,12 +1545,20 @@ function renderHome(m) {
   const d = md(m);
   const bals = getPMBalances();
   const totalBalance = Object.values(bals).reduce((s, v) => s + v, 0);
-  const spendable = totalBalance;
 
+  // All-time income and expenses across all months
+  let allInc = 0, allExp = 0;
+  Object.values(DB.months || {}).forEach(mo => {
+    (mo.income || []).forEach(i => allInc += Number(i.amount));
+    (mo.expenses || []).forEach(e => allExp += Number(e.amount));
+  });
+  (DB.savings || []).forEach(sv => allExp += Number(sv.amount));
+
+  // Current month income/expenses for the stat cards
   const inc = d.income.reduce((s,i) => s + Number(i.amount), 0);
   const exp = d.expenses.reduce((s,e) => s + Number(e.amount), 0);
 
-  document.getElementById('remaining').textContent = spendable.toFixed(2);
+  document.getElementById('remaining').textContent = totalBalance.toFixed(2);
   document.getElementById('total-inc').textContent = 'RM ' + inc.toFixed(2);
   document.getElementById('total-exp').textContent = 'RM ' + exp.toFixed(2);
 
@@ -1393,51 +1658,101 @@ function renderIncome(m) {
 /* ─────────────── HISTORY ─────────────── */
 function renderHistory() {
   const months = [...new Set([...Object.keys(DB.months), curMonth()])].sort().reverse();
-  document.getElementById('month-selector').innerHTML = months.map(m =>
-    `<div class="month-chip ${m===viewM?'active':''}" onclick="viewM='${m}';renderHistory()">${fmtMonth(m)}</div>`).join('');
+  const dd = document.getElementById('month-selector-dd');
+  if (dd) {
+    dd.innerHTML = months.map(m => {
+      const moData = DB.months[m] || {};
+      const mInc = (moData.income || []).reduce((s,i) => s + Number(i.amount), 0);
+      const mExp = (moData.expenses || []).reduce((s,e) => s + Number(e.amount), 0);
+      const arrow = m === viewM ? '▶ ' : '';
+      return `<option value="${m}" ${m===viewM?'selected':''}>${arrow}${fmtMonth(m)}   ✦ In: RM${mInc.toFixed(2)}   ✦ Out: RM${mExp.toFixed(2)}</option>`;
+    }).join('');
+  }
 
   const d = md(viewM);
   const inc = d.income.reduce((s,i) => s + Number(i.amount), 0);
   const exp = d.expenses.reduce((s,e) => s + Number(e.amount), 0);
-  const rem = inc - exp;
+  // Cumulative remaining: sum all income - all expenses - all savings up to and including viewM
+  const sortedMonths = Object.keys(DB.months).sort();
+  let cumulativeRem = 0;
+  for (const mo of sortedMonths) {
+    const moData = DB.months[mo];
+    cumulativeRem += (moData.income || []).reduce((s,i) => s + Number(i.amount), 0);
+    cumulativeRem -= (moData.expenses || []).reduce((s,e) => s + Number(e.amount), 0);
+    if (mo === viewM) break;
+  }
+  // Also subtract savings that happened up to viewM
+  (DB.savings || []).forEach(sv => { if (sv.date && sv.date.slice(0,7) <= viewM) cumulativeRem -= Number(sv.amount); });
 
   document.getElementById('hist-title').textContent = fmtMonth(viewM);
   document.getElementById('hist-inc').textContent = 'RM ' + inc.toFixed(2);
   document.getElementById('hist-exp').textContent = 'RM ' + exp.toFixed(2);
-  document.getElementById('hist-rem').textContent = 'RM ' + rem.toFixed(2);
+  document.getElementById('hist-rem').textContent = 'RM ' + cumulativeRem.toFixed(2);
 
   const sortedInc = [...d.income].reverse();
   const sortedExp = [...d.expenses].reverse();
 
-  document.getElementById('hist-inc-list').innerHTML = sortedInc.length
-    ? sortedInc.map(i => `
-      <div class="list-item">
-        <div class="left"><div class="title">${esc(i.source)}</div><div class="meta">${i.date}</div></div>
-        <div class="item-right">
-          <div class="amount positive">+RM ${Number(i.amount).toFixed(2)}</div>
-          <div class="item-actions">
-            <button class="action-btn edit-btn" onclick="requireAuth(()=>editIncome('${i.id}','${viewM}'))">✏️</button>
-            <button class="action-btn del-btn" onclick="requireAuth(()=>deleteIncome('${i.id}','${viewM}'))">🗑️</button>
+  // Group income by date
+  const incByDate = {};
+  sortedInc.forEach(i => { if (!incByDate[i.date]) incByDate[i.date] = []; incByDate[i.date].push(i); });
+  const incDates = Object.keys(incByDate).sort().reverse();
+  document.getElementById('hist-inc-list').innerHTML = incDates.length
+    ? incDates.map(date => {
+        const [y, mo, day] = date.split('-');
+        const label = `${parseInt(day)} ${MONTHS[parseInt(mo)-1]} ${y}`;
+        const dayTotal = incByDate[date].reduce((s, i) => s + Number(i.amount), 0);
+        const items = incByDate[date].map(i => `
+          <div class="list-item" style="border-radius:12px;margin-bottom:6px">
+            <div class="left"><div class="title"><span class="source-dot"></span>${esc(i.source)}</div><div class="meta">${i.notes ? esc(i.notes) : 'Income'}</div></div>
+            <div class="item-right">
+              <div class="amount positive">+RM ${Number(i.amount).toFixed(2)}</div>
+              <div class="item-actions">
+                <button class="action-btn edit-btn" onclick="requireAuth(()=>editIncome('${i.id}','${viewM}'))">✏️</button>
+                <button class="action-btn del-btn" onclick="requireAuth(()=>deleteIncome('${i.id}','${viewM}'))">🗑️</button>
+              </div>
+            </div>
+          </div>`).join('');
+        return `<div style="margin-bottom:8px">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 16px 6px">
+            <div style="font-size:11px;font-weight:700;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase">${label}</div>
+            <div style="font-size:12px;font-weight:700;color:#4ecb82;background:rgba(78,203,130,0.1);border:1px solid rgba(78,203,130,0.2);border-radius:20px;padding:3px 10px">+RM ${dayTotal.toFixed(2)}</div>
           </div>
-        </div>
-      </div>`).join('')
+          ${items}
+        </div>`;
+      }).join('')
     : '<div class="empty-state"><p>No income</p></div>';
 
-  document.getElementById('hist-exp-list').innerHTML = sortedExp.length
-    ? sortedExp.map(e => `
-      <div class="list-item">
-        <div class="left">
-          <div class="title">${esc(e.item)}</div>
-          <div class="meta">${e.date} · ${esc(e.category)}${e.payFrom ? ' · <span style="color:var(--purple)">'+esc(e.payFrom)+'</span>' : ''}</div>
-        </div>
-        <div class="item-right">
-          <div class="amount negative">−RM ${Number(e.amount).toFixed(2)}</div>
-          <div class="item-actions">
-            <button class="action-btn edit-btn" onclick="requireAuth(()=>editExpense('${e.id}','${viewM}'))">✏️</button>
-            <button class="action-btn del-btn" onclick="requireAuth(()=>deleteExpense('${e.id}','${viewM}'))">🗑️</button>
+  // Group expenses by date
+  const expByDate = {};
+  sortedExp.forEach(e => { if (!expByDate[e.date]) expByDate[e.date] = []; expByDate[e.date].push(e); });
+  const expDates = Object.keys(expByDate).sort().reverse();
+  document.getElementById('hist-exp-list').innerHTML = expDates.length
+    ? expDates.map(date => {
+        const [y, mo, day] = date.split('-');
+        const label = `${parseInt(day)} ${MONTHS[parseInt(mo)-1]} ${y}`;
+        const dayTotal = expByDate[date].reduce((s, e) => s + Number(e.amount), 0);
+        const items = expByDate[date].map(e => `
+          <div class="list-item" style="border-radius:12px;margin-bottom:6px">
+            <div class="left">
+              <div class="title">${esc(e.item)}<span class="badge badge-${e.priority==='High'?'h':e.priority==='Low'?'l':'m'}">${e.priority||'Medium'}</span></div>
+              <div class="meta">${esc(e.subcategory||e.category)}${e.payFrom ? ' · <span style="color:var(--purple)">'+esc(e.payFrom)+'</span>' : ''}</div>
+            </div>
+            <div class="item-right">
+              <div class="amount negative">−RM ${Number(e.amount).toFixed(2)}</div>
+              <div class="item-actions">
+                <button class="action-btn edit-btn" onclick="requireAuth(()=>editExpense('${e.id}','${viewM}'))">✏️</button>
+                <button class="action-btn del-btn" onclick="requireAuth(()=>deleteExpense('${e.id}','${viewM}'))">🗑️</button>
+              </div>
+            </div>
+          </div>`).join('');
+        return `<div style="margin-bottom:8px">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 16px 6px">
+            <div style="font-size:11px;font-weight:700;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase">${label}</div>
+            <div style="font-size:12px;font-weight:700;color:var(--red);background:rgba(255,92,122,0.1);border:1px solid rgba(255,92,122,0.2);border-radius:20px;padding:3px 10px">−RM ${dayTotal.toFixed(2)}</div>
           </div>
-        </div>
-      </div>`).join('')
+          ${items}
+        </div>`;
+      }).join('')
     : '<div class="empty-state"><p>No expenses</p></div>';
 }
 
@@ -1472,7 +1787,10 @@ function renderShoppingList() {
     document.getElementById('shopping-total').textContent = 'RM 0.00';
     return;
   }
-  const total = list.reduce((s, item) => s + (item.bought ? 0 : (item.qty||1) * Number(item.price)), 0);
+  const anyBought = list.some(item => item.bought);
+  const total = anyBought
+    ? list.reduce((s, item) => s + (item.bought ? (item.qty||1) * Number(item.price) : 0), 0)
+    : list.reduce((s, item) => s + (item.qty||1) * Number(item.price), 0);
   document.getElementById('shopping-total').textContent = 'RM ' + total.toFixed(2);
 
   container.innerHTML = list.map((item, idx) => {
@@ -1544,7 +1862,7 @@ async function checkoutShopping() {
   const total = boughtItems.reduce((s,i) => s + (i.qty||1) * Number(i.price), 0);
 
   const payFrom = getSelectedPayOpt('checkout-pay-opts');
-  if (!payFrom) return toast('Select payment method to pay from', 'err');
+  if (!payFrom) return toast('Select a payment method before checking out', 'err');
 
   const bals = getPMBalances();
   if ((bals[payFrom] || 0) < total) return toast('Insufficient balance in ' + payFrom, 'err');
@@ -1564,7 +1882,8 @@ async function checkoutShopping() {
       lastPurchase: date, status: 'active'
     };
     d.groceries.push({ id: 'g_' + Date.now() + Math.random(), date, item: item.name, category: item.category || 'Food', cost: qty * Number(item.price), details: `Qty ${qty} × RM ${Number(item.price).toFixed(2)}` });
-    d.expenses.push({ id: 'eg_' + Date.now() + Math.random(), date, category: 'Groceries', subcategory: item.category || 'Food', item: item.name + (qty > 1 ? ` ×${qty}` : ''), amount: qty * Number(item.price), priority: item.priority || 'Medium', isLoan: false, notes: 'Shopping list', payFrom });
+    // Always include payFrom — this is critical for balance tracking
+    d.expenses.push({ id: 'eg_' + Date.now() + Math.random(), date, category: 'Groceries', subcategory: item.category || 'Food', item: item.name + (qty > 1 ? ` ×${qty}` : ''), amount: qty * Number(item.price), priority: item.priority || 'Medium', isLoan: false, notes: 'Shopping list', payFrom: payFrom });
   }
   DB.shoppingList = DB.shoppingList.filter(i => !i.bought);
   if (!d.shoppingHistory) d.shoppingHistory = [];
@@ -1881,17 +2200,21 @@ function openModal(id) {
     renderManagePMs();
   }
   if (id === 'savings') {
-    document.getElementById('sv-modal-title').textContent = 'Add Saving';
+    document.getElementById('sv-modal-title').textContent = 'Add Deposit';
+    const sel = document.getElementById('sv-goal-select');
+    if (sel) sel.innerHTML = (DB.savingGoals || []).map(g => `<option value="${g.id}">${esc(g.name)}</option>`).join('');
     renderPaymentMethodSelector('sv-pay-opts', null);
   }
 }
 
 function closeModal(id) {
   editState = null;
-  document.getElementById('modal-'+id).classList.remove('active');
+  const el = document.getElementById('modal-'+id);
+  if (el) el.classList.remove('active');
   if (id === 'expense') document.getElementById('exp-modal-title').textContent = 'Add Expense';
   if (id === 'income') document.getElementById('inc-modal-title').textContent = 'Add Income';
-  if (id === 'savings') document.getElementById('sv-modal-title').textContent = 'Add Saving';
+  if (id === 'savings') document.getElementById('sv-modal-title').textContent = 'Add Deposit';
+  if (id === 'saving-goal') document.getElementById('sg-modal-title').textContent = 'New Saving Goal';
 }
 
 function updateSubs() {
@@ -1912,12 +2235,49 @@ function setFilter(f) {
 }
 
 async function resetAll() {
-  if (!confirm('Delete ALL data?')) return;
-  if (!confirm('Really? This cannot be undone.')) return;
-  DB = { months: {}, shoppingList: [], paymentMethods: [...DEFAULT_PAYMENT_METHODS], savings: [], pin: DB.pin || '1234' };
+  if (!confirm('Delete ALL data? This cannot be undone.')) return;
+  const enteredPin = prompt('Enter your PIN to confirm reset:');
+  if (enteredPin === null) return;
+  if (enteredPin !== (DB.pin || '1234')) return toast('❌ Wrong PIN — reset cancelled', 'err');
+  DB = { months: {}, shoppingList: [], paymentMethods: [...DEFAULT_PAYMENT_METHODS], savings: [], savingGoals: [], pin: DB.pin || '1234' };
   DB.months[curMonth()] = { income: [], expenses: [], groceries: [], inventory: {}, shoppingHistory: [] };
-  await db.ref('/data').set({ months: DB.months, shoppingList: [], paymentMethods: DB.paymentMethods, savings: [], pin: DB.pin });
+  await db.ref('/data').set({ months: DB.months, shoppingList: [], paymentMethods: DB.paymentMethods, savings: [], savingGoals: [], pin: DB.pin });
   toast('Reset complete');
+  renderAll();
+}
+
+async function fixOrphanedExpenses() {
+  // Find all expenses missing payFrom and show them grouped by month
+  const orphans = [];
+  Object.entries(DB.months || {}).forEach(([month, mo]) => {
+    (mo.expenses || []).forEach(e => {
+      if (!e.payFrom) orphans.push({ month, ...e });
+    });
+  });
+
+  if (orphans.length === 0) return toast('✅ No orphaned expenses found!', 'ok');
+
+  const total = orphans.reduce((s, e) => s + Number(e.amount), 0);
+  const pms = getPMs();
+  const pmList = pms.map((pm, i) => `${i+1}. ${pm}`).join('\n');
+
+  const choice = prompt(
+    `Found ${orphans.length} expenses (RM ${total.toFixed(2)}) with no payment method assigned.\n\nThese are mostly old grocery checkouts.\n\nAvailable payment methods:\n${pmList}\n\nType the NUMBER of the payment method to assign to all of them, or Cancel to abort.`
+  );
+  if (!choice) return;
+  const idx = parseInt(choice) - 1;
+  if (isNaN(idx) || idx < 0 || idx >= pms.length) return toast('Invalid selection', 'err');
+
+  const selectedPM = pms[idx];
+  let fixed = 0;
+  Object.values(DB.months || {}).forEach(mo => {
+    (mo.expenses || []).forEach(e => {
+      if (!e.payFrom) { e.payFrom = selectedPM; fixed++; }
+    });
+  });
+
+  await saveAll();
+  toast(`✅ Fixed ${fixed} expenses → assigned to ${selectedPM}`, 'ok');
   renderAll();
 }
 
@@ -1945,6 +2305,41 @@ function toast(msg, type) {
   t.className = 'toast ' + (type||'ok') + ' show';
   setTimeout(() => t.classList.remove('show'), 2500);
 }
+
+function openWithdrawModal(goalId) {
+  document.getElementById('wd-goal-id').value = goalId;
+  document.getElementById('wd-date').value = today();
+  document.getElementById('wd-amount').value = '';
+  document.getElementById('wd-reason').value = '';
+  document.getElementById('wd-type').value = 'goal';
+  document.getElementById('modal-withdraw-savings').classList.add('active');
+}
+
+async function saveWithdrawal() {
+  const goalId = document.getElementById('wd-goal-id').value;
+  const amount = parseFloat(document.getElementById('wd-amount').value) || 0;
+  const withdrawType = document.getElementById('wd-type').value;
+  const reason = document.getElementById('wd-reason').value.trim();
+  const date = document.getElementById('wd-date').value;
+  if (!amount) return toast('Enter withdrawal amount', 'err');
+  if (!goalId) return toast('No goal selected', 'err');
+
+  const allEntries = (DB.savings || []).filter(s => s.goalId === goalId && s.type !== 'withdraw');
+  const totalDeposited = allEntries.reduce((s, sv) => s + Number(sv.amount), 0);
+  const totalWithdrawn = (DB.savings || []).filter(s => s.goalId === goalId && s.type === 'withdraw').reduce((s, sv) => s + Number(sv.amount), 0);
+  const available = totalDeposited - totalWithdrawn;
+  if (amount > available) return toast(`Only RM${available.toFixed(2)} available to withdraw`, 'err');
+
+  if (!DB.savings) DB.savings = [];
+  DB.savings.push({ id: 'wd_' + Date.now(), date, amount, goalId, type: 'withdraw', withdrawType, reason, payFrom: null });
+  await saveAll();
+  closeModal('withdraw-savings');
+  toast(`✅ Withdrew RM${amount.toFixed(2)} (${withdrawType})`, 'ok');
+  renderAll();
+}
+
+// Also add closeModal support for withdraw-savings
+const _origCloseModal = closeModal;
 
 document.addEventListener('DOMContentLoaded', () => {
   updateSubs();
